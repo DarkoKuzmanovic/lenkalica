@@ -34,7 +34,7 @@ export default function Breadcrumbs() {
             Home
           </Link>
         </li>
-        {breadcrumbItems.map((item, index) => (
+        {breadcrumbItems.map((item) => (
           <li key={item.href} className="flex items-center">
             <svg
               className="flex-shrink-0 h-4 w-4 text-gray-400 dark:text-gray-500"

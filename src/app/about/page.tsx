@@ -41,9 +41,9 @@ export default function AboutPage() {
 
           <h2>Join Our Journey</h2>
           <p>
-            Whether you're a history enthusiast, culture lover, or simply curious about the world around us, we invite
-            you to join us on this journey of discovery. Through our articles, we hope to inspire a deeper appreciation
-            for the rich tapestry of human experience.
+            Whether you&apos;re a history enthusiast, culture lover, or simply curious about the world around us, we
+            invite you to join us on this journey of discovery. Through our articles, we hope to inspire a deeper
+            appreciation for the rich tapestry of human experience.
           </p>
         </div>
       </div>
