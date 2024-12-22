@@ -1,0 +1,57 @@
+import { getArticleById } from "@/lib/articles";
+import ArticleMeta from "@/components/ArticleMeta";
+import Image from "next/image";
+import { notFound } from "next/navigation";
+import AudioButton from "@/components/AudioButton";
+
+export default async function ArticlePage({ params }: { params: { id: string } }) {
+  const article = await getArticleById(params.id);
+
+  if (!article) {
+    notFound();
+  }
+
+  return (
+    <div className="py-8">
+      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Hero Section */}
+        <div className="relative w-full h-[400px] mb-12 rounded-2xl overflow-hidden shadow-xl">
+          <Image src={article.coverImage} alt={article.title} fill className="object-cover" priority />
+        </div>
+
+        {/* Article Header */}
+        <header className="max-w-3xl mx-auto text-center mb-12">
+          <h1>{article.title}</h1>
+          <ArticleMeta article={article} />
+          {article.audioFile && (
+            <div className="mt-6">
+              <AudioButton audioUrl={article.audioFile} title={article.title} />
+            </div>
+          )}
+        </header>
+
+        {/* Article Content */}
+        <div className="max-w-3xl mx-auto">
+          <div
+            className="prose prose-lg md:prose-xl dark:prose-invert max-w-none"
+            dangerouslySetInnerHTML={{ __html: article.content }}
+          />
+
+          {/* Tags */}
+          {article.tags && article.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 my-12 justify-center">
+              {article.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      </article>
+    </div>
+  );
+}
