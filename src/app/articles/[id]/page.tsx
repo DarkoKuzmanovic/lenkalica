@@ -3,8 +3,28 @@ import ArticleMeta from "@/components/ArticleMeta";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import AudioButton from "@/components/AudioButton";
+import { Metadata } from "next";
 
-export default async function ArticlePage({ params }: { params: { id: string } }) {
+type Props = {
+  params: { id: string };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const article = await getArticleById(params.id);
+
+  if (!article) {
+    return {
+      title: "Article Not Found",
+    };
+  }
+
+  return {
+    title: `${article.title} | Lenkalica`,
+    description: article.excerpt,
+  };
+}
+
+export default async function ArticlePage({ params }: Props) {
   const article = await getArticleById(params.id);
 
   if (!article) {
