@@ -5,11 +5,9 @@ import { notFound } from "next/navigation";
 import AudioButton from "@/components/AudioButton";
 import { Metadata } from "next";
 
-type Props = {
-  params: { id: string };
-};
+type PageParams = { id: string };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: PageParams }): Promise<Metadata> {
   const article = await getArticleById(params.id);
 
   if (!article) {
@@ -24,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function ArticlePage({ params }: Props) {
+export default async function ArticlePage({ params }: { params: PageParams }) {
   const article = await getArticleById(params.id);
 
   if (!article) {
