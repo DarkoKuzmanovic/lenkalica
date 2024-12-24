@@ -26,6 +26,12 @@ export default function Header() {
               Articles
             </Link>
             <Link
+              href="/podcasts"
+              className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+            >
+              Podcasts
+            </Link>
+            <Link
               href="/about"
               className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
             >

@@ -31,6 +31,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="/podcasts"
+                  className="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400"
+                >
+                  Podcasts
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/about"
                   className="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400"
                 >

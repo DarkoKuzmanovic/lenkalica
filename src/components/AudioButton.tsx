@@ -22,7 +22,7 @@ export default function AudioButton({ audioUrl, title }: AudioButtonProps) {
           clipRule="evenodd"
         />
       </svg>
-      Listen to Article
+      Listen to Podcast
     </button>
   );
 }
