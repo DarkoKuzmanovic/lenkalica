@@ -61,7 +61,7 @@ export default function NasaImageOfDay() {
   if (imageData.media_type !== "image") {
     return (
       <div className="flex justify-center items-center min-h-[400px] text-gray-600 dark:text-gray-400">
-        Today's astronomy picture is not an image. Please check back tomorrow!
+        Today&apos;s astronomy picture is not an image. Please check back tomorrow!
       </div>
     );
   }

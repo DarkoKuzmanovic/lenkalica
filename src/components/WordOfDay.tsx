@@ -105,7 +105,7 @@ export default function WordOfDay() {
             <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-1">
               Example
             </h4>
-            <p className="text-gray-600 dark:text-gray-400 italic">"{wordData.example}"</p>
+            <p className="text-gray-600 dark:text-gray-400 italic">&quot;{wordData.example}&quot;</p>
           </div>
         </div>
 

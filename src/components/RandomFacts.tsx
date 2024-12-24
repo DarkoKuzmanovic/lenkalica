@@ -87,7 +87,7 @@ export default function RandomFacts() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {facts.map((fact, index) => (
+      {facts.map((fact) => (
         <div key={fact.id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
           <div className="p-6">
             <div className="min-h-[100px]">
