@@ -58,7 +58,7 @@ export async function GET() {
   xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0"
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
-    <atom:link href="${escapeXml(baseUrl, true)}/api/podcast-feed" rel="self" type="application/rss+xml" />
+    <atom:link href="${escapeXml(baseUrl, true)}/api/podcast-xml" rel="self" type="application/rss+xml" />
     <title>Lenkalica Podcasts</title>
     <link>${escapeXml(baseUrl, true)}/podcasts</link>
     <language>en-us</language>
