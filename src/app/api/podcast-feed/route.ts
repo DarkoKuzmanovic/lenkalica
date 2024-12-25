@@ -28,6 +28,14 @@ function validateAudioFile(audioFile: string): { isValid: boolean; size: number 
   }
 }
 
+// Function to ensure URL has https:// protocol
+function ensureHttps(url: string): string {
+  if (!url.startsWith("http")) {
+    return `https://${url}`;
+  }
+  return url;
+}
+
 export async function GET() {
   try {
     const articles = await getAllArticles();
@@ -38,7 +46,7 @@ export async function GET() {
     });
 
     // Get the base URL from environment variable or default to production URL
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://lenkalica.vercel.app";
+    const baseUrl = ensureHttps(process.env.NEXT_PUBLIC_BASE_URL || "lenkalica.vercel.app");
     const podcastCoverUrl = `${baseUrl}/images/podcast-cover.jpg`;
 
     // Create the RSS feed
@@ -83,7 +91,7 @@ export async function GET() {
       <pubDate>${new Date(article.date).toUTCString()}</pubDate>
       <enclosure
         url="${escapeXml(audioUrl, true)}"
-        type="audio/mpeg; codecs=mp3"
+        type="audio/mpeg"
         length="${size}"
       />
       <guid isPermaLink="false">${escapeXml(articleUrl, true)}</guid>
