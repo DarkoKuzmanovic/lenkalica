@@ -11,20 +11,20 @@ type Webcam = {
 
 const WEBCAMS: Webcam[] = [
   {
+    id: "shibuya-live",
+    title: "Shibuya Crossing",
+    location: "Tokyo, Japan",
+    youtubeId: "TUd7JORZeWo",
+  },
+  {
     id: "sydney-live",
     title: "Sydney Opera House",
     location: "Sydney, Australia",
     youtubeId: "5uZa3-RMFos",
   },
   {
-    id: "shibuya-live",
-    title: "Shibuya Crossing, Tokyo",
-    location: "Tokyo, Japan",
-    youtubeId: "TUd7JORZeWo",
-  },
-  {
     id: "newyork-live",
-    title: "Times Square, New York",
+    title: "Times Square",
     location: "New York, USA",
     youtubeId: "rnXIjl_Rzy4",
   },

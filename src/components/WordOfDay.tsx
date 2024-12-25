@@ -10,22 +10,61 @@ type WordData = {
   date: string;
 };
 
+type StoredWord = {
+  data: WordData;
+  expiryDate: string;
+};
+
 export default function WordOfDay() {
   const [wordData, setWordData] = useState<WordData | null>(null);
   const [loading, setLoading] = useState(true);
   const [speaking, setSpeaking] = useState(false);
 
   useEffect(() => {
-    // For now, using static data as web scraping would require backend setup
-    const mockData = {
-      word: "delectation",
-      pronunciation: "dee-lek-TAY-shun",
-      definition: "a feeling of delight or enjoyment; it can also be used to refer to the source of such feelings",
-      example: "The resort staff left a sampling of fine chocolate in our room for our delectation.",
-      date: "December 23, 2024",
+    const fetchWord = async () => {
+      try {
+        // Check if we have a cached word that hasn't expired
+        const storedWordJson = localStorage.getItem("wordOfDay");
+        if (storedWordJson) {
+          const storedWord: StoredWord = JSON.parse(storedWordJson);
+          const expiryDate = new Date(storedWord.expiryDate);
+
+          // If word hasn't expired, use it
+          if (expiryDate > new Date()) {
+            setWordData(storedWord.data);
+            setLoading(false);
+            return;
+          }
+        }
+
+        // Fetch new word from our API
+        const response = await fetch("/api/word-of-day");
+        if (!response.ok) {
+          throw new Error("Failed to fetch word of the day");
+        }
+        const data = await response.json();
+
+        // Set expiry date to next day at midnight
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(0, 0, 0, 0);
+
+        // Store in localStorage
+        const storedWord: StoredWord = {
+          data,
+          expiryDate: tomorrow.toISOString(),
+        };
+        localStorage.setItem("wordOfDay", JSON.stringify(storedWord));
+
+        setWordData(data);
+      } catch (error) {
+        console.error("Error setting up word of the day:", error);
+      } finally {
+        setLoading(false);
+      }
     };
-    setWordData(mockData);
-    setLoading(false);
+
+    fetchWord();
   }, []);
 
   const speak = () => {

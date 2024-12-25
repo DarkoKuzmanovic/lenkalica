@@ -15,6 +15,11 @@ type Artwork = {
   credit_line: string;
 };
 
+type StoredArtwork = {
+  data: Artwork;
+  expiryDate: string;
+};
+
 export default function ArtworkOfDay() {
   const [artwork, setArtwork] = useState<Artwork | null>(null);
   const [loading, setLoading] = useState(true);
@@ -24,6 +29,20 @@ export default function ArtworkOfDay() {
   useEffect(() => {
     async function fetchArtwork() {
       try {
+        // Check if we have a cached artwork that hasn't expired
+        const storedArtworkJson = localStorage.getItem("artworkOfDay");
+        if (storedArtworkJson) {
+          const storedArtwork: StoredArtwork = JSON.parse(storedArtworkJson);
+          const expiryDate = new Date(storedArtwork.expiryDate);
+
+          // If artwork hasn't expired, use it
+          if (expiryDate > new Date()) {
+            setArtwork(storedArtwork.data);
+            setLoading(false);
+            return;
+          }
+        }
+
         // Get a random artwork from the public domain collection
         const response = await fetch(
           "https://api.artic.edu/api/v1/artworks/search?q=&query[term][is_public_domain]=true&limit=1&fields=id,title,artist_display,date_display,medium_display,dimensions,image_id,description,credit_line"
@@ -33,6 +52,18 @@ export default function ArtworkOfDay() {
         if (!data.data || data.data.length === 0) {
           throw new Error("No artwork found");
         }
+
+        // Set expiry date to next day at midnight
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(0, 0, 0, 0);
+
+        // Store in localStorage
+        const storedArtwork: StoredArtwork = {
+          data: data.data[0],
+          expiryDate: tomorrow.toISOString(),
+        };
+        localStorage.setItem("artworkOfDay", JSON.stringify(storedArtwork));
 
         setArtwork(data.data[0]);
       } catch (error) {
@@ -133,7 +164,7 @@ export default function ArtworkOfDay() {
             <div className="relative aspect-[16/9] overflow-hidden">
               <Image src={highResImageUrl} alt={artwork.title} fill className="object-contain" priority />
             </div>
-            <div className="absolute bottom-4 left-4 right-4 bg-black/50 text-white p-4 rounded-lg">
+            <div className="absolute bottom-0 left-4 right-4 bg-black/50 text-white p-4 rounded-lg">
               <h4 className="text-xl font-bold mb-1">{artwork.title}</h4>
               <p className="text-sm text-gray-300">{artwork.artist_display}</p>
             </div>
