@@ -2,7 +2,6 @@ import { getAllArticles } from "@/lib/articles";
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
-import { getAudioDurationInSeconds } from "get-audio-duration";
 
 // Function to escape XML special characters, but not URLs
 function escapeXml(unsafe: string, isUrl = false): string {
@@ -17,26 +16,15 @@ function escapeXml(unsafe: string, isUrl = false): string {
     .replace(/'/g, "&apos;");
 }
 
-// Function to format duration in HH:MM:SS
-function formatDuration(seconds: number): string {
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const remainingSeconds = Math.floor(seconds % 60);
-  return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${remainingSeconds
-    .toString()
-    .padStart(2, "0")}`;
-}
-
-// Function to validate audio file and get its duration
-async function validateAudioFile(audioFile: string): Promise<{ isValid: boolean; size: number; duration: number }> {
+// Function to validate audio file
+function validateAudioFile(audioFile: string): { isValid: boolean; size: number } {
   try {
     const fullPath = path.join(process.cwd(), "public", audioFile);
     const stats = fs.statSync(fullPath);
-    const duration = await getAudioDurationInSeconds(fullPath);
-    return { isValid: true, size: stats.size, duration };
+    return { isValid: true, size: stats.size };
   } catch (error) {
     console.error(`Error validating audio file ${audioFile}:`, error);
-    return { isValid: false, size: 0, duration: 0 };
+    return { isValid: false, size: 0 };
   }
 }
 
@@ -51,16 +39,11 @@ function ensureHttps(url: string): string {
 export async function GET() {
   try {
     const articles = await getAllArticles();
-
-    // Filter and validate audio files
-    const articlesWithAudioPromises = articles
-      .filter((article): article is typeof article & { audioFile: string } => typeof article.audioFile === "string")
-      .map(async (article) => {
-        const audioInfo = await validateAudioFile(article.audioFile);
-        return { article, audioInfo };
-      });
-
-    const validArticles = (await Promise.all(articlesWithAudioPromises)).filter(({ audioInfo }) => audioInfo.isValid);
+    const articlesWithAudio = articles.filter((article): article is typeof article & { audioFile: string } => {
+      if (typeof article.audioFile !== "string") return false;
+      const { isValid } = validateAudioFile(article.audioFile);
+      return isValid;
+    });
 
     // Get the base URL from environment variable or default to production URL
     const baseUrl = ensureHttps(process.env.NEXT_PUBLIC_BASE_URL || "lenkalica.vercel.app");
@@ -97,11 +80,11 @@ export async function GET() {
       <link>${escapeXml(baseUrl, true)}/podcasts</link>
     </image>
     <googleplay:image href="${escapeXml(podcastCoverUrl, true)}"/>
-    ${validArticles
-      .map(({ article, audioInfo }) => {
+    ${articlesWithAudio
+      .map((article) => {
+        const { size } = validateAudioFile(article.audioFile);
         const audioUrl = `${baseUrl}${article.audioFile}`;
         const articleUrl = `${baseUrl}/articles/${article.id}`;
-        const duration = formatDuration(audioInfo.duration);
 
         return `
     <item>
@@ -112,12 +95,12 @@ export async function GET() {
       <enclosure
         url="${escapeXml(audioUrl, true)}"
         type="audio/mpeg"
-        length="${audioInfo.size}"
+        length="${size}"
       />
       <guid isPermaLink="false">${escapeXml(articleUrl, true)}</guid>
       <link>${escapeXml(articleUrl, true)}</link>
       ${article.author ? `<itunes:author>${escapeXml(article.author)}</itunes:author>` : ""}
-      <itunes:duration>${duration}</itunes:duration>
+      <itunes:duration>10:00</itunes:duration>
       ${article.category ? `<itunes:category text="${escapeXml(article.category)}"/>` : ""}
       <content:encoded><![CDATA[${article.excerpt || ""}]]></content:encoded>
     </item>`;
