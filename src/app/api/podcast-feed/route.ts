@@ -1,9 +1,13 @@
 import { getAllArticles } from "@/lib/articles";
 import { NextResponse } from "next/server";
-import { headers } from "next/headers";
+import fs from "fs";
+import path from "path";
 
-// Function to escape XML special characters
-function escapeXml(unsafe: string): string {
+// Function to escape XML special characters, but not URLs
+function escapeXml(unsafe: string, isUrl = false): string {
+  if (isUrl) {
+    return unsafe;
+  }
   return unsafe
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -12,26 +16,39 @@ function escapeXml(unsafe: string): string {
     .replace(/'/g, "&apos;");
 }
 
+// Function to get file size in bytes
+function getFileSize(filePath: string): number {
+  try {
+    const fullPath = path.join(process.cwd(), "public", filePath);
+    const stats = fs.statSync(fullPath);
+    return stats.size;
+  } catch (error) {
+    console.error(`Error getting file size for ${filePath}:`, error);
+    return 0;
+  }
+}
+
 export async function GET() {
   try {
     const articles = await getAllArticles();
-    const articlesWithAudio = articles.filter((article) => article.audioFile);
+    const articlesWithAudio = articles.filter(
+      (article): article is typeof article & { audioFile: string } => typeof article.audioFile === "string"
+    );
 
-    // Get the base URL from environment variable, headers, or default to localhost
-    const headersList = headers();
-    const host = headersList.get("host") || "localhost:3000";
-    const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `${protocol}://${host}`;
+    // Get the base URL from environment variable or default to production URL
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://lenkalica.vercel.app";
 
     // Create the RSS feed
     const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0"
   xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
-  xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0">
   <channel>
     <title>Lenkalica Podcasts</title>
-    <link>${baseUrl}/podcasts</link>
+    <link>${escapeXml(baseUrl, true)}/podcasts</link>
     <language>en-us</language>
+    <copyright>© ${new Date().getFullYear()} Lenkalica</copyright>
     <itunes:author>Lenkalica</itunes:author>
     <description>Listen to our articles in audio format. Perfect for when you're on the go.</description>
     <itunes:summary>Listen to our articles in audio format. Perfect for when you're on the go.</itunes:summary>
@@ -42,27 +59,38 @@ export async function GET() {
     </itunes:owner>
     <itunes:explicit>false</itunes:explicit>
     <itunes:category text="Education"/>
+    <itunes:image href="${escapeXml(baseUrl, true)}/images/podcast-cover.jpg"/>
+    <image>
+      <url>${escapeXml(baseUrl, true)}/images/podcast-cover.jpg</url>
+      <title>Lenkalica Podcasts</title>
+      <link>${escapeXml(baseUrl, true)}/podcasts</link>
+    </image>
+    <googleplay:image href="${escapeXml(baseUrl, true)}/images/podcast-cover.jpg"/>
     ${articlesWithAudio
-      .map(
-        (article) => `
+      .map((article) => {
+        const fileSize = getFileSize(article.audioFile);
+        const audioUrl = `${baseUrl}${article.audioFile}`;
+        const articleUrl = `${baseUrl}/articles/${article.id}`;
+
+        return `
     <item>
       <title>${escapeXml(article.title)}</title>
       <description>${escapeXml(article.excerpt || "")}</description>
       <itunes:summary>${escapeXml(article.excerpt || "")}</itunes:summary>
       <pubDate>${new Date(article.date).toUTCString()}</pubDate>
       <enclosure
-        url="${baseUrl}${article.audioFile}"
+        url="${escapeXml(audioUrl, true)}"
         type="audio/mpeg"
-        length="0"
+        length="${fileSize}"
       />
-      <guid isPermaLink="false">${baseUrl}/articles/${article.id}</guid>
-      <link>${baseUrl}/articles/${article.id}</link>
+      <guid isPermaLink="false">${escapeXml(articleUrl, true)}</guid>
+      <link>${escapeXml(articleUrl, true)}</link>
       ${article.author ? `<itunes:author>${escapeXml(article.author)}</itunes:author>` : ""}
       <itunes:duration>00:00:00</itunes:duration>
       ${article.category ? `<itunes:category text="${escapeXml(article.category)}"/>` : ""}
       <content:encoded><![CDATA[${article.content}]]></content:encoded>
-    </item>`
-      )
+    </item>`;
+      })
       .join("\n")}
   </channel>
 </rss>`;
