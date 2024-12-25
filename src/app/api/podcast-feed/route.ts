@@ -37,6 +37,7 @@ export async function GET() {
 
     // Get the base URL from environment variable or default to production URL
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://lenkalica.vercel.app";
+    const podcastCoverUrl = `${baseUrl}/images/podcast-cover.jpg`;
 
     // Create the RSS feed
     const rss = `<?xml version="1.0" encoding="UTF-8"?>
@@ -59,13 +60,13 @@ export async function GET() {
     </itunes:owner>
     <itunes:explicit>false</itunes:explicit>
     <itunes:category text="Education"/>
-    <itunes:image href="${escapeXml(baseUrl, true)}/images/podcast-cover.jpg"/>
+    <itunes:image href="${escapeXml(podcastCoverUrl, true)}"/>
     <image>
-      <url>${escapeXml(baseUrl, true)}/images/podcast-cover.jpg</url>
+      <url>${escapeXml(podcastCoverUrl, true)}</url>
       <title>Lenkalica Podcasts</title>
       <link>${escapeXml(baseUrl, true)}/podcasts</link>
     </image>
-    <googleplay:image href="${escapeXml(baseUrl, true)}/images/podcast-cover.jpg"/>
+    <googleplay:image href="${escapeXml(podcastCoverUrl, true)}"/>
     ${articlesWithAudio
       .map((article) => {
         const fileSize = getFileSize(article.audioFile);
@@ -88,7 +89,7 @@ export async function GET() {
       ${article.author ? `<itunes:author>${escapeXml(article.author)}</itunes:author>` : ""}
       <itunes:duration>00:00:00</itunes:duration>
       ${article.category ? `<itunes:category text="${escapeXml(article.category)}"/>` : ""}
-      <content:encoded><![CDATA[${article.content}]]></content:encoded>
+      <content:encoded><![CDATA[${article.excerpt || ""}]]></content:encoded>
     </item>`;
       })
       .join("\n")}
