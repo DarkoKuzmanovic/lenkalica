@@ -1,6 +1,7 @@
 ---
 title: From Rowdy Revelers to a Jolly Gift-Giver - How Santa Claus Became a Christmas Icon
 date: "2024-12-25"
+author: "Darko Kuzmanović"
 category: "History & Culture"
 tags:
   [
@@ -16,8 +17,6 @@ tags:
   ]
 excerpt: "Discover the surprising origins of Santa Claus, tracing his evolution from a symbol of social unrest to the beloved figure of Christmas cheer. Explore how historical context, from European wassailing traditions to the anxieties of 19th-century New York, shaped the Santa we know today."
 ---
-
-# From Rowdy Revelers to a Jolly Gift-Giver - How Santa Claus Became a Christmas Icon
 
 The Santa Claus we know today – that jolly figure synonymous with Christmas cheer – is a far cry from the holiday's boisterous beginnings. Believe it or not, behind Santa's rosy cheeks and twinkling eyes lies a history intertwined with social unrest, elite anxieties, and a deliberate effort to reshape Christmas itself. To truly understand this transformation, we must journey back to a time when Christmas was less about peaceful family gatherings and more about unbridled revelry.
 

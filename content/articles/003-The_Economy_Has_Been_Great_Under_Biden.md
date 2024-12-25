@@ -1,6 +1,7 @@
 ---
 title: The Economy Has Been Great Under Biden. That’s Why Trump Won.
 date: "2024-12-24"
+author: "Darko Kuzmanović"
 category: "Economics & Politics"
 tags:
   [

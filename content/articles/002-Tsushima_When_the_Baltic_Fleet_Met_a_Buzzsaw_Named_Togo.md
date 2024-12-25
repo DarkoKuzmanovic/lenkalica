@@ -1,6 +1,7 @@
 ---
 title: Tsushima - When the Baltic Fleet Met a Buzzsaw Named Togo (and Lost an Arm, a Leg, and Pretty Much Everything Else)
 date: "2024-12-23"
+author: "Darko Kuzmanović"
 category: "History"
 tags:
   [
@@ -15,8 +16,6 @@ tags:
   ]
 excerpt: "A witty and insightful look at the Battle of Tsushima, one of history's most lopsided naval engagements. Explore the blunders, the brilliance, and the sheer absurdity of this pivotal battle in the Russo-Japanese War."
 ---
-
-## Tsushima: When the Baltic Fleet Met a Buzzsaw Named Togo (and Lost an Arm, a Leg, and Pretty Much Everything Else)
 
 The year was 1905. Tsar Nicholas II, bless his cotton socks, was having a bit of a year. Revolution was brewing at home, his people were grumbling louder than a bear with a toothache, and the Russo-Japanese War wasn't exactly going swimmingly. In a desperate bid to turn the tide (pun intended), he decided to send the Baltic Fleet, Russia's naval pride and joy, on a little jaunt to the Far East. This "jaunt" would become one of history's greatest naval blunders, culminating in the Battle of Tsushima, a maritime massacre so lopsided it made David vs. Goliath look like a fair fight.
 

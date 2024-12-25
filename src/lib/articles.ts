@@ -16,6 +16,7 @@ export interface Article {
   excerpt?: string;
   category?: string;
   tags?: string[];
+  author?: string;
 }
 
 export async function getAllArticles(): Promise<Article[]> {
@@ -50,6 +51,7 @@ export async function getAllArticles(): Promise<Article[]> {
           excerpt: data.excerpt,
           category: data.category,
           tags: data.tags,
+          author: data.author,
         };
       })
   );
@@ -77,6 +79,7 @@ export async function getArticleById(id: string): Promise<Article | undefined> {
       excerpt: data.excerpt,
       category: data.category,
       tags: data.tags,
+      author: data.author,
     };
   } catch {
     return undefined;
