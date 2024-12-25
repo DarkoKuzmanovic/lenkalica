@@ -1,5 +1,6 @@
 import { getAllArticles } from "@/lib/articles";
 import { NextResponse } from "next/server";
+import { headers } from "next/headers";
 
 // Function to escape XML special characters
 function escapeXml(unsafe: string): string {
@@ -16,8 +17,11 @@ export async function GET() {
     const articles = await getAllArticles();
     const articlesWithAudio = articles.filter((article) => article.audioFile);
 
-    // Get the base URL from environment variable or default to localhost
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    // Get the base URL from environment variable, headers, or default to localhost
+    const headersList = headers();
+    const host = headersList.get("host") || "localhost:3000";
+    const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `${protocol}://${host}`;
 
     // Create the RSS feed
     const rss = `<?xml version="1.0" encoding="UTF-8"?>
@@ -26,7 +30,7 @@ export async function GET() {
   xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Lenkalica Podcasts</title>
-    <link>${escapeXml(baseUrl)}/podcasts</link>
+    <link>${baseUrl}/podcasts</link>
     <language>en-us</language>
     <itunes:author>Lenkalica</itunes:author>
     <description>Listen to our articles in audio format. Perfect for when you're on the go.</description>
@@ -47,12 +51,12 @@ export async function GET() {
       <itunes:summary>${escapeXml(article.excerpt || "")}</itunes:summary>
       <pubDate>${new Date(article.date).toUTCString()}</pubDate>
       <enclosure
-        url="${escapeXml(`${baseUrl}${article.audioFile}`)}"
+        url="${baseUrl}${article.audioFile}"
         type="audio/mpeg"
         length="0"
       />
-      <guid isPermaLink="false">${escapeXml(`${baseUrl}/articles/${article.id}`)}</guid>
-      <link>${escapeXml(`${baseUrl}/articles/${article.id}`)}</link>
+      <guid isPermaLink="false">${baseUrl}/articles/${article.id}</guid>
+      <link>${baseUrl}/articles/${article.id}</link>
       ${article.author ? `<itunes:author>${escapeXml(article.author)}</itunes:author>` : ""}
       <itunes:duration>00:00:00</itunes:duration>
       ${article.category ? `<itunes:category text="${escapeXml(article.category)}"/>` : ""}
