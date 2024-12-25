@@ -32,6 +32,7 @@ export async function POST(req: NextRequest) {
       throw new Error("Gemini API key is not configured");
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { title, content } = await req.json();
 
     // Get the model
