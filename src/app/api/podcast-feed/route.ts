@@ -16,24 +16,26 @@ function escapeXml(unsafe: string, isUrl = false): string {
     .replace(/'/g, "&apos;");
 }
 
-// Function to get file size in bytes
-function getFileSize(filePath: string): number {
+// Function to validate audio file
+function validateAudioFile(audioFile: string): { isValid: boolean; size: number } {
   try {
-    const fullPath = path.join(process.cwd(), "public", filePath);
+    const fullPath = path.join(process.cwd(), "public", audioFile);
     const stats = fs.statSync(fullPath);
-    return stats.size;
+    return { isValid: true, size: stats.size };
   } catch (error) {
-    console.error(`Error getting file size for ${filePath}:`, error);
-    return 0;
+    console.error(`Error validating audio file ${audioFile}:`, error);
+    return { isValid: false, size: 0 };
   }
 }
 
 export async function GET() {
   try {
     const articles = await getAllArticles();
-    const articlesWithAudio = articles.filter(
-      (article): article is typeof article & { audioFile: string } => typeof article.audioFile === "string"
-    );
+    const articlesWithAudio = articles.filter((article): article is typeof article & { audioFile: string } => {
+      if (typeof article.audioFile !== "string") return false;
+      const { isValid } = validateAudioFile(article.audioFile);
+      return isValid;
+    });
 
     // Get the base URL from environment variable or default to production URL
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://lenkalica.vercel.app";
@@ -69,7 +71,7 @@ export async function GET() {
     <googleplay:image href="${escapeXml(podcastCoverUrl, true)}"/>
     ${articlesWithAudio
       .map((article) => {
-        const fileSize = getFileSize(article.audioFile);
+        const { size } = validateAudioFile(article.audioFile);
         const audioUrl = `${baseUrl}${article.audioFile}`;
         const articleUrl = `${baseUrl}/articles/${article.id}`;
 
@@ -81,8 +83,8 @@ export async function GET() {
       <pubDate>${new Date(article.date).toUTCString()}</pubDate>
       <enclosure
         url="${escapeXml(audioUrl, true)}"
-        type="audio/mpeg"
-        length="${fileSize}"
+        type="audio/mpeg; codecs=mp3"
+        length="${size}"
       />
       <guid isPermaLink="false">${escapeXml(articleUrl, true)}</guid>
       <link>${escapeXml(articleUrl, true)}</link>
