@@ -3,11 +3,12 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Initialize Gemini API with proper error handling
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-if (!GEMINI_API_KEY) {
-  throw new Error("Missing GEMINI_API_KEY environment variable");
-}
+let genAI: GoogleGenerativeAI | null = null;
 
-const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+// Only initialize if API key is available
+if (GEMINI_API_KEY) {
+  genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+}
 
 const PROMPT = `Given the following article content, generate metadata in the following format:
 {
@@ -28,17 +29,23 @@ Article content:
 
 export async function POST(req: NextRequest) {
   try {
-    if (!GEMINI_API_KEY) {
-      throw new Error("Gemini API key is not configured");
+    const { content } = await req.json();
+
+    // If Gemini API is not available, return default metadata
+    if (!genAI) {
+      console.warn("Gemini API key not configured, using default metadata");
+      return NextResponse.json({
+        metadata: {
+          category: "Current Events",
+          tags: ["general"],
+          excerpt: content.slice(0, 197) + "...",
+          author: "Lenkalica Staff",
+        },
+      });
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { title, content } = await req.json();
-
-    // Get the model
+    // Generate metadata using Gemini
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-
-    // Generate metadata
     const result = await model.generateContent(PROMPT + content);
     const response = await result.response;
     const metadata = JSON.parse(response.text());
