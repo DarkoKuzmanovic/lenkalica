@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Noto_Sans, Noto_Serif } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Header from "@/components/Header";
@@ -8,14 +8,14 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { AudioProvider } from "@/context/AudioContext";
 import AudioPlayer from "@/components/AudioPlayer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const notoSans = Noto_Sans({
   subsets: ["latin"],
+  variable: "--font-noto-sans",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const notoSerif = Noto_Serif({
   subsets: ["latin"],
+  variable: "--font-noto-serif",
 });
 
 export const metadata: Metadata = {
@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}>
+      <body className={`${notoSans.variable} ${notoSerif.variable} antialiased min-h-screen flex flex-col`}>
         <ThemeProvider>
           <AudioProvider>
             <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900">
