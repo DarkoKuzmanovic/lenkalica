@@ -4,11 +4,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const BreadcrumbItem = ({ href, label, isLast }: { href: string; label: string; isLast: boolean }) => {
+  const trimmedLabel = (label: string) => {
+    if (label.length <= 30) return label;
+
+    const lastSpaceIndex = label.lastIndexOf(" ", 30);
+    return label.substring(0, lastSpaceIndex) + "...";
+  };
+
   if (isLast) {
     return (
       <li>
         <span className="text-base-content font-medium break-all" aria-current="page">
-          {label}
+          {trimmedLabel(label)}
         </span>
       </li>
     );
