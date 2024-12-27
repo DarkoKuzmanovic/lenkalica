@@ -71,31 +71,51 @@ export default function DadJoke() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[200px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-4 border-indigo-600 border-t-transparent"></div>
+        <span className="loading loading-spinner loading-lg text-primary"></span>
       </div>
     );
   }
 
   if (error || !joke) {
     return (
-      <div className="flex justify-center items-center min-h-[200px] text-red-600 dark:text-red-400">
-        {error || "No joke available"}
+      <div className="alert alert-error min-h-[200px] items-center justify-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="stroke-current shrink-0 h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <span>{error || "No joke available"}</span>
       </div>
     );
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
-      <div className="p-6">
+    <div className="card bg-base-100 shadow-xl">
+      <div className="card-body">
         <div className="min-h-[100px] flex flex-col items-center justify-center text-center">
-          <p className="text-gray-600 dark:text-gray-300 text-xl mb-4 font-medium">{joke.joke}</p>
+          <p className="text-base-content text-xl mb-4 font-medium">{joke.joke}</p>
           <a
             href={`https://icanhazdadjoke.com/j/${joke.id}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 text-sm"
+            className="btn btn-primary btn-sm"
           >
-            View on icanhazdadjoke →
+            View on icanhazdadjoke
+            <svg className="w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+              <path
+                fillRule="evenodd"
+                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
           </a>
         </div>
       </div>

@@ -3,6 +3,42 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+const BreadcrumbItem = ({ href, label, isLast }: { href: string; label: string; isLast: boolean }) => {
+  if (isLast) {
+    return (
+      <li>
+        <span className="text-base-content font-medium break-all" aria-current="page">
+          {label}
+        </span>
+      </li>
+    );
+  }
+
+  return (
+    <li>
+      <Link
+        href={href}
+        className="text-base-content/70 hover:text-primary transition-colors inline-flex items-center gap-1"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          className="w-4 h-4 shrink-0 stroke-current"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
+          ></path>
+        </svg>
+        <span className="break-all">{label}</span>
+      </Link>
+    </li>
+  );
+};
+
 export default function Breadcrumbs() {
   const pathname = usePathname();
 
@@ -13,52 +49,51 @@ export default function Breadcrumbs() {
 
   const breadcrumbItems = pathSegments.map((segment, index) => {
     const href = `/${pathSegments.slice(0, index + 1).join("/")}`;
-    const label = segment.charAt(0).toUpperCase() + segment.slice(1);
+    // Replace hyphens and underscores with spaces and decode URI components
+    const label = decodeURIComponent(segment)
+      .replace(/[-_]/g, " ")
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
     const isLast = index === pathSegments.length - 1;
-
-    // If it's a dynamic route segment (e.g., [id]), try to make it more readable
-    const displayLabel = segment.startsWith("[") && segment.endsWith("]") ? "Article Details" : label;
 
     return {
       href,
-      label: displayLabel,
+      label,
       isLast,
     };
   });
 
   return (
-    <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4" aria-label="Breadcrumb">
-      <ol className="flex items-center space-x-2 text-sm">
-        <li>
-          <Link href="/" className="text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400">
-            Home
-          </Link>
-        </li>
-        {breadcrumbItems.map((item) => (
-          <li key={item.href} className="flex items-center">
-            <svg
-              className="flex-shrink-0 h-4 w-4 text-gray-400 dark:text-gray-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+    <div className="w-full flex justify-center">
+      <div className="text-sm breadcrumbs max-w-screen-xl w-full px-4">
+        <ul className="flex-wrap">
+          <li>
+            <Link
+              href="/"
+              className="text-base-content/70 hover:text-primary transition-colors inline-flex items-center gap-1"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-            {item.isLast ? (
-              <span className="ml-2 text-gray-900 dark:text-white font-medium" aria-current="page">
-                {item.label}
-              </span>
-            ) : (
-              <Link
-                href={item.href}
-                className="ml-2 text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="w-4 h-4 shrink-0 stroke-current"
               >
-                {item.label}
-              </Link>
-            )}
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                ></path>
+              </svg>
+              <span>Home</span>
+            </Link>
           </li>
-        ))}
-      </ol>
-    </nav>
+          {breadcrumbItems.map((item) => (
+            <BreadcrumbItem key={item.href} {...item} />
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }

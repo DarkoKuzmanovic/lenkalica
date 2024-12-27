@@ -80,7 +80,7 @@ export default function WordOfDay() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[200px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-4 border-indigo-600 border-t-transparent"></div>
+        <span className="loading loading-spinner loading-lg text-primary"></span>
       </div>
     );
   }
@@ -88,16 +88,16 @@ export default function WordOfDay() {
   if (!wordData) return null;
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
-      <div className="p-6">
+    <div className="card bg-base-100 shadow-xl">
+      <div className="card-body">
         <div className="flex justify-between items-start mb-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{wordData.word}</h3>
+              <h3 className="card-title">{wordData.word}</h3>
               <button
                 onClick={speak}
                 disabled={speaking}
-                className="p-1.5 text-gray-500 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                className="btn btn-ghost btn-sm btn-circle"
                 title="Listen to pronunciation"
               >
                 {speaking ? (
@@ -127,33 +127,29 @@ export default function WordOfDay() {
                 )}
               </button>
             </div>
-            <p className="text-gray-600 dark:text-gray-400 font-mono">/{wordData.pronunciation}/</p>
+            <p className="font-mono text-base-content/70">/{wordData.pronunciation}/</p>
           </div>
-          <span className="text-sm text-gray-500 dark:text-gray-400">{wordData.date}</span>
+          <span className="badge badge-ghost">{wordData.date}</span>
         </div>
 
         <div className="space-y-4">
           <div>
-            <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-1">
-              Definition
-            </h4>
-            <p className="text-gray-600 dark:text-gray-400">{wordData.definition}</p>
+            <h4 className="text-sm font-semibold text-base-content uppercase tracking-wider mb-1">Definition</h4>
+            <p className="text-base-content/70">{wordData.definition}</p>
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-1">
-              Example
-            </h4>
-            <p className="text-gray-600 dark:text-gray-400 italic">&quot;{wordData.example}&quot;</p>
+            <h4 className="text-sm font-semibold text-base-content uppercase tracking-wider mb-1">Example</h4>
+            <p className="text-base-content/70 italic">&quot;{wordData.example}&quot;</p>
           </div>
         </div>
 
-        <div className="mt-6">
+        <div className="card-actions justify-end mt-6">
           <a
             href="https://www.merriam-webster.com/word-of-the-day"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 text-sm font-medium inline-flex items-center"
+            className="btn btn-primary btn-sm"
           >
             Learn more on Merriam-Webster
             <svg className="w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor">

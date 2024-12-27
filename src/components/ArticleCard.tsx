@@ -1,40 +1,45 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import type { Article } from "@/lib/articles";
 import { calculateReadingTime } from "@/utils/readingTime";
+import { motion } from "framer-motion";
 
 export default function ArticleCard({ article }: { article: Article }) {
   const readingTime = calculateReadingTime(article.content);
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 bg-white dark:bg-gray-800">
-      <div className="flex-shrink-0 relative h-56">
+    <motion.div
+      whileHover={{ y: -4 }}
+      transition={{ type: "spring", stiffness: 400, damping: 17 }}
+      className="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300"
+    >
+      <figure className="relative h-56 overflow-hidden">
         <Image
           src={article.coverImage}
           alt={article.title}
           fill
-          className="object-cover transition-transform duration-300 hover:scale-105"
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
-      </div>
-      <div className="flex flex-1 flex-col justify-between p-6">
+      </figure>
+      <div className="card-body p-6">
         <div className="flex-1">
-          <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400">{article.category}</p>
-          <Link href={`/articles/${article.id}`} className="block mt-2 group">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-200">
-              {article.title}
-            </h2>
+          <div className="badge badge-primary mb-2">{article.category}</div>
+          <Link href={`/articles/${article.id}`} className="block group">
+            <h2 className="card-title text-xl mb-2 group-hover:text-primary transition-colors">{article.title}</h2>
           </Link>
-          <p className="mt-3 text-base text-gray-600 dark:text-gray-300 line-clamp-3">{article.excerpt}</p>
+          <p className="text-base-content/80 line-clamp-3 mb-6">{article.excerpt}</p>
         </div>
-        <div className="mt-6 flex items-center justify-between border-t border-gray-200 dark:border-gray-700 pt-4">
-          <time dateTime={article.date} className="text-sm text-gray-500 dark:text-gray-400">
+        <div className="card-actions justify-between items-center pt-4 border-t border-base-300">
+          <time dateTime={article.date} className="text-sm text-base-content/60">
             {new Date(article.date).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
               day: "numeric",
             })}
           </time>
-          <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+          <div className="flex items-center text-sm text-base-content/60">
             <svg className="mr-1.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path
                 strokeLinecap="round"
@@ -47,6 +52,6 @@ export default function ArticleCard({ article }: { article: Article }) {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

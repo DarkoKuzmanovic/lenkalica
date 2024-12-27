@@ -84,25 +84,38 @@ export default function LiveWebcam() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-4 border-indigo-600 border-t-transparent"></div>
+        <span className="loading loading-spinner loading-lg text-primary"></span>
       </div>
     );
   }
 
   if (!webcam) {
     return (
-      <div className="flex justify-center items-center min-h-[400px] text-red-600 dark:text-red-400">
-        Failed to load webcam
+      <div className="alert alert-error min-h-[400px] items-center justify-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="stroke-current shrink-0 h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <span>Failed to load webcam</span>
       </div>
     );
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+    <div className="card bg-base-100 shadow-xl">
       <div className="relative aspect-video">
         <iframe
           src={`https://www.youtube.com/embed/${webcam.youtubeId}?autoplay=1&mute=1`}
-          className="absolute inset-0 w-full h-full"
+          className="absolute inset-0 w-full h-full rounded-t-2xl"
           frameBorder="0"
           allowFullScreen
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -110,22 +123,20 @@ export default function LiveWebcam() {
           title={`${webcam.title} Live Stream`}
         />
       </div>
-      <div className="p-6">
+      <div className="card-body">
         <div className="space-y-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">{webcam.title}</h3>
-              <span className="px-2 py-1 text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 rounded-full">
-                LIVE
-              </span>
+              <h3 className="card-title">{webcam.title}</h3>
+              <span className="badge badge-error badge-sm">LIVE</span>
             </div>
-            <p className="text-sm text-gray-600 dark:text-gray-400">{webcam.location}</p>
+            <p className="text-sm text-base-content/70">{webcam.location}</p>
           </div>
           <a
             href={`https://www.youtube.com/watch?v=${webcam.youtubeId}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center text-red-600 hover:text-red-500 dark:text-red-400 dark:hover:text-red-300 text-sm font-medium"
+            className="btn btn-error btn-sm"
           >
             Watch on YouTube
             <svg className="w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor">

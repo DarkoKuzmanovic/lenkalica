@@ -41,30 +41,56 @@ export default function NasaImageOfDay() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-4 border-indigo-600 border-t-transparent"></div>
+        <span className="loading loading-spinner loading-lg text-primary"></span>
       </div>
     );
   }
 
   if (error || !imageData) {
     return (
-      <div className="flex justify-center items-center min-h-[400px] text-red-600 dark:text-red-400">
-        {error || "Failed to load NASA image"}
+      <div className="alert alert-error min-h-[400px] items-center justify-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="stroke-current shrink-0 h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <span>{error || "Failed to load NASA image"}</span>
       </div>
     );
   }
 
   if (imageData.media_type !== "image") {
     return (
-      <div className="flex justify-center items-center min-h-[400px] text-gray-600 dark:text-gray-400">
-        Today&apos;s astronomy picture is not an image. Please check back tomorrow!
+      <div className="alert alert-info min-h-[400px] items-center justify-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          className="stroke-current shrink-0 w-6 h-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          ></path>
+        </svg>
+        <span>Today&apos;s astronomy picture is not an image. Please check back tomorrow!</span>
       </div>
     );
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
-      <div className="relative aspect-[16/9] overflow-hidden cursor-zoom-in" onClick={() => setIsZoomed(true)}>
+    <div className="card bg-base-100 shadow-xl">
+      <figure className="relative aspect-[16/9] cursor-zoom-in" onClick={() => setIsZoomed(true)}>
         <Image
           src={imageData.url}
           alt={imageData.title}
@@ -72,31 +98,20 @@ export default function NasaImageOfDay() {
           className="object-cover transition-transform duration-300"
           priority
         />
-        <div className="absolute bottom-4 right-4 bg-black/50 text-white px-2 py-1 rounded-lg text-sm">
-          Click to zoom
-        </div>
-      </div>
-      <div className="p-6">
-        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{imageData.title}</h3>
+        <div className="badge badge-lg badge-primary absolute bottom-4 right-4">Click to zoom</div>
+      </figure>
+      <div className="card-body">
+        <h3 className="card-title">{imageData.title}</h3>
         <div className="space-y-4">
           <div>
-            {imageData.copyright && (
-              <p className="text-sm text-gray-500 dark:text-gray-400">© {imageData.copyright.trim()}</p>
-            )}
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Published {new Date(imageData.date).toLocaleDateString()}
-            </p>
+            {imageData.copyright && <p className="text-sm text-base-content/60">© {imageData.copyright.trim()}</p>}
+            <p className="text-sm text-base-content/60">Published {new Date(imageData.date).toLocaleDateString()}</p>
           </div>
 
-          <p className="text-gray-600 dark:text-gray-400">{imageData.explanation}</p>
+          <p className="text-base-content/70">{imageData.explanation}</p>
 
-          <div className="mt-6">
-            <a
-              href={imageData.hdurl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 text-sm font-medium inline-flex items-center"
-            >
+          <div className="card-actions justify-end">
+            <a href={imageData.hdurl} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm">
               View on NASA
               <svg className="w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
                 <path
@@ -112,30 +127,24 @@ export default function NasaImageOfDay() {
 
       {/* Zoom Modal */}
       {isZoomed && (
-        <div
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-          onClick={() => setIsZoomed(false)}
-        >
-          <div className="relative w-full max-w-7xl">
-            <div className="relative aspect-[16/9] overflow-hidden">
+        <div className="modal modal-open" onClick={() => setIsZoomed(false)}>
+          <div className="modal-box max-w-7xl relative p-0 bg-transparent">
+            <div className="relative aspect-[16/9]">
               <Image src={imageData.hdurl} alt={imageData.title} fill className="object-contain" priority />
             </div>
-            <div className="absolute bottom-0 left-4 right-4 bg-black/50 text-white p-4 rounded-lg">
+            <div className="absolute bottom-0 left-4 right-4 bg-base-100/50 backdrop-blur-sm p-4 rounded-t-lg">
               <h4 className="text-xl font-bold mb-1">{imageData.title}</h4>
-              <p className="text-sm text-gray-300">
+              <p className="text-sm opacity-90">
                 {imageData.copyright ? `© ${imageData.copyright.trim()}` : "NASA Astronomy Picture of the Day"}
               </p>
             </div>
+            <button
+              onClick={() => setIsZoomed(false)}
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            >
+              ✕
+            </button>
           </div>
-          <button
-            onClick={() => setIsZoomed(false)}
-            className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors"
-            aria-label="Close zoom view"
-          >
-            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
         </div>
       )}
     </div>
