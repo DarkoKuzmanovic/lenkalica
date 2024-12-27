@@ -2,18 +2,19 @@
 title: The Forgotten Explorer - How Nellie Bly Circumnavigated the Globe in 72 Days
 date: "2024-12-26"
 category: "Travel"
-tags: [
-  "Nellie Bly",
-  "Around the World in Eighty Days",
-  "Female Empowerment",
-  "Journalism",
-  "Adventure",
-  "Women's History",
-  "Explorers",
-  "Culture",
-  "Social Justice",
-  "Challenging Conventions"
-]
+tags:
+  [
+    "Nellie Bly",
+    "Around the World in Eighty Days",
+    "Female Empowerment",
+    "Journalism",
+    "Adventure",
+    "Women's History",
+    "Explorers",
+    "Culture",
+    "Social Justice",
+    "Challenging Conventions",
+  ]
 excerpt: "Nellie Bly's record-breaking journey around the world in 72 days was not just a thrilling adventure; it was a transformative moment for women's rights and a testament to the power of human determination and the spirit of adventure that resides within us all."
 author: "Darko Kuzmanović"
 ---

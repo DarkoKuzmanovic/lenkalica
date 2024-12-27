@@ -112,7 +112,7 @@ ${content}`);
         formData.append("coverImageFileName", coverImageFileName);
       }
 
-      if (audioFile) {
+      if (audioFile && audioFileName) {
         formData.append("audioFile", audioFile);
         formData.append("audioFileName", audioFileName);
       }
@@ -150,21 +150,21 @@ ${content}`);
   return (
     <div className="py-8" data-color-mode="light">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold mb-8">Create New Post</h1>
+        <h1 className="text-3xl font-bold mb-8 text-base-content">Create New Post</h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Post Number and Title */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label htmlFor="postNumber" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Post Number
+              <label htmlFor="postNumber" className="label">
+                <span className="label-text">Post Number</span>
               </label>
               <input
                 type="text"
                 id="postNumber"
                 value={postNumber}
                 onChange={(e) => setPostNumber(e.target.value)}
-                className="w-full rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-800"
+                className="input input-bordered w-full"
                 required
                 pattern="\d{3}"
                 title="Please enter a 3-digit number"
@@ -172,15 +172,15 @@ ${content}`);
               />
             </div>
             <div>
-              <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Title
+              <label htmlFor="title" className="label">
+                <span className="label-text">Title</span>
               </label>
               <input
                 type="text"
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-800"
+                className="input input-bordered w-full"
                 required
               />
             </div>
@@ -188,22 +188,15 @@ ${content}`);
 
           {/* Cover Image Upload */}
           <div>
-            <label htmlFor="coverImage" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Cover Image
+            <label htmlFor="coverImage" className="label">
+              <span className="label-text">Cover Image</span>
             </label>
             <input
               type="file"
               id="coverImage"
               accept="image/*"
               onChange={handleImageChange}
-              className="block w-full text-sm text-gray-500 dark:text-gray-400
-                file:mr-4 file:py-2 file:px-4
-                file:rounded-lg file:border-0
-                file:text-sm file:font-medium
-                file:bg-indigo-50 file:text-indigo-700
-                dark:file:bg-indigo-900 dark:file:text-indigo-300
-                hover:file:bg-indigo-100 dark:hover:file:bg-indigo-800
-                file:cursor-pointer"
+              className="file-input file-input-bordered w-full"
               required
             />
             {imagePreview && (
@@ -215,32 +208,23 @@ ${content}`);
 
           {/* Audio Upload */}
           <div>
-            <label htmlFor="audioFile" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Audio File (MP3)
+            <label htmlFor="audioFile" className="label">
+              <span className="label-text">Audio File (MP3)</span>
             </label>
             <input
               type="file"
               id="audioFile"
               accept="audio/mp3"
               onChange={handleAudioChange}
-              className="block w-full text-sm text-gray-500 dark:text-gray-400
-                file:mr-4 file:py-2 file:px-4
-                file:rounded-lg file:border-0
-                file:text-sm file:font-medium
-                file:bg-indigo-50 file:text-indigo-700
-                dark:file:bg-indigo-900 dark:file:text-indigo-300
-                hover:file:bg-indigo-100 dark:hover:file:bg-indigo-800
-                file:cursor-pointer"
+              className="file-input file-input-bordered w-full"
             />
-            {audioFile && (
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">Selected file: {audioFile.name}</p>
-            )}
+            {audioFile && <p className="mt-2 text-base-content/70">Selected file: {audioFile.name}</p>}
           </div>
 
           {/* Markdown Editor */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Content (Markdown)
+            <label className="label">
+              <span className="label-text">Content (Markdown)</span>
             </label>
             <div className="w-full" data-color-mode="light">
               <MDEditor value={content} onChange={(val) => setContent(val || "")} preview="edit" height={400} />
@@ -253,15 +237,11 @@ ${content}`);
               type="button"
               onClick={handleGenerateMetadata}
               disabled={isGeneratingMetadata || !content || !title}
-              className="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn btn-neutral"
             >
               {isGeneratingMetadata ? "Generating..." : "Create Metadata"}
             </button>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
+            <button type="submit" disabled={isSubmitting} className="btn btn-primary">
               {isSubmitting ? "Creating..." : "Create Post"}
             </button>
           </div>
