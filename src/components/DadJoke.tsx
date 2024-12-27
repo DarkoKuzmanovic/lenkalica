@@ -102,21 +102,6 @@ export default function DadJoke() {
       <div className="card-body">
         <div className="min-h-[100px] flex flex-col items-center justify-center text-center">
           <p className="text-base-content text-xl mb-4 font-medium">{joke.joke}</p>
-          <a
-            href={`https://icanhazdadjoke.com/j/${joke.id}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-primary btn-sm"
-          >
-            View on icanhazdadjoke
-            <svg className="w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-              <path
-                fillRule="evenodd"
-                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </a>
         </div>
       </div>
     </div>

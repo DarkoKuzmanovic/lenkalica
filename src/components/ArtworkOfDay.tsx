@@ -25,27 +25,35 @@ export default function ArtworkOfDay() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isZoomed, setIsZoomed] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     async function fetchArtwork() {
       try {
-        // Check if we have a cached artwork that hasn't expired
+        // Check if we have a cached artwork
         const storedArtworkJson = localStorage.getItem("artworkOfDay");
-        if (storedArtworkJson) {
+        if (storedArtworkJson && !refresh) {
           const storedArtwork: StoredArtwork = JSON.parse(storedArtworkJson);
           const expiryDate = new Date(storedArtwork.expiryDate);
 
-          // If artwork hasn't expired, use it
-          if (expiryDate > new Date()) {
+          // If artwork has expired, remove it from localStorage
+          if (expiryDate <= new Date()) {
+            localStorage.removeItem("artworkOfDay");
+          } else {
+            // If artwork hasn't expired, use it
             setArtwork(storedArtwork.data);
             setLoading(false);
             return;
           }
         }
 
+        // Reset refresh state
+        setRefresh(false);
+
         // Get a random artwork from the public domain collection
+        const randomPage = Math.floor(Math.random() * 100); // Random page between 0-99
         const response = await fetch(
-          "https://api.artic.edu/api/v1/artworks/search?q=&query[term][is_public_domain]=true&limit=1&fields=id,title,artist_display,date_display,medium_display,dimensions,image_id,description,credit_line"
+          `https://api.artic.edu/api/v1/artworks/search?q=&query[term][is_public_domain]=true&limit=1&page=${randomPage}&fields=id,title,artist_display,date_display,medium_display,dimensions,image_id,description,credit_line`
         );
         const data = await response.json();
 
@@ -55,8 +63,7 @@ export default function ArtworkOfDay() {
 
         // Set expiry date to next day at midnight
         const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        tomorrow.setHours(0, 0, 0, 0);
+        tomorrow.setHours(24, 0, 0, 0);
 
         // Store in localStorage
         const storedArtwork: StoredArtwork = {
@@ -75,13 +82,19 @@ export default function ArtworkOfDay() {
     }
 
     fetchArtwork();
-  }, []);
+  }, [refresh]);
 
   // Function to remove HTML tags from text
   const stripHtml = (html: string) => {
     const tmp = document.createElement("div");
     tmp.innerHTML = html;
     return tmp.textContent || tmp.innerText || "";
+  };
+
+  const handleRefresh = () => {
+    localStorage.removeItem("artworkOfDay"); // Clear the stored artwork
+    setLoading(true); // Show loading state while fetching
+    setRefresh(true); // Trigger re-fetch in useEffect
   };
 
   if (loading) {
@@ -147,21 +160,9 @@ export default function ArtworkOfDay() {
         </div>
 
         <div className="card-actions justify-end mt-6">
-          <a
-            href={`https://www.artic.edu/artworks/${artwork.id}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-primary btn-sm"
-          >
-            View on Art Institute of Chicago
-            <svg className="w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-              <path
-                fillRule="evenodd"
-                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </a>
+          <button className="btn btn-secondary btn-sm" onClick={handleRefresh}>
+            Refresh Artwork
+          </button>
         </div>
       </div>
 

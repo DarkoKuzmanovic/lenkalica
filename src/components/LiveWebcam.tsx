@@ -128,25 +128,10 @@ export default function LiveWebcam() {
           <div>
             <div className="flex items-center gap-2 mb-1">
               <h3 className="card-title">{webcam.title}</h3>
-              <span className="badge badge-error badge-sm">LIVE</span>
+              <span className="mb-2 badge badge-error badge-sm">LIVE</span>
             </div>
             <p className="text-sm text-base-content/70">{webcam.location}</p>
           </div>
-          <a
-            href={`https://www.youtube.com/watch?v=${webcam.youtubeId}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-error btn-sm"
-          >
-            Watch on YouTube
-            <svg className="w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-              <path
-                fillRule="evenodd"
-                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </a>
         </div>
       </div>
     </div>

@@ -61,14 +61,6 @@ export default function HomePage() {
           <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold">Word of the Day</h2>
-              <a
-                href="https://www.merriam-webster.com/word-of-the-day"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link link-primary text-sm font-medium"
-              >
-                Visit Merriam-Webster →
-              </a>
             </div>
             <WordOfDay />
           </motion.section>
@@ -77,14 +69,6 @@ export default function HomePage() {
           <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold">NASA Astronomy Picture of the Day</h2>
-              <a
-                href="https://apod.nasa.gov/apod/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link link-primary text-sm font-medium"
-              >
-                Visit APOD Website →
-              </a>
             </div>
             <NasaImageOfDay />
           </motion.section>
@@ -93,14 +77,6 @@ export default function HomePage() {
           <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold">Random Facts</h2>
-              <a
-                href="https://uselessfacts.jsph.pl/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link link-primary text-sm font-medium"
-              >
-                Visit Random Facts API →
-              </a>
             </div>
             <RandomFacts />
           </motion.section>
@@ -109,14 +85,6 @@ export default function HomePage() {
           <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold">Dad Joke of the Day</h2>
-              <a
-                href="https://icanhazdadjoke.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link link-primary text-sm font-medium"
-              >
-                Visit icanhazdadjoke →
-              </a>
             </div>
             <DadJoke />
           </motion.section>
@@ -125,14 +93,6 @@ export default function HomePage() {
           <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold">Artwork of the Day</h2>
-              <a
-                href="https://www.artic.edu/collection"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link link-primary text-sm font-medium"
-              >
-                Visit Art Institute of Chicago →
-              </a>
             </div>
             <ArtworkOfDay />
           </motion.section>

@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAudio } from "@/context/AudioContext";
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
+  const { audioUrl } = useAudio();
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -30,14 +32,16 @@ export default function ScrollToTop() {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 flex justify-center pb-4 pointer-events-none z-50">
+    <div
+      className={`fixed bottom-0 left-0 right-0 flex justify-center pointer-events-none z-50 ${audioUrl ? "mb-6" : ""}`}
+    >
       <AnimatePresence>
         {isVisible && (
           <motion.button
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            whileHover={{ scale: 1.1 }}
+            whileHover={{ scale: 1.2 }}
             whileTap={{ scale: 0.9 }}
             onClick={scrollToTop}
             className="btn btn-circle btn-primary shadow-lg pointer-events-auto"

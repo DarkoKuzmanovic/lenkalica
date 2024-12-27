@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAudio } from "@/context/AudioContext";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function AudioPlayer() {
   const { audioUrl, title, isPlaying, togglePlayPause, clearAudio } = useAudio();
   const audioRef = useRef<HTMLAudioElement>(null);
+  const [isPinned, setIsPinned] = useState(true);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -26,7 +27,9 @@ export default function AudioPlayer() {
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 100, opacity: 0 }}
-        className="fixed bottom-0 left-0 right-0 z-50 bg-base-100 shadow-xl border-t border-base-300 md:relative md:bottom-auto md:left-auto md:right-auto md:card md:card-bordered"
+        className={`${
+          isPinned ? "fixed bottom-0 left-0 right-0 z-50" : "relative"
+        } bg-base-100 shadow-xl border-t border-base-300`}
       >
         <div className="max-w-3xl mx-auto w-full">
           <div className="p-3 md:p-4">
@@ -61,15 +64,31 @@ export default function AudioPlayer() {
                   <p className="text-xs md:text-sm text-base-content/60 badge badge-ghost">Now Playing</p>
                 </div>
               </div>
-              <button
-                onClick={clearAudio}
-                className="btn btn-ghost btn-circle btn-sm hover:btn-error"
-                aria-label="Close audio player"
-              >
-                <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setIsPinned(!isPinned)}
+                  className={`btn btn-ghost btn-circle btn-sm ${isPinned ? "text-primary" : ""}`}
+                  aria-label={isPinned ? "Unpin player" : "Pin player"}
+                >
+                  <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M11.9999 17V21M6.9999 12.6667V6C6.9999 4.89543 7.89533 4 8.9999 4H14.9999C16.1045 4 16.9999 4.89543 16.9999 6V12.6667L18.9135 15.4308C19.3727 16.094 18.898 17 18.0913 17H5.90847C5.1018 17 4.62711 16.094 5.08627 15.4308L6.9999 12.6667Z"
+                    />
+                  </svg>
+                </button>
+                <button
+                  onClick={clearAudio}
+                  className="btn btn-ghost btn-circle btn-sm hover:btn-error"
+                  aria-label="Close audio player"
+                >
+                  <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
             </div>
 
             {/* Audio Element */}

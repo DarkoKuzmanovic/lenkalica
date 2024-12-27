@@ -1,7 +1,24 @@
 {
   "name": "lenkalica",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "private": true,
+  "description": "My Next.js project for my wife Jelena",
+  "author": "Darko Kuzmanovic",
+  "license": "MIT",
+  "homepage": "https://github.com/DarkoKuzmanovic/lenkalica#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DarkoKuzmanovic/lenkalica.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DarkoKuzmanovic/lenkalica/issues"
+  },
+  "keywords": [
+    "nextjs",
+    "react",
+    "blog",
+    "podcast"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
