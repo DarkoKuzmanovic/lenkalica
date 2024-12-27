@@ -1,6 +1,7 @@
 "use client";
 
 import { useAudio } from "@/context/AudioContext";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useState, useEffect } from "react";
 
 type TTSButtonProps = {
