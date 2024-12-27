@@ -11,9 +11,7 @@ export default function Footer() {
             <Link href="/" className="text-xl font-bold text-gray-900 dark:text-white">
               Lenkalica
             </Link>
-            <p className="text-gray-600 dark:text-gray-400 max-w-xs">
-              Exploring interesting stories about culture, history, and geography.
-            </p>
+            <p className="text-gray-600 dark:text-gray-400 max-w-xs">Joys of the world at your fingertips</p>
           </div>
 
           {/* Quick Links */}

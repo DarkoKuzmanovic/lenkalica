@@ -66,19 +66,7 @@ export default function AboutPage() {
             <br />
             Remind me to tell you more in-depth about some cool features of it.
           </p>
-          <h2>Our Approach</h2>
-          <p>
-            We combine thorough research with engaging storytelling to bring you articles that are both informative and
-            enjoyable to read. Each piece is carefully crafted to provide unique insights while remaining accessible to
-            all readers.
-          </p>
-
-          <h2>Join Our Journey</h2>
-          <p>
-            Whether you&apos;re a history enthusiast, culture lover, or simply curious about the world around us, we
-            invite you to join us on this journey of discovery. Through our articles, we hope to inspire a deeper
-            appreciation for the rich tapestry of human experience.
-          </p>
+          <Image src="/images/signature.png" alt="With Love, Your Daka" width={300} height={300} />
         </div>
       </div>
     </div>
