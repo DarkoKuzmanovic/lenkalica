@@ -1,12 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useAudio } from "@/context/AudioContext";
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
-  const { audioUrl } = useAudio();
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -32,34 +29,16 @@ export default function ScrollToTop() {
   };
 
   return (
-    <div
-      className={`fixed bottom-0 left-0 right-0 flex justify-center pointer-events-none z-50 ${audioUrl ? "mb-6" : ""}`}
+    <button
+      onClick={scrollToTop}
+      className={`fixed right-4 bottom-8 btn btn-circle btn-primary ${
+        isVisible ? "opacity-100" : "opacity-0 pointer-events-none"
+      } transition-opacity duration-200`}
+      aria-label="Scroll to top"
     >
-      <AnimatePresence>
-        {isVisible && (
-          <motion.button
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={scrollToTop}
-            className="btn btn-circle btn-primary shadow-lg pointer-events-auto"
-            aria-label="Scroll to top"
-            title="Scroll to top"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-            </svg>
-          </motion.button>
-        )}
-      </AnimatePresence>
-    </div>
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+      </svg>
+    </button>
   );
 }

@@ -18,6 +18,7 @@ export default function NasaImageOfDay() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isZoomed, setIsZoomed] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     async function fetchImage() {
@@ -37,6 +38,11 @@ export default function NasaImageOfDay() {
 
     fetchImage();
   }, []);
+
+  const truncateText = (text: string, maxLength: number = 250) => {
+    if (text.length <= maxLength) return text;
+    return text.slice(0, maxLength).trim() + "...";
+  };
 
   if (loading) {
     return (
@@ -90,7 +96,7 @@ export default function NasaImageOfDay() {
 
   return (
     <div className="card bg-base-100 shadow-xl">
-      <figure className="relative aspect-[16/9] cursor-zoom-in" onClick={() => setIsZoomed(true)}>
+      <figure className="relative aspect-[16/9] cursor-zoom-in group" onClick={() => setIsZoomed(true)}>
         <Image
           src={imageData.url}
           alt={imageData.title}
@@ -98,7 +104,21 @@ export default function NasaImageOfDay() {
           className="object-cover transition-transform duration-300"
           priority
         />
-        <div className="badge badge-lg badge-primary absolute bottom-4 right-4">Click to zoom</div>
+        <button className="btn btn-sm btn-ghost absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M15 3h6v6M14 10l6.1-6.1M9 21H3v-6M10 14l-6.1 6.1" />
+          </svg>
+          <span className="ml-2">Zoom</span>
+        </button>
       </figure>
       <div className="card-body">
         <h3 className="card-title">{imageData.title}</h3>
@@ -108,7 +128,17 @@ export default function NasaImageOfDay() {
             <p className="text-sm text-base-content/60">Published {new Date(imageData.date).toLocaleDateString()}</p>
           </div>
 
-          <p className="text-base-content/70">{imageData.explanation}</p>
+          <div className="text-base-content/70">
+            <p>{isExpanded ? imageData.explanation : truncateText(imageData.explanation)}</p>
+            {imageData.explanation.length > 250 && (
+              <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="btn btn-ghost btn-sm px-0 hover:bg-transparent normal-case text-primary hover:text-primary/80"
+              >
+                {isExpanded ? "← Show less" : "Read more →"}
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -119,15 +149,9 @@ export default function NasaImageOfDay() {
             <div className="relative aspect-[16/9]">
               <Image src={imageData.hdurl} alt={imageData.title} fill className="object-contain" priority />
             </div>
-            <div className="absolute bottom-0 left-4 right-4 bg-base-100/50 backdrop-blur-sm p-4 rounded-t-lg">
-              <h4 className="text-xl font-bold mb-1">{imageData.title}</h4>
-              <p className="text-sm opacity-90">
-                {imageData.copyright ? `© ${imageData.copyright.trim()}` : "NASA Astronomy Picture of the Day"}
-              </p>
-            </div>
             <button
               onClick={() => setIsZoomed(false)}
-              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-white"
             >
               ✕
             </button>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans, Noto_Serif } from "next/font/google";
+import { Noto_Sans, Noto_Serif, Literata } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Header from "@/components/Header";
@@ -13,6 +13,11 @@ import ScrollToTop from "@/components/ScrollToTop";
 const notoSans = Noto_Sans({
   subsets: ["latin"],
   variable: "--font-noto-sans",
+});
+
+const literata = Literata({
+  subsets: ["latin"],
+  variable: "--font-literata",
 });
 
 const notoSerif = Noto_Serif({
@@ -46,7 +51,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning data-theme="light">
       <body
-        className={`${notoSans.variable} ${notoSerif.variable} font-sans antialiased min-h-screen flex flex-col bg-base-100 text-base-content`}
+        className={`${notoSans.variable} ${notoSerif.variable} ${literata.variable} font-sans antialiased min-h-screen flex flex-col bg-base-100 text-base-content`}
       >
         <ThemeProvider>
           <AudioProvider>

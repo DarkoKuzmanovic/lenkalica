@@ -6,7 +6,7 @@ type WordData = {
   word: string;
   pronunciation: string;
   definition: string;
-  example: string;
+  example: string | null;
   date: string;
 };
 
@@ -19,13 +19,14 @@ export default function WordOfDay() {
   const [wordData, setWordData] = useState<WordData | null>(null);
   const [loading, setLoading] = useState(true);
   const [speaking, setSpeaking] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     const fetchWord = async () => {
       try {
         // Check if we have a cached word that hasn't expired
         const storedWordJson = localStorage.getItem("wordOfDay");
-        if (storedWordJson) {
+        if (storedWordJson && !refresh) {
           const storedWord: StoredWord = JSON.parse(storedWordJson);
           const expiryDate = new Date(storedWord.expiryDate);
 
@@ -36,6 +37,9 @@ export default function WordOfDay() {
             return;
           }
         }
+
+        // Reset refresh state
+        setRefresh(false);
 
         // Fetch new word from our API
         const response = await fetch("/api/word-of-day");
@@ -65,7 +69,13 @@ export default function WordOfDay() {
     };
 
     fetchWord();
-  }, []);
+  }, [refresh]);
+
+  const handleRefresh = () => {
+    localStorage.removeItem("wordOfDay"); // Clear the stored word
+    setLoading(true); // Show loading state while fetching
+    setRefresh(true); // Trigger re-fetch in useEffect
+  };
 
   const speak = () => {
     if (!wordData || speaking) return;
@@ -138,10 +148,36 @@ export default function WordOfDay() {
             <p className="text-base-content/70">{wordData.definition}</p>
           </div>
 
-          <div>
-            <h4 className="text-sm font-semibold text-base-content uppercase tracking-wider mb-1">Example</h4>
-            <p className="text-base-content/70 italic">&quot;{wordData.example}&quot;</p>
-          </div>
+          {wordData.example && (
+            <div>
+              <h4 className="text-sm font-semibold text-base-content uppercase tracking-wider mb-1">Example</h4>
+              <p className="text-base-content/70 italic">&quot;{wordData.example}&quot;</p>
+            </div>
+          )}
+        </div>
+
+        <div className="card-actions justify-end">
+          <button
+            className="btn btn-circle btn-ghost hover:rotate-180 transition-transform duration-300"
+            onClick={handleRefresh}
+            title="Get new word"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+              <path d="M3 3v5h5" />
+              <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+              <path d="M16 21h5v-5" />
+            </svg>
+          </button>
         </div>
       </div>
     </div>

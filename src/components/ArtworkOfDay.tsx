@@ -26,6 +26,7 @@ export default function ArtworkOfDay() {
   const [error, setError] = useState<string | null>(null);
   const [isZoomed, setIsZoomed] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     async function fetchArtwork() {
@@ -97,6 +98,11 @@ export default function ArtworkOfDay() {
     setRefresh(true); // Trigger re-fetch in useEffect
   };
 
+  const truncateText = (text: string, maxLength: number = 250) => {
+    if (text.length <= maxLength) return text;
+    return text.slice(0, maxLength).trim() + "...";
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[400px]">
@@ -132,7 +138,7 @@ export default function ArtworkOfDay() {
 
   return (
     <div className="card bg-base-100 shadow-xl">
-      <figure className="relative aspect-[16/9] cursor-zoom-in" onClick={() => setIsZoomed(true)}>
+      <figure className="relative aspect-[16/9] cursor-zoom-in group" onClick={() => setIsZoomed(true)}>
         <Image
           src={imageUrl}
           alt={artwork.title}
@@ -140,7 +146,21 @@ export default function ArtworkOfDay() {
           className="object-cover transition-transform duration-300"
           priority
         />
-        <div className="badge badge-lg badge-primary absolute bottom-4 right-4">Click to zoom</div>
+        <button className="btn btn-sm btn-ghost absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M15 3h6v6M14 10l6.1-6.1M9 21H3v-6M10 14l-6.1 6.1" />
+          </svg>
+          <span className="ml-2">Zoom</span>
+        </button>
       </figure>
       <div className="card-body">
         <h3 className="card-title">{artwork.title}</h3>
@@ -150,7 +170,19 @@ export default function ArtworkOfDay() {
             <p className="text-sm text-base-content/60">{artwork.date_display}</p>
           </div>
 
-          {cleanDescription && <p className="text-base-content/70">{cleanDescription}</p>}
+          {cleanDescription && (
+            <div className="text-base-content/70">
+              <p>{isExpanded ? cleanDescription : truncateText(cleanDescription)}</p>
+              {cleanDescription.length > 250 && (
+                <button
+                  onClick={() => setIsExpanded(!isExpanded)}
+                  className="btn btn-ghost btn-sm px-0 hover:bg-transparent normal-case text-primary hover:text-primary/80"
+                >
+                  {isExpanded ? "← Show less" : "Read more →"}
+                </button>
+              )}
+            </div>
+          )}
 
           <div className="text-sm text-base-content/60 space-y-1">
             <p>{artwork.medium_display}</p>
@@ -160,8 +192,26 @@ export default function ArtworkOfDay() {
         </div>
 
         <div className="card-actions justify-end mt-6">
-          <button className="btn btn-secondary btn-sm" onClick={handleRefresh}>
-            Refresh Artwork
+          <button
+            className="btn btn-circle btn-ghost hover:rotate-180 transition-transform duration-300"
+            onClick={handleRefresh}
+            title="Get new artwork"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+              <path d="M3 3v5h5" />
+              <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+              <path d="M16 21h5v-5" />
+            </svg>
           </button>
         </div>
       </div>
@@ -173,13 +223,9 @@ export default function ArtworkOfDay() {
             <div className="relative aspect-[16/9]">
               <Image src={highResImageUrl} alt={artwork.title} fill className="object-contain" priority />
             </div>
-            <div className="absolute bottom-0 left-4 right-4 bg-base-100/50 backdrop-blur-sm p-4 rounded-t-lg">
-              <h4 className="text-xl font-bold mb-1">{artwork.title}</h4>
-              <p className="text-sm opacity-90">{artwork.artist_display}</p>
-            </div>
             <button
               onClick={() => setIsZoomed(false)}
-              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-white"
             >
               ✕
             </button>

@@ -17,13 +17,14 @@ export default function DadJoke() {
   const [joke, setJoke] = useState<DadJoke | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     const fetchJoke = async () => {
       try {
         // Check if we have a cached joke that hasn't expired
         const storedJokeJson = localStorage.getItem("dadJoke");
-        if (storedJokeJson) {
+        if (storedJokeJson && !refresh) {
           const storedJoke: StoredJoke = JSON.parse(storedJokeJson);
           const expiryDate = new Date(storedJoke.expiryDate);
 
@@ -34,6 +35,9 @@ export default function DadJoke() {
             return;
           }
         }
+
+        // Reset refresh state
+        setRefresh(false);
 
         // Fetch new joke
         const response = await fetch("https://icanhazdadjoke.com/", {
@@ -66,7 +70,13 @@ export default function DadJoke() {
     };
 
     fetchJoke();
-  }, []);
+  }, [refresh]);
+
+  const handleRefresh = () => {
+    localStorage.removeItem("dadJoke"); // Clear the stored joke
+    setLoading(true); // Show loading state while fetching
+    setRefresh(true); // Trigger re-fetch in useEffect
+  };
 
   if (loading) {
     return (
@@ -102,6 +112,29 @@ export default function DadJoke() {
       <div className="card-body">
         <div className="min-h-[100px] flex flex-col items-center justify-center text-center">
           <p className="text-base-content text-xl mb-4 font-medium">{joke.joke}</p>
+        </div>
+        <div className="card-actions justify-end mt-6">
+          <button
+            className="btn btn-circle btn-ghost hover:rotate-180 transition-transform duration-300"
+            onClick={handleRefresh}
+            title="Get new joke"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+              <path d="M3 3v5h5" />
+              <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+              <path d="M16 21h5v-5" />
+            </svg>
+          </button>
         </div>
       </div>
     </div>

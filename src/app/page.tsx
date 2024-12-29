@@ -43,19 +43,14 @@ export default function HomePage() {
   }
 
   return (
-    <motion.main
-      className="flex-1 bg-base-200 min-h-screen"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
+    <motion.main className="flex-1" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Hero Section */}
-        <div className="hero bg-base-100 rounded-box shadow-xl mb-8">
-          <div className="hero-content text-center py-12">
+        <div className="hero mb-8">
+          <div className="hero-content text-center py-12 px-0">
             <div className="max-w-2xl">
-              <h1 className="text-5xl font-bold mb-4 text-primary">Welcome to Lenkalica</h1>
-              <p className="text-xl text-base-content/70">Exploring stories about culture, history, and geography.</p>
+              <h1 className="mb-4">Welcome to Lenkalica</h1>
+              <p className="text-xl">Exploring stories about culture, history, and geography.</p>
             </div>
           </div>
         </div>
@@ -67,11 +62,11 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="card bg-base-100 shadow-xl"
+            className="card shadow-sm hover:shadow-md transition-shadow duration-200"
           >
             <div className="card-body">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="card-title text-2xl font-bold text-primary">Word of the Day</h2>
+                <h2>Word of the Day</h2>
               </div>
               <WordOfDay />
             </div>
@@ -82,11 +77,11 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="card bg-base-100 shadow-xl"
+            className="card shadow-sm hover:shadow-md transition-shadow duration-200"
           >
             <div className="card-body">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="card-title text-2xl font-bold text-primary">NASA Astronomy Picture of the Day</h2>
+                <h2>NASA Astronomy Picture of the Day</h2>
               </div>
               <NasaImageOfDay />
             </div>
@@ -97,11 +92,11 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="card bg-base-100 shadow-xl"
+            className="card shadow-sm hover:shadow-md transition-shadow duration-200"
           >
             <div className="card-body">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="card-title text-2xl font-bold text-primary">Random Facts</h2>
+                <h2>Random Facts</h2>
               </div>
               <RandomFacts />
             </div>
@@ -112,11 +107,11 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="card bg-base-100 shadow-xl"
+            className="card shadow-sm hover:shadow-md transition-shadow duration-200"
           >
             <div className="card-body">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="card-title text-2xl font-bold text-primary">Dad Joke of the Day</h2>
+                <h2>Dad Joke of the Day</h2>
               </div>
               <DadJoke />
             </div>
@@ -127,11 +122,11 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="card bg-base-100 shadow-xl"
+            className="card shadow-sm hover:shadow-md transition-shadow duration-200"
           >
             <div className="card-body">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="card-title text-2xl font-bold text-primary">Artwork of the Day</h2>
+                <h2>Artwork of the Day</h2>
               </div>
               <ArtworkOfDay />
             </div>
@@ -142,11 +137,11 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="card bg-base-100 shadow-xl"
+            className="card shadow-sm hover:shadow-md transition-shadow duration-200"
           >
             <div className="card-body">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="card-title text-2xl font-bold text-primary">Daily Live Webcam from Around the World</h2>
+                <h2>Daily Live Webcam from Around the World</h2>
               </div>
               <LiveWebcam />
             </div>

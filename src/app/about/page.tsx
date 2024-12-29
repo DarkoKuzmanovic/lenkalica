@@ -24,8 +24,8 @@ export default function AboutPage() {
         {/* Header */}
         <div className="text-center mb-16">
           <h1>About Lenkalica</h1>
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-            Hello love! &#129392; I hope this becomes a place where you can find inspiration and joy. &#127968;
+          <p className="mt-4 text-lg">
+            Hello love! &#129392; <br />I hope this becomes a place where you can find inspiration and joy. &#127968;
           </p>
         </div>
 
