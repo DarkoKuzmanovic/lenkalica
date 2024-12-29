@@ -5,6 +5,7 @@ interface StyledLinkProps {
   href: string;
   children: React.ReactNode;
   className?: string;
+  onClick?: () => void;
 }
 
 const linkVariants = {
@@ -19,9 +20,9 @@ const linkVariants = {
   },
 };
 
-export default function StyledLink({ href, children, className = "" }: StyledLinkProps) {
+export default function StyledLink({ href, children, className = "", onClick }: StyledLinkProps) {
   return (
-    <Link href={href} className={`relative group rounded-lg px-4 py-2 ${className}`}>
+    <Link href={href} className={`relative group rounded-lg px-4 py-2 ${className}`} onClick={onClick}>
       <motion.span
         className="relative inline-block text-lg font-medium text-base-content/80 transition-colors duration-200 group-hover:text-primary"
         variants={linkVariants}

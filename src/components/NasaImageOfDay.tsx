@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 
 type NasaImageData = {
   title: string;
@@ -129,7 +130,21 @@ export default function NasaImageOfDay() {
           </div>
 
           <div className="text-base-content/70">
-            <p>{isExpanded ? imageData.explanation : truncateText(imageData.explanation)}</p>
+            <AnimatePresence initial={false}>
+              <motion.div
+                key={isExpanded ? "expanded" : "collapsed"}
+                initial="collapsed"
+                animate="expanded"
+                exit="collapsed"
+                variants={{
+                  expanded: { height: "auto", opacity: 1 },
+                  collapsed: { height: 0, opacity: 0 },
+                }}
+                transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
+              >
+                <p>{isExpanded ? imageData.explanation : truncateText(imageData.explanation)}</p>
+              </motion.div>
+            </AnimatePresence>
             {imageData.explanation.length > 250 && (
               <button
                 onClick={() => setIsExpanded(!isExpanded)}

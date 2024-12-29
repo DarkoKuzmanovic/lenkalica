@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 
 type Artwork = {
   id: number;
@@ -172,7 +173,21 @@ export default function ArtworkOfDay() {
 
           {cleanDescription && (
             <div className="text-base-content/70">
-              <p>{isExpanded ? cleanDescription : truncateText(cleanDescription)}</p>
+              <AnimatePresence initial={false}>
+                <motion.div
+                  key={isExpanded ? "expanded" : "collapsed"}
+                  initial="collapsed"
+                  animate="expanded"
+                  exit="collapsed"
+                  variants={{
+                    expanded: { height: "auto", opacity: 1 },
+                    collapsed: { height: 0, opacity: 0 },
+                  }}
+                  transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
+                >
+                  <p>{isExpanded ? cleanDescription : truncateText(cleanDescription)}</p>
+                </motion.div>
+              </AnimatePresence>
               {cleanDescription.length > 250 && (
                 <button
                   onClick={() => setIsExpanded(!isExpanded)}

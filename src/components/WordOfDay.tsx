@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useMediaQuery } from "react-responsive";
 
 type WordData = {
   word: string;
@@ -20,6 +21,8 @@ export default function WordOfDay() {
   const [loading, setLoading] = useState(true);
   const [speaking, setSpeaking] = useState(false);
   const [refresh, setRefresh] = useState(false);
+
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
   useEffect(() => {
     const fetchWord = async () => {
@@ -97,6 +100,15 @@ export default function WordOfDay() {
 
   if (!wordData) return null;
 
+  // Format date based on screen size
+  const formattedDate = isMobile
+    ? new Date(wordData.date).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      })
+    : wordData.date;
+
   return (
     <div className="card bg-base-100 shadow-xl">
       <div className="card-body">
@@ -139,7 +151,7 @@ export default function WordOfDay() {
             </div>
             <p className="font-mono text-base-content/70">/{wordData.pronunciation}/</p>
           </div>
-          <span className="badge badge-ghost">{wordData.date}</span>
+          <span className="badge badge-ghost text-base px-2">{formattedDate}</span>
         </div>
 
         <div className="space-y-4">

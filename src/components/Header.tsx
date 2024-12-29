@@ -42,6 +42,10 @@ const itemVariants = {
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const handleCloseMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <div className="sticky top-0 z-50 w-full bg-base-100/80 backdrop-blur-sm border-b border-base-300">
       <div className="navbar h-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -127,13 +131,19 @@ export default function Header() {
                   animate="animate"
                 >
                   <motion.div variants={itemVariants}>
-                    <StyledLink href="/articles">Articles</StyledLink>
+                    <StyledLink href="/articles" onClick={handleCloseMenu}>
+                      Articles
+                    </StyledLink>
                   </motion.div>
                   <motion.div variants={itemVariants}>
-                    <StyledLink href="/podcasts">Podcasts</StyledLink>
+                    <StyledLink href="/podcasts" onClick={handleCloseMenu}>
+                      Podcasts
+                    </StyledLink>
                   </motion.div>
                   <motion.div variants={itemVariants}>
-                    <StyledLink href="/about">About</StyledLink>
+                    <StyledLink href="/about" onClick={handleCloseMenu}>
+                      About
+                    </StyledLink>
                   </motion.div>
                 </motion.div>
               </div>
