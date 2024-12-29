@@ -6,6 +6,39 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import StyledLink from "./StyledLink";
 
+const navVariants = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.5,
+      duration: 0.5,
+    },
+  },
+};
+
+const itemVariants = {
+  initial: {
+    opacity: 0,
+    y: 50,
+    rotate: -5,
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    rotate: 0,
+    transition: {
+      type: "spring",
+      stiffness: 200,
+      damping: 15,
+      mass: 1,
+    },
+  },
+};
+
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -33,11 +66,22 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <div className="navbar-end hidden md:flex">
-          <div className="flex items-center space-x-2">
-            <StyledLink href="/articles">Articles</StyledLink>
-            <StyledLink href="/podcasts">Podcasts</StyledLink>
-            <StyledLink href="/about">About</StyledLink>
-          </div>
+          <motion.div
+            className="flex items-center space-x-2"
+            variants={navVariants}
+            initial="initial"
+            animate="animate"
+          >
+            <motion.div variants={itemVariants}>
+              <StyledLink href="/articles">Articles</StyledLink>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <StyledLink href="/podcasts">Podcasts</StyledLink>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <StyledLink href="/about">About</StyledLink>
+            </motion.div>
+          </motion.div>
         </div>
 
         {/* Mobile Menu Button */}
@@ -76,11 +120,22 @@ export default function Header() {
           >
             <div className="bg-base-100 border-b border-base-300 shadow-lg">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
-                <div className="flex flex-col space-y-1 py-4">
-                  <StyledLink href="/articles">Articles</StyledLink>
-                  <StyledLink href="/podcasts">Podcasts</StyledLink>
-                  <StyledLink href="/about">About</StyledLink>
-                </div>
+                <motion.div
+                  className="flex flex-col space-y-1 py-4"
+                  variants={navVariants}
+                  initial="initial"
+                  animate="animate"
+                >
+                  <motion.div variants={itemVariants}>
+                    <StyledLink href="/articles">Articles</StyledLink>
+                  </motion.div>
+                  <motion.div variants={itemVariants}>
+                    <StyledLink href="/podcasts">Podcasts</StyledLink>
+                  </motion.div>
+                  <motion.div variants={itemVariants}>
+                    <StyledLink href="/about">About</StyledLink>
+                  </motion.div>
+                </motion.div>
               </div>
             </div>
           </motion.div>
