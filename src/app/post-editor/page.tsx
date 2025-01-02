@@ -17,8 +17,8 @@ export default function PostEditorPage() {
   const [isGeneratingMetadata, setIsGeneratingMetadata] = useState(false);
 
   useEffect(() => {
-    // Set the next post number (005)
-    setPostNumber("005");
+    // Set initial post number (007)
+    setPostNumber("007");
   }, []);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -163,13 +163,20 @@ ${content}`);
                 type="text"
                 id="postNumber"
                 value={postNumber}
-                onChange={(e) => setPostNumber(e.target.value)}
+                onChange={(e) => {
+                  // Only allow 3 digits
+                  const value = e.target.value.replace(/[^0-9]/g, "");
+                  if (value.length <= 3) {
+                    setPostNumber(value.padStart(3, "0"));
+                  }
+                }}
                 className="input input-bordered w-full"
                 required
                 pattern="\d{3}"
                 title="Please enter a 3-digit number"
-                readOnly
+                placeholder="000"
               />
+              <p className="text-xs text-base-content/70 mt-1">Enter a 3-digit number (e.g., 007)</p>
             </div>
             <div>
               <label htmlFor="title" className="label">
