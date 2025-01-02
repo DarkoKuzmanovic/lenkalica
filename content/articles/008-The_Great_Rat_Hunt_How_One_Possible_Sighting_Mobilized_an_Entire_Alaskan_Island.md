@@ -1,5 +1,5 @@
 ---
-title: The Great Rat Hunt: How One Possible Sighting Mobilized an Entire Alaskan Island
+title: The Great Rat Hunt - How One Possible Sighting Mobilized an Entire Alaskan Island
 date: "2025-01-02"
 category: "Science & Nature"
 tags: [
