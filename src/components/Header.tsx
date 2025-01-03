@@ -80,6 +80,9 @@ export default function Header() {
               <StyledLink href="/articles">Articles</StyledLink>
             </motion.div>
             <motion.div variants={itemVariants}>
+              <StyledLink href="/shorts">Shorts</StyledLink>
+            </motion.div>
+            <motion.div variants={itemVariants}>
               <StyledLink href="/podcasts">Podcasts</StyledLink>
             </motion.div>
             <motion.div variants={itemVariants}>
@@ -133,6 +136,11 @@ export default function Header() {
                   <motion.div variants={itemVariants}>
                     <StyledLink href="/articles" onClick={handleCloseMenu}>
                       Articles
+                    </StyledLink>
+                  </motion.div>
+                  <motion.div variants={itemVariants}>
+                    <StyledLink href="/shorts" onClick={handleCloseMenu}>
+                      Shorts
                     </StyledLink>
                   </motion.div>
                   <motion.div variants={itemVariants}>

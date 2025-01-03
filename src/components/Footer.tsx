@@ -29,6 +29,7 @@ export default function Footer() {
         <div>
           <span className="footer-title">Quick Links</span>
           <FooterLink href="/articles">Articles</FooterLink>
+          <FooterLink href="/shorts">Shorts</FooterLink>
           <FooterLink href="/podcasts">Podcasts</FooterLink>
           <FooterLink href="/about">About</FooterLink>
         </div>

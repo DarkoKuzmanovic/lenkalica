@@ -1,18 +1,32 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
+    domains: [
+      "knowablemagazine.org",
+      "wyofile.com",
+      "d2r55xnwy6nx47.cloudfront.net", // Quanta Magazine
+      "static.quantamagazine.org",
+      "www.artic.edu",
+      "apod.nasa.gov",
+      "www.quantamagazine.org",
+    ],
+    // Add support for remote patterns to be more flexible
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "apod.nasa.gov",
+        hostname: "**.cloudfront.net",
       },
       {
         protocol: "https",
-        hostname: "www.artic.edu",
+        hostname: "**.quantamagazine.org",
       },
       {
         protocol: "https",
-        hostname: "earthobservatory.nasa.gov",
+        hostname: "knowablemagazine.org",
+      },
+      {
+        protocol: "https",
+        hostname: "wyofile.com",
       },
     ],
   },
