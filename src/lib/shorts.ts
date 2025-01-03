@@ -1,7 +1,6 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import * as cheerio from "cheerio";
 
 export type Short = {
   id: string;
@@ -38,14 +37,14 @@ function getRandomFallbackImage(): string {
     const fallbackImages = fs.readdirSync(fallbackImagesDirectory);
     if (fallbackImages.length === 0) {
       console.error("No fallback images found in directory:", fallbackImagesDirectory);
-      return "/fallback-shorts/default.png"; // Ensure you have a default.png
+      return "/fallback-shorts/default.png";
     }
     const randomIndex = Math.floor(Math.random() * fallbackImages.length);
     const fallbackImage = fallbackImages[randomIndex];
     return `/fallback-shorts/${fallbackImage}`;
   } catch (error) {
     console.error("Error accessing fallback images:", error);
-    return "/fallback-shorts/default.png"; // Ensure you have a default.png
+    return "/fallback-shorts/default.png";
   }
 }
 
@@ -63,7 +62,6 @@ function loadImageCache(): Record<string, CacheEntry> {
 
 function saveImageCache(cache: Record<string, CacheEntry>) {
   try {
-    // Ensure the cache directory exists
     const cacheDir = path.dirname(cacheFile);
     if (!fs.existsSync(cacheDir)) {
       fs.mkdirSync(cacheDir, { recursive: true });
@@ -78,11 +76,30 @@ async function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+async function extractMetaTags(html: string): Promise<Record<string, string>> {
+  const metaTags: Record<string, string> = {};
+  const metaRegex = /<meta[^>]+>/g;
+  const propertyRegex = /(?:property|name)=["']([^"']+)["']/;
+  const contentRegex = /content=["']([^"']+)["']/;
+
+  const matches = html.match(metaRegex) || [];
+
+  for (const match of matches) {
+    const propertyMatch = match.match(propertyRegex);
+    const contentMatch = match.match(contentRegex);
+
+    if (propertyMatch && contentMatch) {
+      metaTags[propertyMatch[1]] = contentMatch[1];
+    }
+  }
+
+  return metaTags;
+}
+
 async function scrapeImage(url: string): Promise<string | null> {
   const cache = loadImageCache();
   const cacheEntry = cache[url];
 
-  // Check if we have a valid cached entry
   if (cacheEntry && Date.now() - cacheEntry.timestamp < CACHE_DURATION) {
     return cacheEntry.image;
   }
@@ -100,10 +117,10 @@ async function scrapeImage(url: string): Promise<string | null> {
       }
 
       const html = await response.text();
-      const $ = cheerio.load(html);
+      const metaTags = await extractMetaTags(html);
 
-      // Try OpenGraph image first
-      const ogImage = $('meta[property="og:image"]').attr("content") || $('meta[name="og:image"]').attr("content");
+      // Try OpenGraph image
+      const ogImage = metaTags["og:image"];
       if (ogImage) {
         cache[url] = { image: ogImage, timestamp: Date.now() };
         saveImageCache(cache);
@@ -111,39 +128,18 @@ async function scrapeImage(url: string): Promise<string | null> {
       }
 
       // Try Twitter image
-      const twitterImage = $('meta[name="twitter:image"]').attr("content");
+      const twitterImage = metaTags["twitter:image"];
       if (twitterImage) {
         cache[url] = { image: twitterImage, timestamp: Date.now() };
         saveImageCache(cache);
         return twitterImage;
       }
 
-      // Try first large image in the article
-      const firstLargeImage = $("img[width][height]")
-        .filter((_, img) => {
-          const width = parseInt($(img).attr("width") || "0");
-          const height = parseInt($(img).attr("height") || "0");
-          return width >= 600 && height >= 400;
-        })
-        .first()
-        .attr("src");
-
-      if (firstLargeImage) {
-        // Convert relative URLs to absolute
-        const finalImage = firstLargeImage.startsWith("/")
-          ? `${new URL(url).origin}${firstLargeImage}`
-          : firstLargeImage;
-
-        cache[url] = { image: finalImage, timestamp: Date.now() };
-        saveImageCache(cache);
-        return finalImage;
-      }
-
       return null;
     } catch (error) {
       console.error(`Error scraping image from ${url} (attempt ${attempt + 1}/${MAX_RETRIES}):`, error);
       if (attempt < MAX_RETRIES - 1) {
-        await delay(RETRY_DELAY * (attempt + 1)); // Exponential backoff
+        await delay(RETRY_DELAY * (attempt + 1));
         continue;
       }
     }
@@ -154,7 +150,6 @@ async function scrapeImage(url: string): Promise<string | null> {
 
 export async function getAllShorts(): Promise<Short[]> {
   try {
-    // Read the shorts markdown file
     const fileContents = fs.readFileSync(shortsFile, "utf8");
     const { data } = matter(fileContents) as { data: ShortsFileData };
 
@@ -162,7 +157,6 @@ export async function getAllShorts(): Promise<Short[]> {
       throw new Error("Invalid shorts data format");
     }
 
-    // Convert the data into Short objects with scraped images
     const shorts: Short[] = await Promise.all(
       data.shorts.map(async (short: ShortData, index: number) => {
         if (!short.url || !short.title || !short.date) {
@@ -186,7 +180,6 @@ export async function getAllShorts(): Promise<Short[]> {
       })
     );
 
-    // Filter out any null entries and sort by date
     return shorts.filter((short): short is Short => short !== null).sort((a, b) => (a.date < b.date ? 1 : -1));
   } catch (error) {
     console.error("Error getting all shorts:", error);
