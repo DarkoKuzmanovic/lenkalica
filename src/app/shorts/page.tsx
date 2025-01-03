@@ -1,9 +1,26 @@
 import Image from "next/image";
-import { getAllShorts } from "@/lib/shorts";
 import type { Short } from "@/lib/shorts";
+import { headers } from "next/headers";
+
+async function getShorts(): Promise<Short[]> {
+  // Get the host from headers during SSR
+  const headersList = headers();
+  const host = headersList.get("host") || "localhost:3000";
+  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+
+  const response = await fetch(`${protocol}://${host}/api/shorts`, {
+    next: { revalidate: 3600 }, // Revalidate every hour
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch shorts");
+  }
+
+  return response.json();
+}
 
 export default async function ShortsPage() {
-  const shorts = await getAllShorts();
+  const shorts = await getShorts();
 
   return (
     <div className="py-8">
