@@ -1,26 +1,12 @@
 import Image from "next/image";
 import type { Short } from "@/lib/shorts";
-import { headers } from "next/headers";
+import { getAllShorts } from "@/lib/shorts";
 
-async function getShorts(): Promise<Short[]> {
-  // Get the host from headers during SSR
-  const headersList = headers();
-  const host = headersList.get("host") || "localhost:3000";
-  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
-
-  const response = await fetch(`${protocol}://${host}/api/shorts`, {
-    next: { revalidate: 3600 }, // Revalidate every hour
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch shorts");
-  }
-
-  return response.json();
-}
+// Enable static generation with ISR
+export const revalidate = 3600; // Revalidate every hour
 
 export default async function ShortsPage() {
-  const shorts = await getShorts();
+  const shorts = await getAllShorts();
 
   return (
     <div className="py-8">
