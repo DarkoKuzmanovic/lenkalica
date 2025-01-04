@@ -9,6 +9,12 @@ const nextConfig = {
       "www.artic.edu",
       "apod.nasa.gov",
       "www.quantamagazine.org",
+      "www.earth.com",
+      "phys.org",
+      "www.space.com",
+      "cff2.earth.com",
+      "scx2.b-cdn.net",
+      "cdn.mos.cms.futurecdn.net",
     ],
     // Add support for remote patterns to be more flexible
     remotePatterns: [
@@ -19,6 +25,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "**.quantamagazine.org",
+      },
+      {
+        protocol: "https",
+        hostname: "**.earth.com",
       },
       {
         protocol: "https",
