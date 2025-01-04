@@ -65,7 +65,7 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex flex-col md:flex-row items-center gap-4">
-              <div className="hidden md:flex items-center gap-4 border-l border-base-300 pl-4">
+              <div className="hidden md:flex items-center gap-4 pl-4">
                 <FooterCredits />
               </div>
             </div>
