@@ -17,6 +17,7 @@ const nextConfig = {
       "cdn.mos.cms.futurecdn.net",
       "www.positive.news",
       "scienmag.com",
+      "www.science.org",
       "science.org",
     ],
     // Add support for remote patterns to be more flexible
@@ -40,6 +41,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "wyofile.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**.science.org",
       },
     ],
   },

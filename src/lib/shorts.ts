@@ -104,13 +104,42 @@ async function scrapeImage(url: string): Promise<string | null> {
     return cacheEntry.image;
   }
 
+  // Return fallback immediately for science.org URLs
+  if (url.includes("science.org")) {
+    const fallbackImage = getRandomFallbackImage();
+    cache[url] = { image: fallbackImage, timestamp: Date.now() };
+    saveImageCache(cache);
+    return fallbackImage;
+  }
+
   for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
     try {
       const response = await fetch(url, {
         headers: {
-          "User-Agent": "Mozilla/5.0 (compatible; ShortsScraper/1.0; +https://lenkalica.com)",
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+          Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+          "Accept-Language": "en-US,en;q=0.9",
+          "Cache-Control": "no-cache",
+          Pragma: "no-cache",
+          "Sec-Ch-Ua": '"Not_A Brand";v="8", "Chromium";v="120"',
+          "Sec-Ch-Ua-Mobile": "?0",
+          "Sec-Ch-Ua-Platform": '"Windows"',
+          "Sec-Fetch-Dest": "document",
+          "Sec-Fetch-Mode": "navigate",
+          "Sec-Fetch-Site": "none",
+          "Sec-Fetch-User": "?1",
+          "Upgrade-Insecure-Requests": "1",
         },
       });
+
+      // If we get a 403, use fallback image
+      if (response.status === 403) {
+        const fallbackImage = getRandomFallbackImage();
+        cache[url] = { image: fallbackImage, timestamp: Date.now() };
+        saveImageCache(cache);
+        return fallbackImage;
+      }
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -135,7 +164,11 @@ async function scrapeImage(url: string): Promise<string | null> {
         return twitterImage;
       }
 
-      return null;
+      // If no image found, use fallback
+      const fallbackImage = getRandomFallbackImage();
+      cache[url] = { image: fallbackImage, timestamp: Date.now() };
+      saveImageCache(cache);
+      return fallbackImage;
     } catch (error) {
       console.error(`Error scraping image from ${url} (attempt ${attempt + 1}/${MAX_RETRIES}):`, error);
       if (attempt < MAX_RETRIES - 1) {
@@ -145,7 +178,11 @@ async function scrapeImage(url: string): Promise<string | null> {
     }
   }
 
-  return null;
+  // If all retries failed, use fallback
+  const fallbackImage = getRandomFallbackImage();
+  cache[url] = { image: fallbackImage, timestamp: Date.now() };
+  saveImageCache(cache);
+  return fallbackImage;
 }
 
 export async function getAllShorts(): Promise<Short[]> {

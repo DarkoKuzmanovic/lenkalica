@@ -1,9 +1,36 @@
-import Image from "next/image";
 import type { Short } from "@/lib/shorts";
 import { getAllShorts } from "@/lib/shorts";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
 
 // Enable static generation with ISR
 export const revalidate = 3600; // Revalidate every hour
+
+function ShortCard({ short }: { short: Short }) {
+  return (
+    <a href={short.url} target="_blank" rel="noopener noreferrer" className="group block h-full">
+      <article className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-200 h-full flex flex-col">
+        {/* Image */}
+        <figure className="relative aspect-square">
+          <ImageWithFallback src={short.image} alt={short.title} />
+        </figure>
+
+        {/* Content */}
+        <div className="card-body flex-1 flex flex-col justify-between">
+          <h2 className="card-title text-lg group-hover:text-primary transition-colors duration-200 line-clamp-3">
+            {short.title}
+          </h2>
+          <time className="text-sm text-base-content/60 mt-auto">
+            {new Date(short.date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </time>
+        </div>
+      </article>
+    </a>
+  );
+}
 
 export default async function ShortsPage() {
   const shorts = await getAllShorts();
@@ -25,37 +52,5 @@ export default async function ShortsPage() {
         </div>
       </div>
     </div>
-  );
-}
-
-function ShortCard({ short }: { short: Short }) {
-  return (
-    <a href={short.url} target="_blank" rel="noopener noreferrer" className="group block h-full">
-      <article className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-200 h-full flex flex-col">
-        {/* Image */}
-        <figure className="relative aspect-square">
-          <Image
-            src={short.image}
-            alt={short.title}
-            fill
-            className="object-cover transition-transform duration-200 group-hover:scale-105"
-          />
-        </figure>
-
-        {/* Content */}
-        <div className="card-body flex-1 flex flex-col justify-between">
-          <h2 className="card-title text-lg group-hover:text-primary transition-colors duration-200 line-clamp-3">
-            {short.title}
-          </h2>
-          <time className="text-sm text-base-content/60 mt-auto">
-            {new Date(short.date).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </time>
-        </div>
-      </article>
-    </a>
   );
 }
