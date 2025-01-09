@@ -15,6 +15,9 @@ const nextConfig = {
       "cff2.earth.com",
       "scx2.b-cdn.net",
       "cdn.mos.cms.futurecdn.net",
+      "www.positive.news",
+      "scienmag.com",
+      "science.org",
     ],
     // Add support for remote patterns to be more flexible
     remotePatterns: [
