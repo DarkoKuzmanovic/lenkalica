@@ -23,4 +23,20 @@ shorts:
   - title: "How does a hula hoop master gravity? Mathematicians prove that body shape matters"
     date: "2024-01-04"
     url: "https://phys.org/news/2025-01-hula-hoop-master-gravity-mathematicians.html"
+
+  - title: "Grazing can reduce wildfire risk amid climate change"
+    date: "2024-01-09"
+    url: "https://www.science.org/doi/10.1126/science.adu7471"
+
+  - title: "Kangaroos Adapted to Diverse Diets Amidst Late Pleistocene Climate Shifts"
+    date: "2024-01-09"
+    url: "https://scienmag.com/kangaroos-adapted-to-diverse-diets-amidst-late-pleistocene-climate-shifts/"
+
+  - title: "Morning coffee drinkers have a lower risk of heart disease and death"
+    date: "2024-01-09"
+    url: "https://www.earth.com/news/morning-coffee-drinkers-have-a-lower-risk-of-heart-disease-and-death/"
+
+  - title: "What went right in 2024: the top 25 good news stories of the year"
+    date: "2024-01-09"
+    url: "https://www.positive.news/society/what-went-right-in-2024-the-good-news-that-mattered/"
 ---
