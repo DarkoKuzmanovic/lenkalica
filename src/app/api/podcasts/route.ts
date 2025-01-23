@@ -7,20 +7,21 @@ export async function GET(request: NextRequest) {
   const limit = parseInt(searchParams.get("limit") || "6", 10);
 
   try {
-    const articles = await getAllArticles();
+    const allArticles = await getAllArticles();
+    const articlesWithAudio = allArticles.filter((article) => article.audioFile);
 
     const startIndex = (page - 1) * limit;
     const endIndex = startIndex + limit;
-    const paginatedArticles = articles.slice(startIndex, endIndex);
+    const paginatedPodcasts = articlesWithAudio.slice(startIndex, endIndex);
 
-    const totalPages = Math.ceil(articles.length / limit);
+    const totalPages = Math.ceil(articlesWithAudio.length / limit);
 
     return NextResponse.json({
-      data: paginatedArticles,
+      data: paginatedPodcasts,
       currentPage: page,
       totalPages,
     });
   } catch (error) {
-    return NextResponse.json({ error: "Failed to fetch articles" }, { status: 500 });
+    return NextResponse.json({ error: "Failed to fetch podcasts" }, { status: 500 });
   }
 }

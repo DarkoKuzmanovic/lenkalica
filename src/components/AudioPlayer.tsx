@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useAudio } from "@/context/AudioContext";
-import { motion, AnimatePresence } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { useAudioContext } from "@/context/AudioContext";
 
 export default function AudioPlayer() {
-  const { audioUrl, title, isPlaying, togglePlayPause, clearAudio } = useAudio();
+  const { currentAudio: audioUrl, currentTitle: title, isPlaying, stopAudio } = useAudioContext();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPinned, setIsPinned] = useState(true);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -17,93 +18,114 @@ export default function AudioPlayer() {
         audioRef.current.pause();
       }
     }
-  }, [isPlaying]);
+  }, [isPlaying, audioUrl]);
+
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      setCurrentTime(audioRef.current.currentTime);
+    }
+  };
+
+  const handleLoadedMetadata = () => {
+    if (audioRef.current) {
+      setDuration(audioRef.current.duration);
+    }
+  };
+
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const time = Number(e.target.value);
+    if (audioRef.current) {
+      audioRef.current.currentTime = time;
+      setCurrentTime(time);
+    }
+  };
+
+  const formatTime = (time: number) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  };
 
   if (!audioUrl) return null;
 
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: 100, opacity: 0 }}
-        className={`${
-          isPinned ? "fixed bottom-0 left-0 right-0 z-50" : "relative"
-        } bg-base-100 shadow-xl border-t border-base-300`}
-      >
-        <div className="max-w-3xl mx-auto w-full">
-          <div className="p-3 md:p-4">
-            {/* Controls and Title */}
-            <div className="flex items-center justify-between gap-3 mb-2 md:mb-3">
-              <div className="flex items-center gap-3 min-w-0 flex-1">
-                <button
-                  onClick={togglePlayPause}
-                  className="btn btn-circle btn-primary btn-sm md:btn-md"
-                  aria-label={isPlaying ? "Pause" : "Play"}
-                >
-                  {isPlaying ? (
-                    <svg className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path
-                        fillRule="evenodd"
-                        d="M6.75 5.25a.75.75 0 01.75-.75H9a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H7.5a.75.75 0 01-.75-.75V5.25zm7 0a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75h-1.5a.75.75 0 01-.75-.75V5.25z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  ) : (
-                    <svg className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path
-                        fillRule="evenodd"
-                        d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  )}
-                </button>
-                <div className="min-w-0 flex-1">
-                  <h3 className="text-sm md:text-base font-medium text-base-content truncate">{title}</h3>
-                  <p className="text-xs md:text-sm text-base-content/60 badge badge-ghost">Now Playing</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setIsPinned(!isPinned)}
-                  className={`btn btn-ghost btn-circle btn-sm ${isPinned ? "text-primary" : ""}`}
-                  aria-label={isPinned ? "Unpin player" : "Pin player"}
-                >
-                  <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M11.9999 17V21M6.9999 12.6667V6C6.9999 4.89543 7.89533 4 8.9999 4H14.9999C16.1045 4 16.9999 4.89543 16.9999 6V12.6667L18.9135 15.4308C19.3727 16.094 18.898 17 18.0913 17H5.90847C5.1018 17 4.62711 16.094 5.08627 15.4308L6.9999 12.6667Z"
-                    />
-                  </svg>
-                </button>
-                <button
-                  onClick={clearAudio}
-                  className="btn btn-ghost btn-circle btn-sm hover:btn-error"
-                  aria-label="Close audio player"
-                >
-                  <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
+    <div
+      className={`fixed transition-all duration-300 ${
+        isPinned ? "bottom-0" : "-bottom-20"
+      } left-0 right-0 bg-base-200 shadow-lg z-50`}
+      onMouseEnter={() => setIsPinned(true)}
+      onMouseLeave={() => setIsPinned(true)}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="py-4">
+          <div className="flex items-center gap-4">
+            {/* Title */}
+            <div className="flex-1">
+              <h3 className="text-base font-medium truncate">{title}</h3>
             </div>
 
-            {/* Audio Element */}
-            <div className="w-full join">
-              <audio
-                ref={audioRef}
-                src={audioUrl}
-                className="w-full h-8 md:h-10 join-item"
-                controls
-                onEnded={clearAudio}
-              />
+            {/* Controls */}
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => {
+                  if (audioRef.current) {
+                    if (audioRef.current.paused) {
+                      audioRef.current.play();
+                    } else {
+                      audioRef.current.pause();
+                    }
+                  }
+                }}
+                className="btn btn-circle btn-primary"
+              >
+                {audioRef.current?.paused ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                    <path
+                      fillRule="evenodd"
+                      d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                    <path
+                      fillRule="evenodd"
+                      d="M6.75 5.25a.75.75 0 01.75-.75H9a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H7.5a.75.75 0 01-.75-.75V5.25zm7.5 0A.75.75 0 0115 4.5h1.5a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H15a.75.75 0 01-.75-.75V5.25z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                )}
+              </button>
+
+              {/* Progress Bar */}
+              <div className="flex-1 flex items-center gap-2">
+                <span className="text-sm">{formatTime(currentTime)}</span>
+                <input
+                  type="range"
+                  min="0"
+                  max={duration || 0}
+                  value={currentTime}
+                  onChange={handleSeek}
+                  className="range range-primary range-sm flex-1"
+                />
+                <span className="text-sm">{formatTime(duration)}</span>
+              </div>
+
+              <button onClick={stopAudio} className="btn btn-circle btn-ghost">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                  <path
+                    fillRule="evenodd"
+                    d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
-      </motion.div>
-    </AnimatePresence>
+      </div>
+
+      <audio ref={audioRef} src={audioUrl} onTimeUpdate={handleTimeUpdate} onLoadedMetadata={handleLoadedMetadata} />
+    </div>
   );
 }

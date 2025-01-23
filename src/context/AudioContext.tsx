@@ -1,59 +1,53 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState } from "react";
 
-type AudioContextType = {
-  audioUrl: string | null;
-  title: string | null;
+interface AudioContextType {
+  playAudio: (url: string, title: string) => void;
   isPlaying: boolean;
-  setAudio: (url: string, title: string) => void;
-  clearAudio: () => void;
-  togglePlayPause: () => void;
-};
+  currentTitle: string | null;
+  currentAudio: string | null;
+  stopAudio: () => void;
+}
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
 
-export function AudioProvider({ children }: { children: ReactNode }) {
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
-  const [title, setTitle] = useState<string | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+export function useAudioContext() {
+  const context = useContext(AudioContext);
+  if (context === undefined) {
+    throw new Error("useAudioContext must be used within an AudioProvider");
+  }
+  return context;
+}
 
-  const setAudio = (url: string, title: string) => {
-    setAudioUrl(url);
-    setTitle(title);
+export function AudioProvider({ children }: { children: React.ReactNode }) {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentAudio, setCurrentAudio] = useState<string | null>(null);
+  const [currentTitle, setCurrentTitle] = useState<string | null>(null);
+
+  const playAudio = (url: string, title: string) => {
+    setCurrentAudio(url);
+    setCurrentTitle(title);
     setIsPlaying(true);
   };
 
-  const clearAudio = () => {
-    setAudioUrl(null);
-    setTitle(null);
+  const stopAudio = () => {
+    setCurrentAudio(null);
+    setCurrentTitle(null);
     setIsPlaying(false);
-  };
-
-  const togglePlayPause = () => {
-    setIsPlaying(!isPlaying);
   };
 
   return (
     <AudioContext.Provider
       value={{
-        audioUrl,
-        title,
+        playAudio,
         isPlaying,
-        setAudio,
-        clearAudio,
-        togglePlayPause,
+        currentTitle,
+        currentAudio,
+        stopAudio,
       }}
     >
       {children}
     </AudioContext.Provider>
   );
-}
-
-export function useAudio() {
-  const context = useContext(AudioContext);
-  if (context === undefined) {
-    throw new Error("useAudio must be used within an AudioProvider");
-  }
-  return context;
 }
