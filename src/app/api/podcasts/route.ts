@@ -21,7 +21,8 @@ export async function GET(request: NextRequest) {
       currentPage: page,
       totalPages,
     });
-  } catch (error) {
+  } catch (err) {
+    console.error("Failed to fetch podcasts:", err);
     return NextResponse.json({ error: "Failed to fetch podcasts" }, { status: 500 });
   }
 }

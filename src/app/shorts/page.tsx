@@ -1,7 +1,6 @@
 "use client";
 
 import type { Short } from "@/lib/shorts";
-import { getAllShorts } from "@/lib/shorts";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { useEffect, useState } from "react";
 import ShortsCard from "@/components/ShortsCard";

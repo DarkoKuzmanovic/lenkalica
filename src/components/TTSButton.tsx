@@ -11,7 +11,6 @@ interface TTSButtonProps {
 export default function TTSButton({ text, title }: TTSButtonProps) {
   const { playAudio } = useAudioContext();
   const [isGenerating, setIsGenerating] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
 
   const handleTTS = async () => {
     try {
@@ -32,7 +31,6 @@ export default function TTSButton({ text, title }: TTSButtonProps) {
       const audioUrl = URL.createObjectURL(audioBlob);
 
       playAudio(audioUrl, title);
-      setIsPlaying(true);
     } catch (error) {
       console.error("Error generating TTS:", error);
     } finally {

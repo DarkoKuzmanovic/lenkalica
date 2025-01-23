@@ -34,7 +34,8 @@ export async function GET(request: NextRequest) {
       currentPage: page,
       totalPages,
     });
-  } catch (error) {
+  } catch (err) {
+    console.error("Failed to fetch shorts:", err);
     return NextResponse.json({ error: "Failed to fetch shorts" }, { status: 500 });
   }
 }
