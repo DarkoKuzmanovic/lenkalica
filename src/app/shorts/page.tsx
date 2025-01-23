@@ -1,7 +1,6 @@
 "use client";
 
 import type { Short } from "@/lib/shorts";
-import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { useEffect, useState } from "react";
 import ShortsCard from "@/components/ShortsCard";
 import { motion } from "framer-motion";
@@ -27,33 +26,6 @@ const item = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0 },
 };
-
-function ShortCard({ short }: { short: Short }) {
-  return (
-    <a href={short.url} target="_blank" rel="noopener noreferrer" className="group block h-full">
-      <article className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-200 h-full flex flex-col">
-        {/* Image */}
-        <figure className="relative aspect-square">
-          <ImageWithFallback src={short.image} alt={short.title} />
-        </figure>
-
-        {/* Content */}
-        <div className="card-body flex-1 flex flex-col justify-between">
-          <h2 className="card-title text-lg group-hover:text-primary transition-colors duration-200 line-clamp-3">
-            {short.title}
-          </h2>
-          <time className="text-sm text-base-content/60 mt-auto">
-            {new Date(short.date).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </time>
-        </div>
-      </article>
-    </a>
-  );
-}
 
 export default function ShortsPage() {
   const [shorts, setShorts] = useState<Short[]>([]);

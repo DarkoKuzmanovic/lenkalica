@@ -1,20 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAllShorts } from "@/lib/shorts";
 
-interface Short {
-  id: string;
-  title: string;
-  date: string;
-  url: string;
-  image: string;
-}
-
-interface PaginatedResponse {
-  data: Short[];
-  currentPage: number;
-  totalPages: number;
-}
-
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const page = parseInt(searchParams.get("page") || "1", 10);
