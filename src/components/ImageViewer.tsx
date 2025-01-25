@@ -92,14 +92,15 @@ export default function ImageViewer({ comics, currentIndex, isOpen, onClose, onN
             </button>
 
             {/* Navigation buttons */}
-            <div className="absolute inset-y-0 left-4 flex items-center">
+            <div className="absolute inset-y-0 left-4 flex items-center z-20">
               {currentIndex > 0 && (
                 <button
                   onClick={(e) => {
+                    e.preventDefault();
                     e.stopPropagation();
                     onNavigate(currentIndex - 1);
                   }}
-                  className="bg-base-100 hover:bg-base-200 p-3 rounded-full transition-colors"
+                  className="bg-base-100 hover:bg-base-200 p-3 rounded-full transition-colors cursor-pointer w-12 h-12 flex items-center justify-center"
                   aria-label="Previous image"
                 >
                   <svg
@@ -115,14 +116,15 @@ export default function ImageViewer({ comics, currentIndex, isOpen, onClose, onN
               )}
             </div>
 
-            <div className="absolute inset-y-0 right-4 flex items-center">
+            <div className="absolute inset-y-0 right-4 flex items-center z-20">
               {currentIndex < comics.length - 1 && (
                 <button
                   onClick={(e) => {
+                    e.preventDefault();
                     e.stopPropagation();
                     onNavigate(currentIndex + 1);
                   }}
-                  className="bg-base-100 hover:bg-base-200 p-3 rounded-full transition-colors"
+                  className="bg-base-100 hover:bg-base-200 p-3 rounded-full transition-colors cursor-pointer w-12 h-12 flex items-center justify-center"
                   aria-label="Next image"
                 >
                   <svg
@@ -145,7 +147,7 @@ export default function ImageViewer({ comics, currentIndex, isOpen, onClose, onN
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="relative aspect-[4/3] w-full"
+              className="relative aspect-[4/3] w-full z-10"
             >
               <Image
                 src={comics[currentIndex].image}

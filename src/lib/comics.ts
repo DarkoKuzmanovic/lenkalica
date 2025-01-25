@@ -4,6 +4,7 @@ import path from "path";
 export interface Comic {
   id: string;
   image: string;
+  timestamp: number;
 }
 
 const comicsDirectory = path.join(process.cwd(), "public/images/comics");
@@ -19,10 +20,16 @@ export async function getAllComics(): Promise<Comic[]> {
 
   const comics = fileNames
     .filter((fileName) => /\.(jpg|jpeg|png|gif|webp)$/i.test(fileName))
-    .map((fileName) => ({
-      id: fileName.replace(/\.[^/.]+$/, ""), // Remove file extension
-      image: `/images/comics/${fileName}`,
-    }));
+    .map((fileName) => {
+      const filePath = path.join(comicsDirectory, fileName);
+      const stats = fs.statSync(filePath);
+      return {
+        id: fileName.replace(/\.[^/.]+$/, ""), // Remove file extension
+        image: `/images/comics/${fileName}`,
+        timestamp: stats.mtime.getTime(), // Get the modification time
+      };
+    });
 
-  return comics.sort((a, b) => a.id.localeCompare(b.id));
+  // Sort by timestamp, newest first
+  return comics.sort((a, b) => b.timestamp - a.timestamp);
 }
