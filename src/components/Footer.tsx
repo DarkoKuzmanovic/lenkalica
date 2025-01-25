@@ -30,6 +30,7 @@ export default function Footer() {
           <span className="footer-title">Quick Links</span>
           <FooterLink href="/articles">Articles</FooterLink>
           <FooterLink href="/shorts">Shorts</FooterLink>
+          <FooterLink href="/comics">Comics</FooterLink>
           <FooterLink href="/podcasts">Podcasts</FooterLink>
           <FooterLink href="/about">About</FooterLink>
         </div>
