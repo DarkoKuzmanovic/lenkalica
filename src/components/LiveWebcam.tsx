@@ -28,6 +28,12 @@ const WEBCAMS: Webcam[] = [
     location: "New York, USA",
     youtubeId: "rnXIjl_Rzy4",
   },
+  {
+    id: "holywood-beach",
+    title: "Hollywood Beach Broadwalk",
+    location: "Hollywood, USA",
+    youtubeId: "cmkAbDUEoyA",
+  },
 ];
 
 type StoredWebcam = {

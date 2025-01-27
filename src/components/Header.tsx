@@ -13,9 +13,9 @@ const navVariants = {
   animate: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.5,
-      duration: 0.5,
+      staggerChildren: 0.1,
+      delayChildren: 0.3,
+      duration: 0.4,
     },
   },
 };
@@ -23,18 +23,15 @@ const navVariants = {
 const itemVariants = {
   initial: {
     opacity: 0,
-    y: 50,
-    rotate: -5,
+    y: 20,
   },
   animate: {
     opacity: 1,
     y: 0,
-    rotate: 0,
     transition: {
       type: "spring",
-      stiffness: 200,
-      damping: 15,
-      mass: 1,
+      stiffness: 300,
+      damping: 20,
     },
   },
 };
@@ -76,21 +73,27 @@ export default function Header() {
             initial="initial"
             animate="animate"
           >
-            <motion.div variants={itemVariants}>
-              <StyledLink href="/articles">Articles</StyledLink>
-            </motion.div>
-            <motion.div variants={itemVariants}>
-              <StyledLink href="/shorts">Shorts</StyledLink>
-            </motion.div>
-            <motion.div variants={itemVariants}>
-              <StyledLink href="/comics">Comics</StyledLink>
-            </motion.div>
-            <motion.div variants={itemVariants}>
-              <StyledLink href="/podcasts">Podcasts</StyledLink>
-            </motion.div>
-            <motion.div variants={itemVariants}>
-              <StyledLink href="/about">About</StyledLink>
-            </motion.div>
+            {[
+              { href: "/articles", label: "Articles" },
+              { href: "/shorts", label: "Shorts" },
+              { href: "/comics", label: "Comics" },
+              { href: "/podcasts", label: "Podcasts" },
+              { href: "/about", label: "About" },
+            ].map((link) => (
+              <motion.div key={link.href} variants={itemVariants}>
+                <StyledLink href={link.href}>
+                  <span className="relative inline-block">
+                    {link.label}
+                    <motion.span
+                      className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"
+                      initial={{ scaleX: 0 }}
+                      whileHover={{ scaleX: 1 }}
+                      transition={{ duration: 0.2 }}
+                    />
+                  </span>
+                </StyledLink>
+              </motion.div>
+            ))}
           </motion.div>
         </div>
 
@@ -136,31 +139,27 @@ export default function Header() {
                   initial="initial"
                   animate="animate"
                 >
-                  <motion.div variants={itemVariants}>
-                    <StyledLink href="/articles" onClick={handleCloseMenu}>
-                      Articles
-                    </StyledLink>
-                  </motion.div>
-                  <motion.div variants={itemVariants}>
-                    <StyledLink href="/shorts" onClick={handleCloseMenu}>
-                      Shorts
-                    </StyledLink>
-                  </motion.div>
-                  <motion.div variants={itemVariants}>
-                    <StyledLink href="/podcasts" onClick={handleCloseMenu}>
-                      Podcasts
-                    </StyledLink>
-                  </motion.div>
-                  <motion.div variants={itemVariants}>
-                    <StyledLink href="/about" onClick={handleCloseMenu}>
-                      About
-                    </StyledLink>
-                  </motion.div>
-                  <motion.div variants={itemVariants}>
-                    <StyledLink href="/comics" onClick={handleCloseMenu}>
-                      Comics
-                    </StyledLink>
-                  </motion.div>
+                  {[
+                    { href: "/articles", label: "Articles" },
+                    { href: "/shorts", label: "Shorts" },
+                    { href: "/comics", label: "Comics" },
+                    { href: "/podcasts", label: "Podcasts" },
+                    { href: "/about", label: "About" },
+                  ].map((link) => (
+                    <motion.div key={link.href} variants={itemVariants}>
+                      <StyledLink href={link.href} onClick={handleCloseMenu}>
+                        <span className="relative inline-block">
+                          {link.label}
+                          <motion.span
+                            className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"
+                            initial={{ scaleX: 0 }}
+                            whileHover={{ scaleX: 1 }}
+                            transition={{ duration: 0.2 }}
+                          />
+                        </span>
+                      </StyledLink>
+                    </motion.div>
+                  ))}
                 </motion.div>
               </div>
             </div>
