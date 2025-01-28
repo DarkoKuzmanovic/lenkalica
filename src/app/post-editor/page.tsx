@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import dynamic from "next/dynamic";
-
-const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
+import { marked } from "marked";
 
 export default function PostEditorPage() {
   const [postNumber, setPostNumber] = useState("");
@@ -15,6 +13,7 @@ export default function PostEditorPage() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGeneratingMetadata, setIsGeneratingMetadata] = useState(false);
+  const [isPreviewMode, setIsPreviewMode] = useState(false);
 
   useEffect(() => {
     // Set initial post number (007)
@@ -134,10 +133,6 @@ ${content}`);
       setAudioFile(null);
       setImagePreview(null);
 
-      // Increment post number
-      const nextNumber = String(Number(postNumber) + 1).padStart(3, "0");
-      setPostNumber(nextNumber);
-
       alert("Post created successfully!");
     } catch (error) {
       console.error("Error creating post:", error);
@@ -148,7 +143,7 @@ ${content}`);
   };
 
   return (
-    <div className="py-8" data-color-mode="light">
+    <div className="py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-bold mb-8 text-base-content">Create New Post</h1>
 
@@ -163,20 +158,11 @@ ${content}`);
                 type="text"
                 id="postNumber"
                 value={postNumber}
-                onChange={(e) => {
-                  // Only allow 3 digits
-                  const value = e.target.value.replace(/[^0-9]/g, "");
-                  if (value.length <= 3) {
-                    setPostNumber(value.padStart(3, "0"));
-                  }
-                }}
+                onChange={(e) => setPostNumber(e.target.value)}
                 className="input input-bordered w-full"
+                placeholder="Enter post number"
                 required
-                pattern="\d{3}"
-                title="Please enter a 3-digit number"
-                placeholder="000"
               />
-              <p className="text-xs text-base-content/70 mt-1">Enter a 3-digit number (e.g., 007)</p>
             </div>
             <div>
               <label htmlFor="title" className="label">
@@ -228,13 +214,32 @@ ${content}`);
             {audioFile && <p className="mt-2 text-base-content/70">Selected file: {audioFile.name}</p>}
           </div>
 
-          {/* Markdown Editor */}
+          {/* Simple Markdown Editor */}
           <div>
-            <label className="label">
-              <span className="label-text">Content (Markdown)</span>
-            </label>
-            <div className="w-full" data-color-mode="light">
-              <MDEditor value={content} onChange={(val) => setContent(val || "")} preview="edit" height={400} />
+            <div className="flex justify-between items-center mb-2">
+              <label className="label">
+                <span className="label-text">Content</span>
+              </label>
+              <button type="button" onClick={() => setIsPreviewMode(!isPreviewMode)} className="btn btn-sm btn-ghost">
+                {isPreviewMode ? "Edit" : "Preview"}
+              </button>
+            </div>
+
+            <div className="w-full rounded-lg border border-base-300 overflow-hidden">
+              {isPreviewMode ? (
+                <div
+                  className="prose prose-sm max-w-none p-4 min-h-[400px] bg-base-100"
+                  dangerouslySetInnerHTML={{ __html: marked(content) }}
+                />
+              ) : (
+                <textarea
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  className="w-full min-h-[400px] p-4 bg-base-100 text-base-content font-mono text-sm resize-none focus:outline-none"
+                  placeholder="Write your content here..."
+                  spellCheck={false}
+                />
+              )}
             </div>
           </div>
 
