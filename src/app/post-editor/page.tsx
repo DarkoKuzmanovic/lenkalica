@@ -3,104 +3,8 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { marked } from "marked";
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import TiptapImage from "@tiptap/extension-image";
-import TiptapUnderline from "@tiptap/extension-underline";
-import {
-  PhotoIcon,
-  BoltIcon as BoldIcon,
-  DocumentTextIcon as ItalicIcon,
-  MinusIcon as UnderlineIcon,
-  ListBulletIcon,
-  QueueListIcon as ListNumberedIcon,
-  HashtagIcon as Heading1Icon,
-  HashtagIcon as Heading2Icon,
-  CodeBracketIcon as CodeIcon,
-  ChatBubbleLeftRightIcon as QuoteIcon,
-  MinusIcon as DividerHorizontalIcon,
-} from "@heroicons/react/24/outline";
-
-const MenuBar = ({ editor }: { editor: any }) => {
-  if (!editor) {
-    return null;
-  }
-
-  const insertMarkdown = (markdown: string) => {
-    const { from, to } = editor.state.selection;
-    const text = editor.state.doc.textBetween(from, to);
-    editor
-      .chain()
-      .focus()
-      .insertContent(text ? `${markdown}${text}${markdown}` : markdown)
-      .run();
-  };
-
-  return (
-    <div className="border-b border-base-300 p-2 flex flex-wrap gap-1 bg-base-200">
-      <button onClick={() => insertMarkdown("**")} className="btn btn-sm btn-ghost" title="Bold">
-        <BoldIcon className="h-4 w-4" />
-      </button>
-      <button onClick={() => insertMarkdown("*")} className="btn btn-sm btn-ghost" title="Italic">
-        <ItalicIcon className="h-4 w-4" />
-      </button>
-      <div className="divider divider-horizontal mx-1"></div>
-      <button
-        onClick={() => editor.chain().focus().insertContent("\n# ").run()}
-        className="btn btn-sm btn-ghost"
-        title="Heading 1"
-      >
-        <Heading1Icon className="h-4 w-4" />
-        <span className="text-xs">1</span>
-      </button>
-      <button
-        onClick={() => editor.chain().focus().insertContent("\n## ").run()}
-        className="btn btn-sm btn-ghost"
-        title="Heading 2"
-      >
-        <Heading2Icon className="h-4 w-4" />
-        <span className="text-xs">2</span>
-      </button>
-      <div className="divider divider-horizontal mx-1"></div>
-      <button
-        onClick={() => editor.chain().focus().insertContent("\n- ").run()}
-        className="btn btn-sm btn-ghost"
-        title="Bullet List"
-      >
-        <ListBulletIcon className="h-4 w-4" />
-      </button>
-      <button
-        onClick={() => editor.chain().focus().insertContent("\n1. ").run()}
-        className="btn btn-sm btn-ghost"
-        title="Numbered List"
-      >
-        <ListNumberedIcon className="h-4 w-4" />
-      </button>
-      <div className="divider divider-horizontal mx-1"></div>
-      <button
-        onClick={() => editor.chain().focus().insertContent("\n```\n\n```\n").run()}
-        className="btn btn-sm btn-ghost"
-        title="Code Block"
-      >
-        <CodeIcon className="h-4 w-4" />
-      </button>
-      <button
-        onClick={() => editor.chain().focus().insertContent("\n> ").run()}
-        className="btn btn-sm btn-ghost"
-        title="Quote"
-      >
-        <QuoteIcon className="h-4 w-4" />
-      </button>
-      <button
-        onClick={() => editor.chain().focus().insertContent("\n---\n").run()}
-        className="btn btn-sm btn-ghost"
-        title="Horizontal Rule"
-      >
-        <DividerHorizontalIcon className="h-4 w-4" />
-      </button>
-    </div>
-  );
-};
+import MDEditor from "@uiw/react-md-editor";
+import { PhotoIcon } from "@heroicons/react/24/outline";
 
 export default function PostEditorPage() {
   const [postNumber, setPostNumber] = useState("");
@@ -113,43 +17,8 @@ export default function PostEditorPage() {
   const [isGeneratingMetadata, setIsGeneratingMetadata] = useState(false);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
 
-  const convertMarkdownToHTML = (markdown: string) => {
-    return marked(markdown, { headerIds: false, mangle: false });
-  };
-
-  const editor = useEditor({
-    extensions: [
-      StarterKit.configure({
-        heading: false,
-        bold: false,
-        italic: false,
-        bulletList: false,
-        orderedList: false,
-        code: false,
-        codeBlock: false,
-        blockquote: false,
-        horizontalRule: false,
-        strike: false,
-        dropcursor: false,
-        gapcursor: false,
-        text: {},
-        paragraph: {},
-        doc: {},
-      }),
-    ],
-    content: "",
-    editorProps: {
-      attributes: {
-        class: "font-mono text-base leading-relaxed",
-      },
-    },
-    onUpdate: ({ editor }) => {
-      setContent(editor.getText());
-    },
-  });
-
   useEffect(() => {
-    // Set initial post number (007)
+    // Set initial post number
     setPostNumber("007");
   }, []);
 
@@ -178,7 +47,9 @@ export default function PostEditorPage() {
       if (!response.ok) throw new Error("Failed to upload image");
 
       const { imageUrl } = await response.json();
-      editor?.chain().focus().setImage({ src: imageUrl }).run();
+      // Insert markdown image syntax at cursor position
+      const imageMarkdown = `![](${imageUrl})`;
+      setContent((prev) => prev + "\n" + imageMarkdown + "\n");
     } catch (error) {
       console.error("Error uploading image:", error);
       alert("Failed to upload image");
@@ -215,7 +86,7 @@ export default function PostEditorPage() {
         },
         body: JSON.stringify({
           title,
-          content: editor?.getText() || content, // Get plain text for metadata generation
+          content,
         }),
       });
 
@@ -235,8 +106,8 @@ author: "${metadata.author}"
 
 `;
 
-      // Set the content with metadata and preserve the existing content
-      editor?.commands.setContent(metadataContent + (editor.getHTML() || content));
+      // Set the content with metadata
+      setContent(metadataContent + content);
     } catch (error) {
       console.error("Error generating metadata:", error);
       alert("Failed to generate metadata. Please try again.");
@@ -257,7 +128,7 @@ author: "${metadata.author}"
 
       const formData = new FormData();
       formData.append("markdownFileName", markdownFileName);
-      formData.append("content", editor?.getHTML() || content);
+      formData.append("content", content);
 
       if (coverImage) {
         formData.append("coverImage", coverImage);
@@ -284,7 +155,6 @@ author: "${metadata.author}"
       setCoverImage(null);
       setAudioFile(null);
       setImagePreview(null);
-      editor?.commands.setContent("");
 
       alert("Post created successfully!");
     } catch (error) {
@@ -293,25 +163,6 @@ author: "${metadata.author}"
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const getPreviewContent = () => {
-    if (!editor) return "";
-
-    // Get the raw text content from the editor
-    const rawContent = editor.getText();
-
-    // For metadata section, keep it as plain text
-    if (rawContent.startsWith("---")) {
-      const parts = rawContent.split("---");
-      if (parts.length >= 3) {
-        // Keep metadata as preformatted text and render the rest as HTML
-        return `<pre className="font-mono text-sm">---${parts[1]}---</pre>${marked(parts.slice(2).join("---"))}`;
-      }
-    }
-
-    // Convert markdown to HTML for the preview
-    return marked(rawContent);
   };
 
   return (
@@ -386,7 +237,7 @@ author: "${metadata.author}"
             {audioFile && <p className="mt-2 text-base-content/70">Selected file: {audioFile.name}</p>}
           </div>
 
-          {/* Enhanced Markdown Editor */}
+          {/* Markdown Editor */}
           <div>
             <div className="flex justify-between items-center mb-2">
               <label className="label">
@@ -407,26 +258,17 @@ author: "${metadata.author}"
                   <PhotoIcon className="h-4 w-4" />
                   Add Image
                 </label>
-                <button type="button" onClick={() => setIsPreviewMode(!isPreviewMode)} className="btn btn-sm btn-ghost">
-                  {isPreviewMode ? "Edit" : "Preview"}
-                </button>
               </div>
             </div>
 
-            <div className="w-full rounded-lg border border-base-300 overflow-hidden">
-              {isPreviewMode ? (
-                <div
-                  className="prose prose-sm max-w-none p-4 min-h-[400px] bg-base-100"
-                  dangerouslySetInnerHTML={{ __html: getPreviewContent() }}
-                />
-              ) : (
-                <div className="min-h-[400px] bg-base-100">
-                  <MenuBar editor={editor} />
-                  <div className="p-4">
-                    <EditorContent editor={editor} />
-                  </div>
-                </div>
-              )}
+            <div data-color-mode="dark">
+              <MDEditor
+                value={content}
+                onChange={(value) => setContent(value || "")}
+                preview={isPreviewMode ? "preview" : "live"}
+                height={400}
+                className="w-full"
+              />
             </div>
           </div>
 
