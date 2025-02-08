@@ -3,6 +3,104 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { marked } from "marked";
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import TiptapImage from "@tiptap/extension-image";
+import TiptapUnderline from "@tiptap/extension-underline";
+import {
+  PhotoIcon,
+  BoltIcon as BoldIcon,
+  DocumentTextIcon as ItalicIcon,
+  MinusIcon as UnderlineIcon,
+  ListBulletIcon,
+  QueueListIcon as ListNumberedIcon,
+  HashtagIcon as Heading1Icon,
+  HashtagIcon as Heading2Icon,
+  CodeBracketIcon as CodeIcon,
+  ChatBubbleLeftRightIcon as QuoteIcon,
+  MinusIcon as DividerHorizontalIcon,
+} from "@heroicons/react/24/outline";
+
+const MenuBar = ({ editor }: { editor: any }) => {
+  if (!editor) {
+    return null;
+  }
+
+  const insertMarkdown = (markdown: string) => {
+    const { from, to } = editor.state.selection;
+    const text = editor.state.doc.textBetween(from, to);
+    editor
+      .chain()
+      .focus()
+      .insertContent(text ? `${markdown}${text}${markdown}` : markdown)
+      .run();
+  };
+
+  return (
+    <div className="border-b border-base-300 p-2 flex flex-wrap gap-1 bg-base-200">
+      <button onClick={() => insertMarkdown("**")} className="btn btn-sm btn-ghost" title="Bold">
+        <BoldIcon className="h-4 w-4" />
+      </button>
+      <button onClick={() => insertMarkdown("*")} className="btn btn-sm btn-ghost" title="Italic">
+        <ItalicIcon className="h-4 w-4" />
+      </button>
+      <div className="divider divider-horizontal mx-1"></div>
+      <button
+        onClick={() => editor.chain().focus().insertContent("\n# ").run()}
+        className="btn btn-sm btn-ghost"
+        title="Heading 1"
+      >
+        <Heading1Icon className="h-4 w-4" />
+        <span className="text-xs">1</span>
+      </button>
+      <button
+        onClick={() => editor.chain().focus().insertContent("\n## ").run()}
+        className="btn btn-sm btn-ghost"
+        title="Heading 2"
+      >
+        <Heading2Icon className="h-4 w-4" />
+        <span className="text-xs">2</span>
+      </button>
+      <div className="divider divider-horizontal mx-1"></div>
+      <button
+        onClick={() => editor.chain().focus().insertContent("\n- ").run()}
+        className="btn btn-sm btn-ghost"
+        title="Bullet List"
+      >
+        <ListBulletIcon className="h-4 w-4" />
+      </button>
+      <button
+        onClick={() => editor.chain().focus().insertContent("\n1. ").run()}
+        className="btn btn-sm btn-ghost"
+        title="Numbered List"
+      >
+        <ListNumberedIcon className="h-4 w-4" />
+      </button>
+      <div className="divider divider-horizontal mx-1"></div>
+      <button
+        onClick={() => editor.chain().focus().insertContent("\n```\n\n```\n").run()}
+        className="btn btn-sm btn-ghost"
+        title="Code Block"
+      >
+        <CodeIcon className="h-4 w-4" />
+      </button>
+      <button
+        onClick={() => editor.chain().focus().insertContent("\n> ").run()}
+        className="btn btn-sm btn-ghost"
+        title="Quote"
+      >
+        <QuoteIcon className="h-4 w-4" />
+      </button>
+      <button
+        onClick={() => editor.chain().focus().insertContent("\n---\n").run()}
+        className="btn btn-sm btn-ghost"
+        title="Horizontal Rule"
+      >
+        <DividerHorizontalIcon className="h-4 w-4" />
+      </button>
+    </div>
+  );
+};
 
 export default function PostEditorPage() {
   const [postNumber, setPostNumber] = useState("");
@@ -15,12 +113,47 @@ export default function PostEditorPage() {
   const [isGeneratingMetadata, setIsGeneratingMetadata] = useState(false);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
 
+  const convertMarkdownToHTML = (markdown: string) => {
+    return marked(markdown, { headerIds: false, mangle: false });
+  };
+
+  const editor = useEditor({
+    extensions: [
+      StarterKit.configure({
+        heading: false,
+        bold: false,
+        italic: false,
+        bulletList: false,
+        orderedList: false,
+        code: false,
+        codeBlock: false,
+        blockquote: false,
+        horizontalRule: false,
+        strike: false,
+        dropcursor: false,
+        gapcursor: false,
+        text: {},
+        paragraph: {},
+        doc: {},
+      }),
+    ],
+    content: "",
+    editorProps: {
+      attributes: {
+        class: "font-mono text-base leading-relaxed",
+      },
+    },
+    onUpdate: ({ editor }) => {
+      setContent(editor.getText());
+    },
+  });
+
   useEffect(() => {
     // Set initial post number (007)
     setPostNumber("007");
   }, []);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCoverImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setCoverImage(file);
@@ -29,6 +162,26 @@ export default function PostEditorPage() {
         setImagePreview(reader.result as string);
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleInlineImageUpload = async (file: File) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+
+      const response = await fetch("/api/upload-image", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error("Failed to upload image");
+
+      const { imageUrl } = await response.json();
+      editor?.chain().focus().setImage({ src: imageUrl }).run();
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      alert("Failed to upload image");
     }
   };
 
@@ -62,7 +215,7 @@ export default function PostEditorPage() {
         },
         body: JSON.stringify({
           title,
-          content,
+          content: editor?.getText() || content, // Get plain text for metadata generation
         }),
       });
 
@@ -71,9 +224,7 @@ export default function PostEditorPage() {
       }
 
       const { metadata } = await response.json();
-
-      // Update the content with the generated metadata
-      setContent(`---
+      const metadataContent = `---
 title: ${title}
 date: "${new Date().toISOString().split("T")[0]}"
 category: "${metadata.category}"
@@ -82,7 +233,10 @@ excerpt: "${metadata.excerpt}"
 author: "${metadata.author}"
 ---
 
-${content}`);
+`;
+
+      // Set the content with metadata and preserve the existing content
+      editor?.commands.setContent(metadataContent + (editor.getHTML() || content));
     } catch (error) {
       console.error("Error generating metadata:", error);
       alert("Failed to generate metadata. Please try again.");
@@ -101,10 +255,9 @@ ${content}`);
       const coverImageFileName = `${postNumber}-${formattedTitle}.png`;
       const audioFileName = audioFile ? `${postNumber}-${formattedTitle}.mp3` : null;
 
-      // Create FormData to send files
       const formData = new FormData();
       formData.append("markdownFileName", markdownFileName);
-      formData.append("content", content);
+      formData.append("content", editor?.getHTML() || content);
 
       if (coverImage) {
         formData.append("coverImage", coverImage);
@@ -116,7 +269,6 @@ ${content}`);
         formData.append("audioFileName", audioFileName);
       }
 
-      // Send the data to our API endpoint
       const response = await fetch("/api/posts/create", {
         method: "POST",
         body: formData,
@@ -132,6 +284,7 @@ ${content}`);
       setCoverImage(null);
       setAudioFile(null);
       setImagePreview(null);
+      editor?.commands.setContent("");
 
       alert("Post created successfully!");
     } catch (error) {
@@ -140,6 +293,25 @@ ${content}`);
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const getPreviewContent = () => {
+    if (!editor) return "";
+
+    // Get the raw text content from the editor
+    const rawContent = editor.getText();
+
+    // For metadata section, keep it as plain text
+    if (rawContent.startsWith("---")) {
+      const parts = rawContent.split("---");
+      if (parts.length >= 3) {
+        // Keep metadata as preformatted text and render the rest as HTML
+        return `<pre className="font-mono text-sm">---${parts[1]}---</pre>${marked(parts.slice(2).join("---"))}`;
+      }
+    }
+
+    // Convert markdown to HTML for the preview
+    return marked(rawContent);
   };
 
   return (
@@ -188,7 +360,7 @@ ${content}`);
               type="file"
               id="coverImage"
               accept="image/*"
-              onChange={handleImageChange}
+              onChange={handleCoverImageChange}
               className="file-input file-input-bordered w-full"
               required
             />
@@ -214,31 +386,46 @@ ${content}`);
             {audioFile && <p className="mt-2 text-base-content/70">Selected file: {audioFile.name}</p>}
           </div>
 
-          {/* Simple Markdown Editor */}
+          {/* Enhanced Markdown Editor */}
           <div>
             <div className="flex justify-between items-center mb-2">
               <label className="label">
                 <span className="label-text">Content</span>
               </label>
-              <button type="button" onClick={() => setIsPreviewMode(!isPreviewMode)} className="btn btn-sm btn-ghost">
-                {isPreviewMode ? "Edit" : "Preview"}
-              </button>
+              <div className="flex items-center gap-2">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) handleInlineImageUpload(file);
+                  }}
+                  className="hidden"
+                  id="inline-image-upload"
+                />
+                <label htmlFor="inline-image-upload" className="btn btn-sm btn-ghost gap-2 cursor-pointer">
+                  <PhotoIcon className="h-4 w-4" />
+                  Add Image
+                </label>
+                <button type="button" onClick={() => setIsPreviewMode(!isPreviewMode)} className="btn btn-sm btn-ghost">
+                  {isPreviewMode ? "Edit" : "Preview"}
+                </button>
+              </div>
             </div>
 
             <div className="w-full rounded-lg border border-base-300 overflow-hidden">
               {isPreviewMode ? (
                 <div
                   className="prose prose-sm max-w-none p-4 min-h-[400px] bg-base-100"
-                  dangerouslySetInnerHTML={{ __html: marked(content) }}
+                  dangerouslySetInnerHTML={{ __html: getPreviewContent() }}
                 />
               ) : (
-                <textarea
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
-                  className="w-full min-h-[400px] p-4 bg-base-100 text-base-content font-mono text-sm resize-none focus:outline-none"
-                  placeholder="Write your content here..."
-                  spellCheck={false}
-                />
+                <div className="min-h-[400px] bg-base-100">
+                  <MenuBar editor={editor} />
+                  <div className="p-4">
+                    <EditorContent editor={editor} />
+                  </div>
+                </div>
               )}
             </div>
           </div>

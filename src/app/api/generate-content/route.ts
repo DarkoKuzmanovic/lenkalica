@@ -14,11 +14,12 @@ if (GEMINI_API_KEY) {
 
 export async function POST(req: NextRequest) {
   try {
-    const { prompt, systemPrompt, temperature } = await req.json();
+    const { prompt, systemPrompt, temperature, topP } = await req.json();
 
     console.log("Received prompt:", prompt);
     console.log("System prompt:", systemPrompt);
     console.log("Temperature:", temperature);
+    console.log("Top P:", topP);
 
     // If Gemini API is not available, return error
     if (!genAI) {
@@ -29,9 +30,10 @@ export async function POST(req: NextRequest) {
     // Generate content using Gemini
     try {
       const model = genAI.getGenerativeModel({
-        model: "gemini-2.0-flash-thinking-exp-01-21",
+        model: "gemini-2.0-pro-exp-02-05",
         generationConfig: {
-          temperature: temperature,
+          temperature,
+          topP,
         },
       });
 
