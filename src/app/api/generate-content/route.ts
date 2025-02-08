@@ -70,9 +70,7 @@ export async function POST(req: NextRequest) {
       console.error("Gemini API Error:", modelError);
       // Add more detailed error information
       const errorMessage =
-        modelError instanceof Error
-          ? `${modelError.message}\n${(modelError as any).stack || ""}`
-          : "Unknown model error";
+        modelError instanceof Error ? `${modelError.message}\n${modelError.stack || ""}` : "Unknown model error";
       console.error("Detailed error:", errorMessage);
 
       return NextResponse.json(

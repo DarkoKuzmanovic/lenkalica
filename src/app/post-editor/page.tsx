@@ -2,9 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { marked } from "marked";
-import MDEditor from "@uiw/react-md-editor";
 import { PhotoIcon } from "@heroicons/react/24/outline";
+import MDEditor from "@uiw/react-md-editor";
 
 export default function PostEditorPage() {
   const [postNumber, setPostNumber] = useState("");
@@ -15,7 +14,6 @@ export default function PostEditorPage() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGeneratingMetadata, setIsGeneratingMetadata] = useState(false);
-  const [isPreviewMode, setIsPreviewMode] = useState(false);
 
   useEffect(() => {
     // Set initial post number
@@ -265,8 +263,8 @@ author: "${metadata.author}"
               <MDEditor
                 value={content}
                 onChange={(value) => setContent(value || "")}
-                preview={isPreviewMode ? "preview" : "live"}
-                height={400}
+                preview="live"
+                height={600}
                 className="w-full"
               />
             </div>
