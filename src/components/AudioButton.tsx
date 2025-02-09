@@ -21,7 +21,7 @@ export default function AudioButton({ audioUrl, title }: AudioButtonProps) {
         />
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
-      Listen to Article
+      Listen to Podcast
     </button>
   );
 }
