@@ -4,7 +4,6 @@ import ArticleMeta from "@/components/ArticleMeta";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import AudioButton from "@/components/AudioButton";
-import TTSButton from "@/components/TTSButton";
 import ArticleContent from "./ArticleContent";
 import { useEffect, useState, use } from "react";
 import type { Article } from "@/lib/articles";
@@ -56,9 +55,6 @@ export default function ArticlePage({ params }: { params: Promise<{ id: string }
   }
 
   if (!article) return null;
-
-  // Remove HTML tags for TTS
-  const plainText = article.content.replace(/<[^>]*>/g, "");
 
   return (
     <>
