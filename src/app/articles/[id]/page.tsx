@@ -85,7 +85,6 @@ export default function ArticlePage({ params }: { params: Promise<{ id: string }
             <ArticleMeta article={article} />
             <div className="mt-6 flex items-center justify-center gap-4">
               {article.audioFile && <AudioButton audioUrl={article.audioFile} title={article.title} />}
-              <TTSButton text={plainText} title={article.title} />
             </div>
           </header>
 

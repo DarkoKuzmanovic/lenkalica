@@ -1,3 +1,5 @@
+// This file can be removed entirely since TTS functionality is no longer in use.
+
 "use client";
 
 import { useState } from "react";
