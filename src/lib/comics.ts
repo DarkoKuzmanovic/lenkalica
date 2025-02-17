@@ -26,7 +26,7 @@ export async function getAllComics(): Promise<Comic[]> {
       return {
         id: fileName.replace(/\.[^/.]+$/, ""), // Remove file extension
         image: `/images/comics/${fileName}`,
-        timestamp: stats.mtime.getTime(), // Get the modification time
+        timestamp: stats.birthtime.getTime(), // Get the creation time
       };
     });
 
