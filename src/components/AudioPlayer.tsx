@@ -2,6 +2,8 @@
 
 import { useRef, useState, useEffect } from "react";
 import { useAudioContext } from "@/context/AudioContext";
+import { useAndroidDetection } from "@/hooks/useAndroidDetection";
+import { getAndroidInterface } from "@/utils/androidDetection";
 
 export default function AudioPlayer() {
   const { currentAudio: audioUrl, currentTitle: title, isPlaying, stopAudio } = useAudioContext();
@@ -9,6 +11,7 @@ export default function AudioPlayer() {
   const [isPinned, setIsPinned] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const { isAndroid } = useAndroidDetection();
 
   useEffect(() => {
     if (audioRef.current) {
@@ -19,6 +22,33 @@ export default function AudioPlayer() {
       }
     }
   }, [isPlaying, audioUrl]);
+
+  // Android media notification integration
+  useEffect(() => {
+    if (isAndroid && title) {
+      const androidInterface = getAndroidInterface();
+      if (androidInterface) {
+        androidInterface.startMediaNotification(title);
+      }
+    }
+  }, [isAndroid, title]);
+
+  useEffect(() => {
+    if (isAndroid) {
+      const androidInterface = getAndroidInterface();
+      if (androidInterface) {
+        if (isPlaying) {
+          // Resume notification (startMediaNotification handles both start and resume)
+          if (title) {
+            androidInterface.startMediaNotification(title);
+          }
+        } else if (audioUrl) {
+          // Pause notification
+          androidInterface.pauseMediaNotification();
+        }
+      }
+    }
+  }, [isAndroid, isPlaying, audioUrl, title]);
 
   const handleTimeUpdate = () => {
     if (audioRef.current) {

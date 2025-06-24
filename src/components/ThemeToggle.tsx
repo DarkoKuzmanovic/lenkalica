@@ -3,23 +3,30 @@
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useAndroidDetection } from "@/hooks/useAndroidDetection";
 
 export default function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
   const [isChecked, setIsChecked] = useState(false);
+  const { isAndroid, mounted: androidMounted } = useAndroidDetection();
 
   useEffect(() => {
     setMounted(true);
     setIsChecked(theme === "dark");
   }, [theme]);
 
-  if (!mounted) {
+  if (!mounted || !androidMounted) {
     return (
       <div className="w-10 h-10 animate-pulse bg-base-200 rounded-full">
         <span className="sr-only">Loading theme toggle</span>
       </div>
     );
+  }
+
+  // Hide theme toggle when running in Android webview
+  if (isAndroid) {
+    return null;
   }
 
   const handleToggle = () => {

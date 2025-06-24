@@ -9,6 +9,7 @@ import { AudioProvider } from "@/context/AudioContext";
 import AudioPlayer from "@/components/AudioPlayer";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import ScrollToTop from "@/components/ScrollToTop";
+import ConditionalHeader from "@/components/ConditionalHeader";
 
 const notoSans = Noto_Sans({
   subsets: ["latin"],
@@ -66,7 +67,7 @@ export default function RootLayout({
                 />
                 <div className="drawer-content flex flex-col min-h-screen">
                   {/* Header */}
-                  <Header />
+                  <ConditionalHeader />
 
                   {/* Breadcrumbs */}
                   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">

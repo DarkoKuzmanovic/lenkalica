@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState } from "react";
+import { getAndroidInterface, isLenkalicaApp } from "@/utils/androidDetection";
 
 interface AudioContextType {
   playAudio: (url: string, title: string) => void;
@@ -32,6 +33,14 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   };
 
   const stopAudio = () => {
+    // Stop Android notification if running in app
+    if (isLenkalicaApp()) {
+      const androidInterface = getAndroidInterface();
+      if (androidInterface) {
+        androidInterface.stopMediaNotification();
+      }
+    }
+    
     setCurrentAudio(null);
     setCurrentTitle(null);
     setIsPlaying(false);
