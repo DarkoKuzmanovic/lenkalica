@@ -56,16 +56,31 @@ export default function AudioPlayer() {
       onMouseEnter={() => setIsPinned(true)}
       onMouseLeave={() => setIsPinned(true)}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="py-4">
-          <div className="flex items-center gap-4">
-            {/* Title */}
-            <div className="flex-1">
-              <h3 className="text-base font-medium truncate">{title}</h3>
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+        <div className="py-3 sm:py-4">
+          <div className="flex items-center gap-3 sm:gap-4">
+            {/* Left side: Title and Progress */}
+            <div className="flex-1 min-w-0">
+              {/* Title */}
+              <h3 className="text-sm sm:text-base font-medium truncate mb-2">{title}</h3>
+              
+              {/* Progress Bar */}
+              <div className="flex items-center gap-2">
+                <span className="text-xs sm:text-sm shrink-0">{formatTime(currentTime)}</span>
+                <input
+                  type="range"
+                  min="0"
+                  max={duration || 0}
+                  value={currentTime}
+                  onChange={handleSeek}
+                  className="range range-primary range-sm flex-1"
+                />
+                <span className="text-xs sm:text-sm shrink-0">{formatTime(duration)}</span>
+              </div>
             </div>
 
-            {/* Controls */}
-            <div className="flex items-center gap-4">
+            {/* Right side: Controls */}
+            <div className="flex items-center gap-2 shrink-0">
               <button
                 onClick={() => {
                   if (audioRef.current) {
@@ -76,10 +91,10 @@ export default function AudioPlayer() {
                     }
                   }
                 }}
-                className="btn btn-circle btn-primary"
+                className="btn btn-circle btn-primary btn-sm sm:btn-md"
               >
                 {audioRef.current?.paused ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 sm:w-6 sm:h-6">
                     <path
                       fillRule="evenodd"
                       d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
@@ -87,7 +102,7 @@ export default function AudioPlayer() {
                     />
                   </svg>
                 ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 sm:w-6 sm:h-6">
                     <path
                       fillRule="evenodd"
                       d="M6.75 5.25a.75.75 0 01.75-.75H9a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H7.5a.75.75 0 01-.75-.75V5.25zm7.5 0A.75.75 0 0115 4.5h1.5a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H15a.75.75 0 01-.75-.75V5.25z"
@@ -97,22 +112,8 @@ export default function AudioPlayer() {
                 )}
               </button>
 
-              {/* Progress Bar */}
-              <div className="flex-1 flex items-center gap-2">
-                <span className="text-sm">{formatTime(currentTime)}</span>
-                <input
-                  type="range"
-                  min="0"
-                  max={duration || 0}
-                  value={currentTime}
-                  onChange={handleSeek}
-                  className="range range-primary range-sm flex-1"
-                />
-                <span className="text-sm">{formatTime(duration)}</span>
-              </div>
-
-              <button onClick={stopAudio} className="btn btn-circle btn-ghost">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+              <button onClick={stopAudio} className="btn btn-circle btn-ghost btn-sm sm:btn-md">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 sm:w-6 sm:h-6">
                   <path
                     fillRule="evenodd"
                     d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"

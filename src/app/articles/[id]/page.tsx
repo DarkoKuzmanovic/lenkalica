@@ -67,7 +67,7 @@ export default function ArticlePage({ params }: { params: Promise<{ id: string }
       </div>
 
       <div className="py-8">
-        <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <article className="max-w-4xl mx-auto px-2 sm:px-4 lg:px-8">
           {/* Hero Section */}
           <div className="card bg-base-100 shadow-xl mb-12">
             <figure className="relative w-full h-[400px]">
