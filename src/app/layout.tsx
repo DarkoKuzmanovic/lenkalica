@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Noto_Sans, Noto_Serif, Literata } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { AudioProvider } from "@/context/AudioContext";
