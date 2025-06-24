@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface SearchResult {
@@ -196,7 +195,7 @@ export default function SearchBar() {
               </svg>
             </div>
             <p className="text-base-content/60 text-sm">
-              No results found for "{query}"
+              No results found for &quot;{query}&quot;
             </p>
             <p className="text-base-content/40 text-xs mt-1">
               Try different keywords or check your spelling

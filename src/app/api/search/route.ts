@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAllArticles, type Article } from "@/lib/articles";
-import { getAllShorts, type Short } from "@/lib/shorts";
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
+import { getAllArticles } from "@/lib/articles";
+import { getAllShorts } from "@/lib/shorts";
 
 interface SearchResult {
   id: string;
