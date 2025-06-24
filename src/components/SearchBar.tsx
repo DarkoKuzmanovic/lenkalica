@@ -157,14 +157,9 @@ export default function SearchBar() {
                       </span>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-base-content line-clamp-1 mb-1 group-hover:text-primary transition-colors">
+                      <p className="text-sm font-medium text-base-content line-clamp-1 group-hover:text-primary transition-colors">
                         {result.title}
                       </p>
-                      {result.excerpt && (
-                        <p className="text-xs text-base-content/60 line-clamp-2 leading-relaxed">
-                          {result.excerpt}
-                        </p>
-                      )}
                     </div>
                   </div>
                 </motion.button>

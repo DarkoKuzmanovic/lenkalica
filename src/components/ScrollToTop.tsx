@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useAudioContext } from "@/context/AudioContext";
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
+  const { currentAudio } = useAudioContext();
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -29,12 +31,15 @@ export default function ScrollToTop() {
     });
   };
 
+  // Calculate bottom position based on whether audio player is active
+  const bottomPosition = currentAudio ? "bottom-24" : "bottom-8";
+
   return (
     <motion.button
       onClick={scrollToTop}
-      className={`fixed right-4 bottom-8 btn btn-circle btn-primary ${
+      className={`fixed right-4 ${bottomPosition} btn btn-circle btn-primary ${
         isVisible ? "opacity-100" : "opacity-0 pointer-events-none"
-      } transition-opacity duration-200`}
+      } transition-all duration-200`}
       aria-label="Scroll to top"
       whileTap={{ scale: 0.9 }}
       whileHover={{ scale: 1.1 }}
