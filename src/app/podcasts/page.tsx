@@ -67,7 +67,7 @@ export default function PodcastsPage() {
 
   return (
     <div className="py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
         {/* Hero Section */}
         <div className="hero bg-base-200 rounded-box p-8 mb-16">
           <div className="hero-content text-center">

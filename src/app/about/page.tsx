@@ -20,7 +20,7 @@ export default function AboutPage() {
 
   return (
     <div className="py-16">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto px-2 sm:px-4 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
           <h1>About Lenkalica</h1>
