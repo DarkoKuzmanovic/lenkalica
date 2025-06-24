@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import StyledLink from "./StyledLink";
+import SearchBar from "./SearchBar";
 
 const navVariants = {
   initial: {
@@ -45,7 +46,7 @@ export default function Header() {
 
   return (
     <div className="sticky top-0 z-50 w-full bg-base-100/80 backdrop-blur-sm border-b border-base-300">
-      <div className="navbar h-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="navbar h-14 max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
         <div className="navbar-start">
           <Link href="/" className="group flex items-center space-x-3">
             <motion.div
@@ -63,6 +64,11 @@ export default function Header() {
               Lenkalica
             </motion.span>
           </Link>
+        </div>
+
+        {/* Center - Search Bar (Desktop) */}
+        <div className="navbar-center hidden lg:flex">
+          <SearchBar />
         </div>
 
         {/* Desktop Navigation */}
@@ -132,7 +138,12 @@ export default function Header() {
             transition={{ type: "spring", stiffness: 400, damping: 30 }}
           >
             <div className="bg-base-100 border-b border-base-300 shadow-lg">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+              <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-2">
+                {/* Mobile Search */}
+                <div className="py-3 border-b border-base-300 mb-2 lg:hidden">
+                  <SearchBar />
+                </div>
+                
                 <motion.div
                   className="flex flex-col space-y-1 py-4"
                   variants={navVariants}
