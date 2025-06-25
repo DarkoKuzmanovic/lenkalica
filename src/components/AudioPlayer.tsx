@@ -5,8 +5,24 @@ import { useAudioContext } from "@/context/AudioContext";
 import { useAndroidDetection } from "@/hooks/useAndroidDetection";
 import { getAndroidInterface } from "@/utils/androidDetection";
 
+// Extend the Window interface for Android media callbacks
+declare global {
+  interface Window {
+    handleAndroidMediaPlay?: () => void;
+    handleAndroidMediaPause?: () => void;
+    handleAndroidMediaSeek?: (position: number) => void;
+  }
+}
+
 export default function AudioPlayer() {
-  const { currentAudio: audioUrl, currentTitle: title, isPlaying, stopAudio, pauseAudio, resumeAudio } = useAudioContext();
+  const {
+    currentAudio: audioUrl,
+    currentTitle: title,
+    isPlaying,
+    stopAudio,
+    pauseAudio,
+    resumeAudio,
+  } = useAudioContext();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPinned, setIsPinned] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
@@ -17,19 +33,19 @@ export default function AudioPlayer() {
   useEffect(() => {
     if (isAndroid) {
       // Define global callback functions for Android to call
-      (window as any).handleAndroidMediaPlay = () => {
+      window.handleAndroidMediaPlay = () => {
         if (audioRef.current && audioRef.current.paused) {
           resumeAudio();
         }
       };
 
-      (window as any).handleAndroidMediaPause = () => {
+      window.handleAndroidMediaPause = () => {
         if (audioRef.current && !audioRef.current.paused) {
           pauseAudio();
         }
       };
 
-      (window as any).handleAndroidMediaSeek = (position: number) => {
+      window.handleAndroidMediaSeek = (position: number) => {
         if (audioRef.current) {
           audioRef.current.currentTime = position;
           setCurrentTime(position);
@@ -38,9 +54,9 @@ export default function AudioPlayer() {
 
       // Cleanup function
       return () => {
-        delete (window as any).handleAndroidMediaPlay;
-        delete (window as any).handleAndroidMediaPause;
-        delete (window as any).handleAndroidMediaSeek;
+        delete window.handleAndroidMediaPlay;
+        delete window.handleAndroidMediaPause;
+        delete window.handleAndroidMediaSeek;
       };
     }
   }, [isAndroid, resumeAudio, pauseAudio]);
@@ -87,15 +103,12 @@ export default function AudioPlayer() {
       const current = audioRef.current.currentTime;
       const total = audioRef.current.duration;
       setCurrentTime(current);
-      
+
       // Update Android Media Player notification position
       if (isAndroid && total && !isNaN(total)) {
         const androidInterface = getAndroidInterface();
         if (androidInterface) {
-          androidInterface.updateMediaPosition(
-            Math.floor(current),
-            Math.floor(total)
-          );
+          androidInterface.updateMediaPosition(Math.floor(current), Math.floor(total));
         }
       }
     }
@@ -105,7 +118,7 @@ export default function AudioPlayer() {
     if (audioRef.current) {
       const total = audioRef.current.duration;
       setDuration(total);
-      
+
       // Send initial duration to Android Media Player notification
       if (isAndroid && total && !isNaN(total)) {
         const androidInterface = getAndroidInterface();
@@ -121,15 +134,12 @@ export default function AudioPlayer() {
     if (audioRef.current) {
       audioRef.current.currentTime = time;
       setCurrentTime(time);
-      
+
       // Update Android Media Player notification position when seeking
       if (isAndroid && audioRef.current.duration && !isNaN(audioRef.current.duration)) {
         const androidInterface = getAndroidInterface();
         if (androidInterface) {
-          androidInterface.updateMediaPosition(
-            Math.floor(time),
-            Math.floor(audioRef.current.duration)
-          );
+          androidInterface.updateMediaPosition(Math.floor(time), Math.floor(audioRef.current.duration));
         }
       }
     }
@@ -158,7 +168,7 @@ export default function AudioPlayer() {
             <div className="flex-1 min-w-0">
               {/* Title */}
               <h3 className="text-sm sm:text-base font-medium truncate mb-2">{title}</h3>
-              
+
               {/* Progress Bar */}
               <div className="flex items-center gap-2">
                 <span className="text-xs sm:text-sm shrink-0">{formatTime(currentTime)}</span>
@@ -187,7 +197,12 @@ export default function AudioPlayer() {
                 className="btn btn-circle btn-primary btn-sm sm:btn-md"
               >
                 {!isPlaying ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 sm:w-6 sm:h-6">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-4 h-4 sm:w-6 sm:h-6"
+                  >
                     <path
                       fillRule="evenodd"
                       d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
@@ -195,7 +210,12 @@ export default function AudioPlayer() {
                     />
                   </svg>
                 ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 sm:w-6 sm:h-6">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-4 h-4 sm:w-6 sm:h-6"
+                  >
                     <path
                       fillRule="evenodd"
                       d="M6.75 5.25a.75.75 0 01.75-.75H9a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H7.5a.75.75 0 01-.75-.75V5.25zm7.5 0A.75.75 0 0115 4.5h1.5a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H15a.75.75 0 01-.75-.75V5.25z"
@@ -206,7 +226,12 @@ export default function AudioPlayer() {
               </button>
 
               <button onClick={stopAudio} className="btn btn-circle btn-ghost btn-sm sm:btn-md">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 sm:w-6 sm:h-6">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4 sm:w-6 sm:h-6"
+                >
                   <path
                     fillRule="evenodd"
                     d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
@@ -219,10 +244,10 @@ export default function AudioPlayer() {
         </div>
       </div>
 
-      <audio 
-        ref={audioRef} 
-        src={audioUrl} 
-        onTimeUpdate={handleTimeUpdate} 
+      <audio
+        ref={audioRef}
+        src={audioUrl}
+        onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onSeeked={() => {
           // Update position when seeking is complete

@@ -7,7 +7,7 @@ interface AudioContextType {
   playAudio: (url: string, title: string) => void;
   pauseAudio: () => void;
   resumeAudio: () => void;
-  seekToPosition: (position: number) => void;
+  seekToPosition: () => void;
   isPlaying: boolean;
   currentTitle: string | null;
   currentAudio: string | null;
@@ -43,7 +43,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     setIsPlaying(true);
   };
 
-  const seekToPosition = (position: number) => {
+  const seekToPosition = () => {
     // This will be handled by the AudioPlayer component
     // We just need to provide the interface for Android callbacks
   };
@@ -56,7 +56,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
         androidInterface.stopMediaNotification();
       }
     }
-    
+
     setCurrentAudio(null);
     setCurrentTitle(null);
     setIsPlaying(false);
