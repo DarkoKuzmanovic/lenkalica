@@ -9,6 +9,8 @@ declare global {
       pauseMediaNotification: () => void;
       stopMediaNotification: () => void;
       updateMediaPosition: (position: number, duration: number) => void;
+      loadAndPlayAudio: (url: string, title: string) => void;
+      seekToPosition: (position: number) => void;
     };
   }
 }

@@ -32,12 +32,14 @@ export default function AndroidAudioPlayer() {
     setCurrentTime(time);
     
     const androidInterface = getAndroidInterface();
-    if (androidInterface && 'seekToPosition' in androidInterface) {
-      // Send seek command to Android natively
-      (androidInterface as unknown as { seekToPosition: (position: number) => void }).seekToPosition(Math.floor(time));
-    } else {
-      // Fallback to old method
-      androidInterface?.updateMediaPosition(Math.floor(time), Math.floor(duration));
+    if (androidInterface) {
+      if (androidInterface.seekToPosition) {
+        console.log('AndroidAudioPlayer: Seeking to position', time);
+        androidInterface.seekToPosition(Math.floor(time));
+      } else {
+        console.log('AndroidAudioPlayer: Fallback seek method');
+        androidInterface.updateMediaPosition(Math.floor(time), Math.floor(duration));
+      }
     }
   };
 
@@ -70,14 +72,23 @@ export default function AndroidAudioPlayer() {
   // Start Android media when audio URL changes
   useEffect(() => {
     if (audioUrl && title) {
+      console.log('AndroidAudioPlayer: Loading audio', { audioUrl, title });
       setIsLoading(true);
       const androidInterface = getAndroidInterface();
-      if (androidInterface && 'loadAndPlayAudio' in androidInterface) {
-        // Tell Android to load and prepare the audio natively
-        (androidInterface as unknown as { loadAndPlayAudio: (url: string, title: string) => void }).loadAndPlayAudio(audioUrl, title);
+      
+      if (androidInterface) {
+        console.log('AndroidAudioPlayer: Android interface available', Object.keys(androidInterface));
+        
+        if (androidInterface.loadAndPlayAudio) {
+          console.log('AndroidAudioPlayer: Using loadAndPlayAudio method');
+          androidInterface.loadAndPlayAudio(audioUrl, title);
+        } else {
+          console.log('AndroidAudioPlayer: Fallback to startMediaNotification');
+          androidInterface.startMediaNotification(title);
+        }
       } else {
-        // Fallback to old method
-        androidInterface?.startMediaNotification(title);
+        console.log('AndroidAudioPlayer: No Android interface found');
+        setIsLoading(false);
       }
     }
   }, [audioUrl, title]);
