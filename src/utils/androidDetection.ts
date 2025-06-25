@@ -8,6 +8,7 @@ declare global {
       startMediaNotification: (title: string) => void;
       pauseMediaNotification: () => void;
       stopMediaNotification: () => void;
+      updateMediaPosition: (position: number, duration: number) => void;
     };
   }
 }

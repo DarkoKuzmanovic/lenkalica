@@ -52,13 +52,35 @@ export default function AudioPlayer() {
 
   const handleTimeUpdate = () => {
     if (audioRef.current) {
-      setCurrentTime(audioRef.current.currentTime);
+      const current = audioRef.current.currentTime;
+      const total = audioRef.current.duration;
+      setCurrentTime(current);
+      
+      // Update Android Media Player notification position
+      if (isAndroid && total && !isNaN(total)) {
+        const androidInterface = getAndroidInterface();
+        if (androidInterface) {
+          androidInterface.updateMediaPosition(
+            Math.floor(current),
+            Math.floor(total)
+          );
+        }
+      }
     }
   };
 
   const handleLoadedMetadata = () => {
     if (audioRef.current) {
-      setDuration(audioRef.current.duration);
+      const total = audioRef.current.duration;
+      setDuration(total);
+      
+      // Send initial duration to Android Media Player notification
+      if (isAndroid && total && !isNaN(total)) {
+        const androidInterface = getAndroidInterface();
+        if (androidInterface) {
+          androidInterface.updateMediaPosition(0, Math.floor(total));
+        }
+      }
     }
   };
 
@@ -67,6 +89,17 @@ export default function AudioPlayer() {
     if (audioRef.current) {
       audioRef.current.currentTime = time;
       setCurrentTime(time);
+      
+      // Update Android Media Player notification position when seeking
+      if (isAndroid && audioRef.current.duration && !isNaN(audioRef.current.duration)) {
+        const androidInterface = getAndroidInterface();
+        if (androidInterface) {
+          androidInterface.updateMediaPosition(
+            Math.floor(time),
+            Math.floor(audioRef.current.duration)
+          );
+        }
+      }
     }
   };
 
@@ -156,7 +189,24 @@ export default function AudioPlayer() {
         </div>
       </div>
 
-      <audio ref={audioRef} src={audioUrl} onTimeUpdate={handleTimeUpdate} onLoadedMetadata={handleLoadedMetadata} />
+      <audio 
+        ref={audioRef} 
+        src={audioUrl} 
+        onTimeUpdate={handleTimeUpdate} 
+        onLoadedMetadata={handleLoadedMetadata}
+        onSeeked={() => {
+          // Update position when seeking is complete
+          if (audioRef.current && isAndroid && audioRef.current.duration && !isNaN(audioRef.current.duration)) {
+            const androidInterface = getAndroidInterface();
+            if (androidInterface) {
+              androidInterface.updateMediaPosition(
+                Math.floor(audioRef.current.currentTime),
+                Math.floor(audioRef.current.duration)
+              );
+            }
+          }
+        }}
+      />
     </div>
   );
 }
