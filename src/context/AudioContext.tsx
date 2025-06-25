@@ -35,12 +35,12 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (isAndroid) {
       // Define global callback for Android to update our state
-      (window as any).updateAudioContextState = (playing: boolean) => {
+      (window as unknown as { updateAudioContextState?: (playing: boolean) => void }).updateAudioContextState = (playing: boolean) => {
         setIsPlaying(playing);
       };
 
       return () => {
-        delete (window as any).updateAudioContextState;
+        delete (window as unknown as { updateAudioContextState?: unknown }).updateAudioContextState;
       };
     }
   }, [isAndroid]);

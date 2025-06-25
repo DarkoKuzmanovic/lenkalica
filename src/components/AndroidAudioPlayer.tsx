@@ -32,9 +32,9 @@ export default function AndroidAudioPlayer() {
     setCurrentTime(time);
     
     const androidInterface = getAndroidInterface();
-    if (androidInterface && (androidInterface as any).seekToPosition) {
+    if (androidInterface && 'seekToPosition' in androidInterface) {
       // Send seek command to Android natively
-      (androidInterface as any).seekToPosition(Math.floor(time));
+      (androidInterface as unknown as { seekToPosition: (position: number) => void }).seekToPosition(Math.floor(time));
     } else {
       // Fallback to old method
       androidInterface?.updateMediaPosition(Math.floor(time), Math.floor(duration));
@@ -44,26 +44,26 @@ export default function AndroidAudioPlayer() {
   // Set up Android callbacks to receive playback state
   useEffect(() => {
     // Define callbacks for Android to update our UI
-    (window as any).updateWebPlayerState = (playing: boolean, position: number, totalDuration: number) => {
+    (window as unknown as { updateWebPlayerState?: (playing: boolean, position: number, totalDuration: number) => void }).updateWebPlayerState = (playing: boolean, position: number, totalDuration: number) => {
       setCurrentTime(position);
       setDuration(totalDuration);
       setIsLoading(false);
     };
 
-    (window as any).onAndroidMediaLoading = () => {
+    (window as unknown as { onAndroidMediaLoading?: () => void }).onAndroidMediaLoading = () => {
       setIsLoading(true);
     };
 
-    (window as any).onAndroidMediaReady = (totalDuration: number) => {
+    (window as unknown as { onAndroidMediaReady?: (totalDuration: number) => void }).onAndroidMediaReady = (totalDuration: number) => {
       setDuration(totalDuration);
       setIsLoading(false);
     };
 
     // Cleanup
     return () => {
-      delete (window as any).updateWebPlayerState;
-      delete (window as any).onAndroidMediaLoading;
-      delete (window as any).onAndroidMediaReady;
+      delete (window as unknown as { updateWebPlayerState?: unknown }).updateWebPlayerState;
+      delete (window as unknown as { onAndroidMediaLoading?: unknown }).onAndroidMediaLoading;
+      delete (window as unknown as { onAndroidMediaReady?: unknown }).onAndroidMediaReady;
     };
   }, []);
 
@@ -72,9 +72,9 @@ export default function AndroidAudioPlayer() {
     if (audioUrl && title) {
       setIsLoading(true);
       const androidInterface = getAndroidInterface();
-      if (androidInterface && (androidInterface as any).loadAndPlayAudio) {
+      if (androidInterface && 'loadAndPlayAudio' in androidInterface) {
         // Tell Android to load and prepare the audio natively
-        (androidInterface as any).loadAndPlayAudio(audioUrl, title);
+        (androidInterface as unknown as { loadAndPlayAudio: (url: string, title: string) => void }).loadAndPlayAudio(audioUrl, title);
       } else {
         // Fallback to old method
         androidInterface?.startMediaNotification(title);
