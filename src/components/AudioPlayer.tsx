@@ -6,12 +6,44 @@ import { useAndroidDetection } from "@/hooks/useAndroidDetection";
 import { getAndroidInterface } from "@/utils/androidDetection";
 
 export default function AudioPlayer() {
-  const { currentAudio: audioUrl, currentTitle: title, isPlaying, stopAudio } = useAudioContext();
+  const { currentAudio: audioUrl, currentTitle: title, isPlaying, stopAudio, pauseAudio, resumeAudio } = useAudioContext();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPinned, setIsPinned] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const { isAndroid } = useAndroidDetection();
+
+  // Set up Android media control callbacks
+  useEffect(() => {
+    if (isAndroid) {
+      // Define global callback functions for Android to call
+      (window as any).handleAndroidMediaPlay = () => {
+        if (audioRef.current && audioRef.current.paused) {
+          resumeAudio();
+        }
+      };
+
+      (window as any).handleAndroidMediaPause = () => {
+        if (audioRef.current && !audioRef.current.paused) {
+          pauseAudio();
+        }
+      };
+
+      (window as any).handleAndroidMediaSeek = (position: number) => {
+        if (audioRef.current) {
+          audioRef.current.currentTime = position;
+          setCurrentTime(position);
+        }
+      };
+
+      // Cleanup function
+      return () => {
+        delete (window as any).handleAndroidMediaPlay;
+        delete (window as any).handleAndroidMediaPause;
+        delete (window as any).handleAndroidMediaSeek;
+      };
+    }
+  }, [isAndroid, resumeAudio, pauseAudio]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -146,17 +178,15 @@ export default function AudioPlayer() {
             <div className="flex items-center gap-2 shrink-0">
               <button
                 onClick={() => {
-                  if (audioRef.current) {
-                    if (audioRef.current.paused) {
-                      audioRef.current.play();
-                    } else {
-                      audioRef.current.pause();
-                    }
+                  if (isPlaying) {
+                    pauseAudio();
+                  } else {
+                    resumeAudio();
                   }
                 }}
                 className="btn btn-circle btn-primary btn-sm sm:btn-md"
               >
-                {audioRef.current?.paused ? (
+                {!isPlaying ? (
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 sm:w-6 sm:h-6">
                     <path
                       fillRule="evenodd"

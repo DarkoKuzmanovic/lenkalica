@@ -5,6 +5,9 @@ import { getAndroidInterface, isLenkalicaApp } from "@/utils/androidDetection";
 
 interface AudioContextType {
   playAudio: (url: string, title: string) => void;
+  pauseAudio: () => void;
+  resumeAudio: () => void;
+  seekToPosition: (position: number) => void;
   isPlaying: boolean;
   currentTitle: string | null;
   currentAudio: string | null;
@@ -32,6 +35,19 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     setIsPlaying(true);
   };
 
+  const pauseAudio = () => {
+    setIsPlaying(false);
+  };
+
+  const resumeAudio = () => {
+    setIsPlaying(true);
+  };
+
+  const seekToPosition = (position: number) => {
+    // This will be handled by the AudioPlayer component
+    // We just need to provide the interface for Android callbacks
+  };
+
   const stopAudio = () => {
     // Stop Android notification if running in app
     if (isLenkalicaApp()) {
@@ -50,6 +66,9 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     <AudioContext.Provider
       value={{
         playAudio,
+        pauseAudio,
+        resumeAudio,
+        seekToPosition,
         isPlaying,
         currentTitle,
         currentAudio,
