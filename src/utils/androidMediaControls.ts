@@ -55,8 +55,8 @@ export function setupAndroidMediaControls(
         globalSetCurrentTime(position);
         
         // Also notify Android MediaService of the position update
-        if (typeof window !== 'undefined' && (window as any).Android) {
-          const androidInterface = (window as any).Android;
+        if (typeof window !== 'undefined' && (window as unknown as { Android?: unknown }).Android) {
+          const androidInterface = (window as unknown as { Android: { updateMediaPosition?: (position: number, duration: number) => void } }).Android;
           if (androidInterface.updateMediaPosition && globalAudioRef.duration && !isNaN(globalAudioRef.duration)) {
             androidInterface.updateMediaPosition(
               Math.floor(position),

@@ -36,13 +36,6 @@ export default function AudioPlayer() {
     }
   }, [isAndroid, resumeAudio, pauseAudio, audioUrl]);
 
-  // Update Android controls when audioRef changes
-  useEffect(() => {
-    if (isAndroid && audioRef.current) {
-      setupAndroidMediaControls(audioRef.current, setCurrentTime, resumeAudio, pauseAudio);
-    }
-  }, [audioRef.current, isAndroid, resumeAudio, pauseAudio]);
-
   useEffect(() => {
     if (audioRef.current) {
       if (isPlaying) {
