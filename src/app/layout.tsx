@@ -5,11 +5,10 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { AudioProvider } from "@/context/AudioContext";
-import AudioPlayer from "@/components/AudioPlayer";
+import ConditionalAudioPlayer from "@/components/ConditionalAudioPlayer";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import ScrollToTop from "@/components/ScrollToTop";
 import ConditionalHeader from "@/components/ConditionalHeader";
-import AndroidMediaSetup from "@/components/AndroidMediaSetup";
 
 const notoSans = Noto_Sans({
   subsets: ["latin"],
@@ -56,7 +55,6 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <AudioProvider>
-            <AndroidMediaSetup />
             <ErrorBoundary>
               <div className="drawer">
                 <input
@@ -83,7 +81,7 @@ export default function RootLayout({
                   </main>
 
                   {/* Audio Player */}
-                  <AudioPlayer />
+                  <ConditionalAudioPlayer />
 
                   {/* Footer */}
                   <Footer />
