@@ -4,15 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { useAudioContext } from "@/context/AudioContext";
 import { useAndroidDetection } from "@/hooks/useAndroidDetection";
 import { getAndroidInterface } from "@/utils/androidDetection";
-
-// Extend the Window interface for Android media callbacks
-declare global {
-  interface Window {
-    handleAndroidMediaPlay?: () => void;
-    handleAndroidMediaPause?: () => void;
-    handleAndroidMediaSeek?: (position: number) => void;
-  }
-}
+import { setupAndroidMediaControls, clearAndroidMediaControls } from "@/utils/androidMediaControls";
 
 export default function AudioPlayer() {
   const {
@@ -31,35 +23,25 @@ export default function AudioPlayer() {
 
   // Set up Android media control callbacks
   useEffect(() => {
-    if (isAndroid) {
-      // Define global callback functions for Android to call
-      window.handleAndroidMediaPlay = () => {
-        if (audioRef.current && audioRef.current.paused) {
-          resumeAudio();
-        }
-      };
-
-      window.handleAndroidMediaPause = () => {
-        if (audioRef.current && !audioRef.current.paused) {
-          pauseAudio();
-        }
-      };
-
-      window.handleAndroidMediaSeek = (position: number) => {
-        if (audioRef.current) {
-          audioRef.current.currentTime = position;
-          setCurrentTime(position);
-        }
-      };
-
-      // Cleanup function
+    if (isAndroid && audioRef.current) {
+      setupAndroidMediaControls(audioRef.current, setCurrentTime, resumeAudio, pauseAudio);
+      
+      // Cleanup function only clears if this component is unmounting completely
       return () => {
-        delete window.handleAndroidMediaPlay;
-        delete window.handleAndroidMediaPause;
-        delete window.handleAndroidMediaSeek;
+        // Only clear if no audio is playing (component being destroyed, not just re-rendered)
+        if (!audioUrl) {
+          clearAndroidMediaControls();
+        }
       };
     }
-  }, [isAndroid, resumeAudio, pauseAudio]);
+  }, [isAndroid, resumeAudio, pauseAudio, audioUrl]);
+
+  // Update Android controls when audioRef changes
+  useEffect(() => {
+    if (isAndroid && audioRef.current) {
+      setupAndroidMediaControls(audioRef.current, setCurrentTime, resumeAudio, pauseAudio);
+    }
+  }, [audioRef.current, isAndroid, resumeAudio, pauseAudio]);
 
   useEffect(() => {
     if (audioRef.current) {

@@ -9,6 +9,7 @@ import AudioPlayer from "@/components/AudioPlayer";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import ScrollToTop from "@/components/ScrollToTop";
 import ConditionalHeader from "@/components/ConditionalHeader";
+import AndroidMediaSetup from "@/components/AndroidMediaSetup";
 
 const notoSans = Noto_Sans({
   subsets: ["latin"],
@@ -55,6 +56,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <AudioProvider>
+            <AndroidMediaSetup />
             <ErrorBoundary>
               <div className="drawer">
                 <input
