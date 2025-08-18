@@ -55,65 +55,69 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Content Sections */}
-        <div className="grid gap-8" onKeyDown={handleKeyboardNavigation} tabIndex={-1}>
-          {/* Word of the Day */}
+        {/* Content Sections - Dynamic Grid */}
+        <div className="grid gap-6 lg:grid-cols-12" onKeyDown={handleKeyboardNavigation} tabIndex={-1}>
+          {/* Featured Content - Large Section */}
           <motion.section
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="card shadow-sm hover:shadow-md transition-shadow duration-200"
+            className="lg:col-span-8 card glass shadow-lg hover:shadow-xl transition-all duration-300 hover-lift-subtle"
           >
             <div className="card-body">
-              <div className="flex justify-between items-center mb-4">
-                <h2>Word of the Day</h2>
-              </div>
-              <WordOfDay />
-            </div>
-          </motion.section>
-
-          {/* NASA Image */}
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="card shadow-sm hover:shadow-md transition-shadow duration-200"
-          >
-            <div className="card-body">
-              <div className="flex justify-between items-center mb-4">
-                <h2>NASA Astronomy Picture of the Day</h2>
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-headline">NASA Astronomy Picture of the Day</h2>
               </div>
               <NasaImageOfDay />
             </div>
           </motion.section>
 
+          {/* Sidebar Content */}
+          <div className="lg:col-span-4 space-y-6">
+            {/* Word of the Day */}
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="card glass shadow-lg hover:shadow-xl transition-all duration-300 hover-lift-subtle"
+            >
+              <div className="card-body">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-subheadline">Word of the Day</h3>
+                </div>
+                <WordOfDay />
+              </div>
+            </motion.section>
+
+            {/* Dad Joke */}
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="card glass shadow-lg hover:shadow-xl transition-all duration-300 hover-lift-subtle"
+            >
+              <div className="card-body">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-subheadline">Dad Joke of the Day</h3>
+                </div>
+                <DadJoke />
+              </div>
+            </motion.section>
+          </div>
+
+          {/* Full Width Content Sections */}
           {/* Random Facts */}
           <motion.section
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="card shadow-sm hover:shadow-md transition-shadow duration-200"
+            transition={{ delay: 0.4 }}
+            className="lg:col-span-6 card glass shadow-lg hover:shadow-xl transition-all duration-300 hover-lift-subtle"
           >
             <div className="card-body">
               <div className="flex justify-between items-center mb-4">
-                <h2>Random Facts</h2>
+                <h3 className="text-subheadline">Random Facts</h3>
               </div>
               <RandomFacts />
-            </div>
-          </motion.section>
-
-          {/* Dad Joke */}
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="card shadow-sm hover:shadow-md transition-shadow duration-200"
-          >
-            <div className="card-body">
-              <div className="flex justify-between items-center mb-4">
-                <h2>Dad Joke of the Day</h2>
-              </div>
-              <DadJoke />
             </div>
           </motion.section>
 
@@ -122,26 +126,26 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="card shadow-sm hover:shadow-md transition-shadow duration-200"
+            className="lg:col-span-6 card glass shadow-lg hover:shadow-xl transition-all duration-300 hover-lift-subtle"
           >
             <div className="card-body">
               <div className="flex justify-between items-center mb-4">
-                <h2>Artwork of the Day</h2>
+                <h3 className="text-subheadline">Artwork of the Day</h3>
               </div>
               <ArtworkOfDay />
             </div>
           </motion.section>
 
-          {/* Live Webcam */}
+          {/* Live Webcam - Full Width */}
           <motion.section
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="card shadow-sm hover:shadow-md transition-shadow duration-200"
+            className="lg:col-span-12 card glass shadow-lg hover:shadow-xl transition-all duration-300 hover-lift-subtle"
           >
             <div className="card-body">
               <div className="flex justify-between items-center mb-4">
-                <h2>Daily Live Webcam from Around the World</h2>
+                <h2 className="text-headline">Daily Live Webcam from Around the World</h2>
               </div>
               <LiveWebcam />
             </div>

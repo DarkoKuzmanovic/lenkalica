@@ -18,21 +18,18 @@ export default function AndroidMediaSetup() {
 
   useEffect(() => {
     if (isAndroid) {
-      console.log('Setting up Android media callbacks at app level');
       // Ensure callbacks exist even if AudioPlayer hasn't mounted yet
       if (!window.handleAndroidMediaPlay) {
         window.handleAndroidMediaPlay = () => {
-          console.log('Android media play - callback not yet connected');
         };
       }
       if (!window.handleAndroidMediaPause) {
         window.handleAndroidMediaPause = () => {
-          console.log('Android media pause - callback not yet connected');
         };
       }
       if (!window.handleAndroidMediaSeek) {
-        window.handleAndroidMediaSeek = (position: number) => {
-          console.log('Android media seek - callback not yet connected, position:', position);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        window.handleAndroidMediaSeek = (_position: number) => {
         };
       }
     }

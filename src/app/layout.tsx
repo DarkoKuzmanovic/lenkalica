@@ -9,6 +9,7 @@ import ConditionalAudioPlayer from "@/components/ConditionalAudioPlayer";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import ScrollToTop from "@/components/ScrollToTop";
 import ConditionalHeader from "@/components/ConditionalHeader";
+import ReadingProgress from "@/components/ReadingProgress";
 
 const notoSans = Noto_Sans({
   subsets: ["latin"],
@@ -56,6 +57,7 @@ export default function RootLayout({
         <ThemeProvider>
           <AudioProvider>
             <ErrorBoundary>
+              <ReadingProgress />
               <div className="drawer">
                 <input
                   id="main-drawer"

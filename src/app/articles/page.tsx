@@ -64,8 +64,8 @@ export default function ArticlesPage() {
     <div className="py-16">
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
         <div className="text-center max-w-2xl mx-auto">
-          <h1 className="mb-4">Articles & Stories</h1>
-          <p className="text-lg leading-relaxed text-base-content/80">
+          <h1 className="text-display mb-6">Articles & Stories</h1>
+          <p className="text-body-large">
             Discover fascinating stories about culture, history, and geography. Each article is carefully crafted to
             bring you unique insights and perspectives.
           </p>

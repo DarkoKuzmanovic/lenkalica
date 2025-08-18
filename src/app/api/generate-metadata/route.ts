@@ -26,7 +26,6 @@ export async function POST(req: NextRequest) {
   try {
     const { content } = await req.json();
 
-    console.log("Content received:", content);
 
     // If Gemini API is not available, return default metadata
     if (!genAI) {

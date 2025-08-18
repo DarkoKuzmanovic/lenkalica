@@ -41,9 +41,9 @@ export default function RandomFacts() {
         // Reset refresh state
         setRefresh(false);
 
-        // Fetch 3 new facts
+        // Fetch 6 new facts
         const newFacts: Fact[] = [];
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 6; i++) {
           const response = await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en");
           const data = await response.json();
           newFacts.push(data);
@@ -81,8 +81,23 @@ export default function RandomFacts() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-[200px]">
-        <span className="loading loading-spinner loading-lg text-primary"></span>
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <div key={index} className="card bg-base-100 shadow-lg">
+              <div className="card-body p-4">
+                <div className="animate-pulse">
+                  <div className="h-4 bg-base-300 rounded w-3/4 mb-2"></div>
+                  <div className="h-4 bg-base-300 rounded w-full mb-2"></div>
+                  <div className="h-4 bg-base-300 rounded w-5/6"></div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-center">
+          <span className="loading loading-spinner loading-md text-primary"></span>
+        </div>
       </div>
     );
   }
@@ -110,12 +125,14 @@ export default function RandomFacts() {
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {facts.map((fact) => (
-          <div key={fact.id} className="card bg-base-100 shadow-xl">
-            <div className="card-body">
-              <div className="min-h-[100px]">
-                <p className="text-base-content text-lg mb-4">{fact.text}</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {facts.map((fact, index) => (
+          <div key={fact.id} className={`card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 hover-lift-subtle ${
+            index === 0 ? 'sm:col-span-2 lg:col-span-1' : ''
+          }`}>
+            <div className="card-body p-4">
+              <div className="min-h-[80px]">
+                <p className="text-base-content text-sm leading-relaxed">{fact.text}</p>
               </div>
             </div>
           </div>

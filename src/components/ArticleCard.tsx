@@ -8,12 +8,15 @@ import { motion } from "framer-motion";
 
 export default function ArticleCard({ article }: { article: Article }) {
   const readingTime = calculateReadingTime(article.content);
+  
+  // Check if article is new (published within last 7 days)
+  const isNew = new Date().getTime() - new Date(article.date).getTime() < 7 * 24 * 60 * 60 * 1000;
 
   return (
     <motion.div
       whileHover={{ y: -4 }}
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
-      className="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300"
+      className="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 hover-scale focus-ring group"
     >
       <figure className="relative h-56 overflow-hidden">
         <Image
@@ -22,6 +25,13 @@ export default function ArticleCard({ article }: { article: Article }) {
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
+        {isNew && (
+          <div className="absolute top-3 right-3">
+            <span className="status-badge status-new">
+              ✨ New
+            </span>
+          </div>
+        )}
       </figure>
       <div className="card-body p-6">
         <div className="flex-1">

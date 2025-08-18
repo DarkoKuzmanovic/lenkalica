@@ -29,28 +29,21 @@ export function setupAndroidMediaControls(
 
   // Only set up callbacks once to avoid overwriting
   if (!window.handleAndroidMediaPlay) {
-    console.log('Setting up Android media control callbacks');
 
     window.handleAndroidMediaPlay = () => {
-      console.log('Android media play callback triggered');
       if (globalAudioRef && globalAudioRef.paused && globalResumeAudio) {
-        console.log('Resuming audio from Android control');
         globalResumeAudio();
       }
     };
 
     window.handleAndroidMediaPause = () => {
-      console.log('Android media pause callback triggered');
       if (globalAudioRef && !globalAudioRef.paused && globalPauseAudio) {
-        console.log('Pausing audio from Android control');
         globalPauseAudio();
       }
     };
 
     window.handleAndroidMediaSeek = (position: number) => {
-      console.log('Android media seek callback triggered, position:', position);
       if (globalAudioRef && globalSetCurrentTime) {
-        console.log('Seeking to position:', position);
         globalAudioRef.currentTime = position;
         globalSetCurrentTime(position);
         
@@ -67,7 +60,6 @@ export function setupAndroidMediaControls(
       }
     };
   } else {
-    console.log('Android media callbacks already set up, updating references only');
   }
 }
 

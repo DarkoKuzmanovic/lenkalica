@@ -16,10 +16,6 @@ export async function POST(req: NextRequest) {
   try {
     const { prompt, systemPrompt, temperature, topP } = await req.json();
 
-    console.log("Received prompt:", prompt);
-    console.log("System prompt:", systemPrompt);
-    console.log("Temperature:", temperature);
-    console.log("Top P:", topP);
 
     // If Gemini API is not available, return error
     if (!genAI) {
@@ -37,7 +33,6 @@ export async function POST(req: NextRequest) {
         },
       });
 
-      console.log("Model initialized");
 
       // Generate content with proper format
       const result = await model.generateContent([
@@ -45,13 +40,11 @@ export async function POST(req: NextRequest) {
         { text: "\n\nUser: " + prompt },
       ]);
 
-      console.log("Content generated");
 
       const response = await result.response;
 
       // Check if the response has a 'promptFeedback' field which indicates issues with the prompt
       if (response.promptFeedback) {
-        console.warn("Prompt feedback:", response.promptFeedback);
         return NextResponse.json(
           {
             error: "Prompt feedback error",
@@ -63,7 +56,6 @@ export async function POST(req: NextRequest) {
 
       const content = response.text();
 
-      console.log("Response received, length:", content.length);
 
       return NextResponse.json({ content });
     } catch (modelError) {
