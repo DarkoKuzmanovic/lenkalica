@@ -16,7 +16,7 @@ tags:
     "Reconquista",
   ]
 excerpt: "Explore the Alhambra, a breathtaking palace-fortress in Granada, Spain. Discover its history, stunning architecture, ingenious water systems, and enduring legacy as a UNESCO World Heritage Site."
-author: "Unknown"
+author: "Darko Kuzmanovic"
 ---
 
 **Granada, Spain** – The air hangs thick with the scent of jasmine and sun-baked earth. Cicadas buzz a relentless summer chorus, a counterpoint to the gentle murmur of water that permeates the air. High above the sprawling city of Granada, perched on a rugged hill overlooking the snow-dusted peaks of the Sierra Nevada, sits a monument that defies easy categorization: the Alhambra. More than just a palace, fortress, or garden, it is a symphony in stone, a testament to a sophisticated civilization that flourished centuries ago, and a place where the boundaries between art, nature, and engineering blur into seamless harmony. Stepping through its arched gateways is to journey into a world where history is etched in every tile, where water is not just a resource but a voice, and where the echoes of sultans, poets, and artisans still resonate within the intricate plasterwork.
