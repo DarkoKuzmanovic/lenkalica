@@ -6,6 +6,7 @@ import type { Comic } from "@/lib/comics";
 import ComicCard from "@/components/ComicCard";
 import ImageViewer from "@/components/ImageViewer";
 import Pagination from "@/components/Pagination";
+import SkeletonGrid from "@/components/SkeletonGrid";
 
 interface PaginatedResponse {
   data: Comic[];
@@ -79,8 +80,8 @@ export default function ComicsPage() {
         </div>
 
         {isLoading ? (
-          <div className="mt-16 flex justify-center">
-            <span className="loading loading-spinner loading-lg text-primary"></span>
+          <div className="mt-16">
+            <SkeletonGrid count={9} columns={3} type="images" />
           </div>
         ) : (
           <>

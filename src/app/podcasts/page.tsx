@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Pagination from "@/components/Pagination";
+import SkeletonGrid from "@/components/SkeletonGrid";
 import type { Article } from "@/lib/articles";
 import AudioButton from "@/components/AudioButton";
 import { calculateReadingTime } from "@/utils/readingTime";
@@ -101,8 +102,8 @@ export default function PodcastsPage() {
 
         {/* Content */}
         {isLoading ? (
-          <div className="mt-16 flex justify-center">
-            <span className="loading loading-spinner loading-lg text-primary"></span>
+          <div className="mt-16">
+            <SkeletonGrid count={6} columns={2} type="mixed" />
           </div>
         ) : (
           <>

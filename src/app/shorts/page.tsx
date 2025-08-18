@@ -3,6 +3,7 @@
 import type { Short } from "@/lib/shorts";
 import { useEffect, useState } from "react";
 import ShortsCard from "@/components/ShortsCard";
+import ShortsSkeleton from "@/components/ShortsSkeleton";
 import { motion } from "framer-motion";
 import Pagination from "@/components/Pagination";
 
@@ -71,8 +72,10 @@ export default function ShortsPage() {
 
         {/* Content */}
         {isLoading ? (
-          <div className="mt-16 flex justify-center">
-            <span className="loading loading-spinner loading-lg text-primary"></span>
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <ShortsSkeleton key={index} />
+            ))}
           </div>
         ) : (
           <>

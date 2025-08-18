@@ -1,6 +1,7 @@
 "use client";
 
 import ArticleCard from "@/components/ArticleCard";
+import SkeletonCard from "@/components/SkeletonCard";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import type { Article } from "@/lib/articles";
@@ -71,8 +72,11 @@ export default function ArticlesPage() {
           </p>
         </div>
         {isLoading ? (
-          <div className="mt-16 flex justify-center">
-            <span className="loading loading-spinner loading-lg text-primary"></span>
+          <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <SkeletonCard variant="featured" />
+            {Array.from({ length: 5 }).map((_, index) => (
+              <SkeletonCard key={index} variant="default" />
+            ))}
           </div>
         ) : (
           <>
@@ -82,9 +86,13 @@ export default function ArticlesPage() {
               initial="hidden"
               animate="show"
             >
-              {articles.map((article) => (
+              {articles.map((article, index) => (
                 <motion.div key={article.id} variants={item}>
-                  <ArticleCard article={article} />
+                  <ArticleCard 
+                    article={article} 
+                    variant={index === 0 && currentPage === 1 ? 'featured' : 'default'}
+                    priority={index === 0}
+                  />
                 </motion.div>
               ))}
             </motion.div>

@@ -36,8 +36,37 @@ export default function HomePage() {
 
   if (pageLoading) {
     return (
-      <div className="min-h-screen grid place-items-center">
-        <span className="loading loading-spinner loading-lg text-primary"></span>
+      <div className="flex-1">
+        <div className="container mx-auto px-2 sm:px-4 lg:px-8 py-8">
+          {/* Hero Section Skeleton */}
+          <div className="hero mb-8">
+            <div className="hero-content text-center py-12 px-0">
+              <div className="max-w-2xl space-y-4 animate-pulse">
+                <div className="h-12 bg-base-300 rounded-lg mx-auto w-3/4"></div>
+                <div className="h-6 bg-base-300 rounded mx-auto w-1/2"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Content Sections Skeleton */}
+          <div className="grid gap-6 lg:grid-cols-12 animate-pulse">
+            {/* Featured content skeleton */}
+            <div className="lg:col-span-8 card glass h-96 bg-base-300"></div>
+            
+            {/* Sidebar content skeleton */}
+            <div className="lg:col-span-4 space-y-6">
+              <div className="card glass h-48 bg-base-300"></div>
+              <div className="card glass h-48 bg-base-300"></div>
+            </div>
+
+            {/* Bottom row skeleton */}
+            <div className="lg:col-span-6 card glass h-64 bg-base-300"></div>
+            <div className="lg:col-span-6 card glass h-64 bg-base-300"></div>
+            
+            {/* Full width skeleton */}
+            <div className="lg:col-span-12 card glass h-80 bg-base-300"></div>
+          </div>
+        </div>
       </div>
     );
   }

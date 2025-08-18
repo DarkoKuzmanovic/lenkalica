@@ -245,3 +245,53 @@ body {
 .focus-ring {
   @apply focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-base-100;
 }
+
+/* Card Design Variants */
+.card-featured {
+  @apply relative overflow-hidden;
+  background: linear-gradient(135deg, rgba(255, 184, 0, 0.1) 0%, rgba(255, 138, 0, 0.1) 100%);
+}
+
+.card-featured::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #FFB800 0%, #FF8A00 100%);
+}
+
+.card-compact {
+  @apply shadow-sm;
+}
+
+.card-compact .card-body {
+  @apply p-4;
+}
+
+.card-compact figure {
+  @apply h-32;
+}
+
+.card-list {
+  @apply flex-row overflow-hidden;
+}
+
+.card-list figure {
+  @apply w-48 h-32 shrink-0;
+}
+
+.card-list .card-body {
+  @apply p-4 flex-1;
+}
+
+@media (max-width: 768px) {
+  .card-list {
+    @apply flex-col;
+  }
+  
+  .card-list figure {
+    @apply w-full h-48;
+  }
+}
