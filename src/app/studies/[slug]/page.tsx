@@ -12,7 +12,6 @@ export default function StudyPage({ params }: { params: Promise<{ slug: string }
   const [study, setStudy] = useState<Study | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [showInfographic, setShowInfographic] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -86,45 +85,35 @@ export default function StudyPage({ params }: { params: Promise<{ slug: string }
             <h1 className="mb-4">{study.title}</h1>
             <StudyMeta study={study} />
             
-            {/* Interactive Toggle */}
+            {/* Interactive Infographic Link */}
             {study.hasInfographic && (
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <div className="tabs tabs-boxed">
-                  <button 
-                    className={`tab ${!showInfographic ? 'tab-active' : ''}`}
-                    onClick={() => setShowInfographic(false)}
-                  >
-                    📖 Article
-                  </button>
-                  <button 
-                    className={`tab ${showInfographic ? 'tab-active' : ''}`}
-                    onClick={() => setShowInfographic(true)}
-                  >
-                    📊 Interactive
-                  </button>
-                </div>
+                <a 
+                  href={`/studies/${study.slug}/infographic`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary btn-lg gap-2"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                  📊 View Interactive Infographic
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
                 <div className="badge badge-info gap-2">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  Switch between reading and interactive modes
+                  Opens in new tab for better experience
                 </div>
               </div>
             )}
           </header>
 
           {/* Content Display */}
-          {showInfographic && study.hasInfographic ? (
-            <div className="w-full">
-              <iframe
-                src={`/api/studies/${study.slug}/infographic`}
-                className="w-full h-screen border-0 rounded-lg shadow-lg"
-                title={`${study.title} - Interactive Infographic`}
-              />
-            </div>
-          ) : (
-            <StudyContent content={study.content} tags={study.tags} />
-          )}
+          <StudyContent content={study.content} tags={study.tags} />
         </article>
       </div>
     </>

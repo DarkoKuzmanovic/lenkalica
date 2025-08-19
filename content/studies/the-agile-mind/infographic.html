@@ -1,28 +1,51 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Emotional Agility: An Interactive Guide</title>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Literata:wght@400;500;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet" />
-    <link href="https://db.onlinewebfonts.com/c/1e44faec07b8b81f60a3215d76bd0086?family=Irvin-Heading" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
     <!-- Chosen Palette: Serene Harmony -->
     <!-- Application Structure Plan: The SPA is designed as a guided, vertical journey. It starts with a captivating hero section to introduce the concept, followed by a process-oriented exploration of the 'Four Movements'. This section uses interactive tabs to allow users to explore each step without being overwhelmed. Next, a 'Benefits' section uses dynamic cards to showcase tangible outcomes. A comparative analysis section uses an interactive chart to clarify distinctions between EA and related concepts. Finally, an actionable 'Toolkit' section provides practical exercises in an accordion format. This structure was chosen to guide the user from theory to practice, making a complex psychological framework digestible and actionable. The flow is logical: What it is -> How it works -> Why it matters -> How it compares -> How to do it. -->
     <!-- Visualization & Content Choices: 1. Four Movements Diagram: Report Info -> The core process of EA. Goal -> Organize & Explain. Viz -> Interactive tabbed diagram (HTML/CSS/JS). Interaction -> Clicking tabs reveals detailed content for each step. Justification -> Breaks down a complex process into manageable, self-paced steps, enhancing comprehension. 2. Benefits Section: Report Info -> Tangible outcomes of EA. Goal -> Inform & Motivate. Viz -> Clickable info cards (HTML/CSS/JS). Interaction -> Clicking a card reveals more detailed text. Justification -> Presents key benefits concisely, with an option to drill down for more detail, catering to different levels of user interest. 3. Comparative Analysis Chart: Report Info -> EA vs. EI, Resilience, Mindfulness. Goal -> Compare & Differentiate. Viz -> Interactive Radar Chart (Chart.js). Interaction -> Hovering over points shows details; buttons can toggle datasets. Justification -> A radar chart visually represents the multi-faceted nature of these concepts and allows for easy comparison of their strengths and focus areas. 4. Practical Toolkit: Report Info -> Actionable exercises. Goal -> Instruct & Enable. Viz -> Accordion UI (HTML/CSS/JS). Interaction -> Clicking a heading expands to show the exercise. Justification -> Organizes a large number of exercises cleanly, allowing users to focus on one at a time. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
       body {
-        font-family: "Literata", ui-serif, Georgia, serif;
+        font-family: "Inter", sans-serif;
+        background-color: #fdfbf8;
+        color: #4a4a4a;
       }
-      h1, h2, h3, h4, h5, h6 {
-        font-family: "Irvin-Heading", serif;
-        font-weight: 700;
-        letter-spacing: -0.1px;
+      .nav-link {
+        transition: color 0.3s, border-bottom-color 0.3s;
+        border-bottom: 2px solid transparent;
+      }
+      .nav-link:hover,
+      .nav-link.active {
+        color: #c8a07d;
+        border-bottom-color: #c8a07d;
+      }
+      .tab.active {
+        background-color: #c8a07d;
+        color: #ffffff;
+      }
+      .tab {
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .benefit-card {
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      .benefit-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+      .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease-in-out;
       }
       .chart-container {
         position: relative;
@@ -40,44 +63,36 @@
       }
     </style>
   </head>
-  <body class="bg-base-100 text-base-content font-serif">
-    <div class="navbar bg-base-100 shadow-sm sticky top-0 z-50">
-      <div class="navbar-start">
-        <div class="dropdown">
-          <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16"></path>
-            </svg>
-          </div>
-          <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-            <li><a href="#intro" class="nav-link">Introduction</a></li>
-            <li><a href="#framework" class="nav-link">Framework</a></li>
-            <li><a href="#benefits" class="nav-link">Benefits</a></li>
-            <li><a href="#compare" class="nav-link">Compare</a></li>
-            <li><a href="#toolkit" class="nav-link">Toolkit</a></li>
-          </ul>
+  <body class="antialiased">
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+      <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-[#4A4A4A]">The Agile Mind</h1>
+        <div class="hidden md:flex space-x-8">
+          <a href="#intro" class="nav-link active">Introduction</a>
+          <a href="#framework" class="nav-link">The Framework</a>
+          <a href="#benefits" class="nav-link">Benefits</a>
+          <a href="#compare" class="nav-link">Compare</a>
+          <a href="#toolkit" class="nav-link">Toolkit</a>
         </div>
-        <a class="btn btn-ghost text-xl font-bold">The Agile Mind</a>
+        <button id="mobile-menu-button" class="md:hidden text-2xl">☰</button>
+      </nav>
+      <div id="mobile-menu" class="hidden md:hidden flex-col items-center py-4 space-y-4">
+        <a href="#intro" class="nav-link active">Introduction</a>
+        <a href="#framework" class="nav-link">The Framework</a>
+        <a href="#benefits" class="nav-link">Benefits</a>
+        <a href="#compare" class="nav-link">Compare</a>
+        <a href="#toolkit" class="nav-link">Toolkit</a>
       </div>
-      <div class="navbar-center hidden lg:flex">
-        <ul class="menu menu-horizontal px-1">
-          <li><a href="#intro" class="nav-link active">Introduction</a></li>
-          <li><a href="#framework" class="nav-link">Framework</a></li>
-          <li><a href="#benefits" class="nav-link">Benefits</a></li>
-          <li><a href="#compare" class="nav-link">Compare</a></li>
-          <li><a href="#toolkit" class="nav-link">Toolkit</a></li>
-        </ul>
-      </div>
-    </div>
+    </header>
 
     <main>
       <section id="intro" class="container mx-auto px-6 py-16 text-center">
-        <h2 class="text-4xl md:text-5xl font-bold mb-4 text-primary">Emotional Agility</h2>
-        <p class="text-xl md:text-2xl text-base-content/70 mb-8 max-w-3xl mx-auto">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#C8A07D]">Emotional Agility</h2>
+        <p class="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
           A revolutionary, science-based approach to navigate life's twists and turns with self-acceptance,
           clear-sightedness, and an open mind.
         </p>
-        <p class="text-lg text-base-content/80 max-w-4xl mx-auto">
+        <p class="text-lg text-gray-700 max-w-4xl mx-auto">
           This guide translates the core principles developed by Dr. Susan David into an interactive experience. You'll
           learn to move beyond emotional rigidity—like bottling up feelings or brooding over them—and instead use your
           emotions as data. This skill allows you to respond to challenges with intention and your core values, rather
@@ -86,11 +101,11 @@
         </p>
       </section>
 
-      <section id="framework" class="py-16 bg-base-200">
+      <section id="framework" class="py-16 bg-white">
         <div class="container mx-auto px-6">
           <div class="text-center mb-12">
             <h2 class="text-3xl font-bold">The Four Movements of Emotional Agility</h2>
-            <p class="mt-4 text-lg text-base-content/70 max-w-3xl mx-auto">
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
               Emotional Agility is a process built on four key practices. They are not just tips, but a reinforcing
               cycle of awareness and intentional action. Click through the tabs to explore how to move from a state of
               reactivity to a considered, value-driven response.
@@ -98,23 +113,23 @@
           </div>
 
           <div class="max-w-4xl mx-auto">
-            <div class="tabs tabs-boxed mb-8 justify-center">
-              <button data-tab="showing-up" class="tab tab-active">
+            <div class="flex justify-center border-b mb-8">
+              <button data-tab="showing-up" class="tab active text-lg py-3 px-6 font-medium rounded-t-lg">
                 1. Showing Up
               </button>
-              <button data-tab="stepping-out" class="tab">
+              <button data-tab="stepping-out" class="tab text-lg py-3 px-6 font-medium rounded-t-lg">
                 2. Stepping Out
               </button>
-              <button data-tab="walking-why" class="tab">
+              <button data-tab="walking-why" class="tab text-lg py-3 px-6 font-medium rounded-t-lg">
                 3. Walking Your Why
               </button>
-              <button data-tab="moving-on" class="tab">4. Moving On</button>
+              <button data-tab="moving-on" class="tab text-lg py-3 px-6 font-medium rounded-t-lg">4. Moving On</button>
             </div>
 
-            <div class="card bg-base-100 shadow-xl p-6">
+            <div id="tab-content" class="p-4">
               <div id="showing-up" class="tab-pane active">
-                <h3 class="text-2xl font-bold mb-4 text-primary">Showing Up: The Courage to Face Your Inner World</h3>
-                <p class="text-base-content/80 leading-relaxed">
+                <h3 class="text-2xl font-bold mb-4 text-[#C8A07D]">Showing Up: The Courage to Face Your Inner World</h3>
+                <p class="text-gray-700 leading-relaxed">
                   This is the foundational practice of facing your thoughts, emotions, and behaviors willingly, with
                   curiosity and kindness, rather than ignoring or judging them. It's about accepting the full spectrum
                   of human experience. When we fight a difficult emotion, we create a secondary struggle that drains our
@@ -123,10 +138,10 @@
                 </p>
               </div>
               <div id="stepping-out" class="tab-pane hidden">
-                <h3 class="text-2xl font-bold mb-4 text-primary">
+                <h3 class="text-2xl font-bold mb-4 text-[#C8A07D]">
                   Stepping Out: Creating Space Between Stimulus and Response
                 </h3>
-                <p class="text-base-content/80 leading-relaxed">
+                <p class="text-gray-700 leading-relaxed">
                   This is the process of detaching from your thoughts and emotions to see them for what they are:
                   transient internal events, not infallible directives. This creates a crucial psychological space where
                   you regain the power to choose your actions. A simple technique is to rephrase your thoughts. Instead
@@ -136,8 +151,8 @@
                 </p>
               </div>
               <div id="walking-why" class="tab-pane hidden">
-                <h3 class="text-2xl font-bold mb-4 text-primary">Walking Your Why: The Compass of Core Values</h3>
-                <p class="text-base-content/80 leading-relaxed">
+                <h3 class="text-2xl font-bold mb-4 text-[#C8A07D]">Walking Your Why: The Compass of Core Values</h3>
+                <p class="text-gray-700 leading-relaxed">
                   This step involves identifying your core values and using them as an internal compass to guide your
                   behavior. The goal is to be driven by your deeply held principles, not by knee-jerk emotional
                   reactions. Your most difficult emotions often act as signposts, pointing directly to what you cherish
@@ -146,8 +161,8 @@
                 </p>
               </div>
               <div id="moving-on" class="tab-pane hidden">
-                <h3 class="text-2xl font-bold mb-4 text-primary">Moving On: The Power of Intentional Action</h3>
-                <p class="text-base-content/80 leading-relaxed">
+                <h3 class="text-2xl font-bold mb-4 text-[#C8A07D]">Moving On: The Power of Intentional Action</h3>
+                <p class="text-gray-700 leading-relaxed">
                   This final movement is where insight translates into behavior. It's about making small, deliberate
                   adjustments—or "tiny tweaks"—to your mindset and habits to align your actions with your values.
                   Lasting change comes from small, consistent shifts over time, not radical overhauls. For instance, if
@@ -164,59 +179,51 @@
         <div class="container mx-auto px-6">
           <div class="text-center mb-12">
             <h2 class="text-3xl font-bold">The Tangible Dividends of Agility</h2>
-            <p class="mt-4 text-lg text-base-content/70 max-w-3xl mx-auto">
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
               Practicing emotional agility yields concrete benefits across all areas of life. It provides a universal
               mechanism for navigating complexity by replacing automatic reactions with considered, value-driven
               responses. Click on each card to learn more.
             </p>
           </div>
           <div class="grid md:grid-cols-3 gap-8">
-            <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-2">
-              <div class="card-body">
-                <h3 class="card-title text-primary">Stress & Resilience</h3>
-                <p class="text-base-content/80">
-                  Learn how emotional agility provides the "how-to" for bouncing back from adversity, creating a
-                  psychological buffer that mitigates the fight-or-flight response and allows for clear-headed
-                  problem-solving under pressure.
-                </p>
-              </div>
+            <div class="benefit-card bg-white p-8 rounded-lg shadow-md cursor-pointer">
+              <h3 class="text-2xl font-bold mb-4 text-[#C8A07D]">Stress & Resilience</h3>
+              <p class="text-gray-700">
+                Learn how emotional agility provides the "how-to" for bouncing back from adversity, creating a
+                psychological buffer that mitigates the fight-or-flight response and allows for clear-headed
+                problem-solving under pressure.
+              </p>
             </div>
-            <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-2">
-              <div class="card-body">
-                <h3 class="card-title text-primary">Leadership & Work</h3>
-                <p class="text-base-content/80">
-                  Discover why it's a cornerstone of effective leadership. Agile leaders create psychological safety,
-                  boost team performance, and reduce burnout by navigating uncertainty with focus and intention.
-                </p>
-              </div>
+            <div class="benefit-card bg-white p-8 rounded-lg shadow-md cursor-pointer">
+              <h3 class="text-2xl font-bold mb-4 text-[#C8A07D]">Leadership & Work</h3>
+              <p class="text-gray-700">
+                Discover why it's a cornerstone of effective leadership. Agile leaders create psychological safety,
+                boost team performance, and reduce burnout by navigating uncertainty with focus and intention.
+              </p>
             </div>
-            <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer hover:-translate-y-2">
-              <div class="card-body">
-                <h3 class="card-title text-primary">Relationships</h3>
-                <p class="text-base-content/80">
-                  See how it transforms interpersonal dynamics. By creating space to choose a response that honors your
-                  values, you can move from reactive conflict to authentic connection with partners, family, and friends.
-                </p>
-              </div>
+            <div class="benefit-card bg-white p-8 rounded-lg shadow-md cursor-pointer">
+              <h3 class="text-2xl font-bold mb-4 text-[#C8A07D]">Relationships</h3>
+              <p class="text-gray-700">
+                See how it transforms interpersonal dynamics. By creating space to choose a response that honors your
+                values, you can move from reactive conflict to authentic connection with partners, family, and friends.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="compare" class="py-16 bg-base-200">
+      <section id="compare" class="py-16 bg-white">
         <div class="container mx-auto px-6">
           <div class="text-center mb-12">
             <h2 class="text-3xl font-bold">How Emotional Agility Compares</h2>
-            <p class="mt-4 text-lg text-base-content/70 max-w-3xl mx-auto">
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
               Emotional Agility is part of a broader ecosystem of psychological concepts. While related, they are not
               the same. This interactive chart helps clarify the unique focus and goals of each skill, highlighting how
               Emotional Agility integrates awareness with value-driven action.
             </p>
           </div>
-          <div class="card bg-base-100 shadow-xl p-6">
-            <div class="chart-container h-[40vh] md:h-96 max-h-[500px]">
-              <canvas id="comparisonChart"></canvas>
-            </div>
+          <div class="chart-container h-[40vh] md:h-96 max-h-[500px]">
+            <canvas id="comparisonChart"></canvas>
           </div>
         </div>
       </section>
@@ -225,19 +232,21 @@
         <div class="container mx-auto px-6">
           <div class="text-center mb-12">
             <h2 class="text-3xl font-bold">Your Practical Toolkit</h2>
-            <p class="mt-4 text-lg text-base-content/70 max-w-3xl mx-auto">
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
               Emotional Agility is a skill that improves with practice. This toolkit provides concrete exercises for
               each of the four movements. Click on any exercise to expand it and begin building your proficiency today.
             </p>
           </div>
           <div class="max-w-3xl mx-auto space-y-4">
-            <div class="collapse collapse-arrow bg-base-100 shadow-xl">
-              <input type="checkbox" name="accordion-1" />
-              <div class="collapse-title text-xl font-medium text-primary">
-                Exercises for "Showing Up"
-              </div>
-              <div class="collapse-content">
-                <ul class="list-disc list-inside space-y-2 text-base-content/80">
+            <div class="accordion-item bg-white rounded-lg shadow-md">
+              <button
+                class="accordion-header w-full text-left p-6 font-bold text-xl text-[#C8A07D] flex justify-between items-center"
+              >
+                <span>Exercises for "Showing Up"</span>
+                <span class="transform transition-transform duration-300">▼</span>
+              </button>
+              <div class="accordion-content px-6 pb-6">
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
                   <li>
                     <strong>Mindful Paced Breathing:</strong> Inhale slowly through the nose, exhale slowly through the
                     mouth. Even one minute calms your nervous system.
@@ -253,13 +262,15 @@
                 </ul>
               </div>
             </div>
-            <div class="collapse collapse-arrow bg-base-100 shadow-xl">
-              <input type="checkbox" name="accordion-2" />
-              <div class="collapse-title text-xl font-medium text-primary">
-                Exercises for "Stepping Out"
-              </div>
-              <div class="collapse-content">
-                <ul class="list-disc list-inside space-y-2 text-base-content/80">
+            <div class="accordion-item bg-white rounded-lg shadow-md">
+              <button
+                class="accordion-header w-full text-left p-6 font-bold text-xl text-[#C8A07D] flex justify-between items-center"
+              >
+                <span>Exercises for "Stepping Out"</span>
+                <span class="transform transition-transform duration-300">▼</span>
+              </button>
+              <div class="accordion-content px-6 pb-6">
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
                   <li>
                     <strong>Thought and Feeling Labeling:</strong> Rephrase "I am anxious" to "I'm noticing the feeling
                     of anxiety." This creates immediate mental space.
@@ -276,13 +287,15 @@
                 </ul>
               </div>
             </div>
-            <div class="collapse collapse-arrow bg-base-100 shadow-xl">
-              <input type="checkbox" name="accordion-3" />
-              <div class="collapse-title text-xl font-medium text-primary">
-                Exercises for "Walking Your Why"
-              </div>
-              <div class="collapse-content">
-                <ul class="list-disc list-inside space-y-2 text-base-content/80">
+            <div class="accordion-item bg-white rounded-lg shadow-md">
+              <button
+                class="accordion-header w-full text-left p-6 font-bold text-xl text-[#C8A07D] flex justify-between items-center"
+              >
+                <span>Exercises for "Walking Your Why"</span>
+                <span class="transform transition-transform duration-300">▼</span>
+              </button>
+              <div class="accordion-content px-6 pb-6">
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
                   <li>
                     <strong>Value Clarification Prompts:</strong> Journal on questions like: "What qualities do I admire
                     most in others?" or "What do I want to stand for in my life?"
@@ -294,13 +307,15 @@
                 </ul>
               </div>
             </div>
-            <div class="collapse collapse-arrow bg-base-100 shadow-xl">
-              <input type="checkbox" name="accordion-4" />
-              <div class="collapse-title text-xl font-medium text-primary">
-                Exercises for "Moving On"
-              </div>
-              <div class="collapse-content">
-                <ul class="list-disc list-inside space-y-2 text-base-content/80">
+            <div class="accordion-item bg-white rounded-lg shadow-md">
+              <button
+                class="accordion-header w-full text-left p-6 font-bold text-xl text-[#C8A07D] flex justify-between items-center"
+              >
+                <span>Exercises for "Moving On"</span>
+                <span class="transform transition-transform duration-300">▼</span>
+              </button>
+              <div class="accordion-content px-6 pb-6">
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
                   <li>
                     <strong>"Tiny Tweak" Identification:</strong> Choose a core value and identify one small, achievable
                     action you can take in the next 24 hours to express it.
@@ -321,9 +336,22 @@
       </section>
     </main>
 
+    <footer class="bg-white mt-16">
+      <div class="container mx-auto px-6 py-8 text-center text-gray-600">
+        <p>
+          &copy; 2024 The Agile Mind. An interactive exploration of Emotional Agility based on the work of Dr. Susan
+          David.
+        </p>
+      </div>
+    </footer>
+
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // Mobile menu functionality removed since using DaisyUI dropdown
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+        mobileMenuButton.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+        });
 
         const navLinks = document.querySelectorAll(".nav-link");
         const sections = document.querySelectorAll("main section");
@@ -370,8 +398,8 @@
           tab.addEventListener("click", () => {
             const target = tab.getAttribute("data-tab");
 
-            tabs.forEach((t) => t.classList.remove("tab-active"));
-            tab.classList.add("tab-active");
+            tabs.forEach((t) => t.classList.remove("active"));
+            tab.classList.add("active");
 
             tabPanes.forEach((pane) => {
               if (pane.id === target) {
@@ -383,7 +411,26 @@
           });
         });
 
-        // Accordion functionality now handled by DaisyUI collapse components
+        const accordionItems = document.querySelectorAll(".accordion-item");
+        accordionItems.forEach((item) => {
+          const header = item.querySelector(".accordion-header");
+          const content = item.querySelector(".accordion-content");
+          const icon = header.querySelector("span:last-child");
+
+          header.addEventListener("click", () => {
+            const isOpen = content.style.maxHeight && content.style.maxHeight !== "0px";
+
+            accordionItems.forEach((i) => {
+              i.querySelector(".accordion-content").style.maxHeight = "0px";
+              i.querySelector(".accordion-header span:last-child").style.transform = "rotate(0deg)";
+            });
+
+            if (!isOpen) {
+              content.style.maxHeight = content.scrollHeight + "px";
+              icon.style.transform = "rotate(180deg)";
+            }
+          });
+        });
 
         const ctx = document.getElementById("comparisonChart").getContext("2d");
         const comparisonChart = new Chart(ctx, {

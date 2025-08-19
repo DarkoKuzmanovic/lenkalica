@@ -1,6 +1,6 @@
 ---
 title: "The Agile Mind: A Comprehensive Framework for Thriving in the Face of Stress and Change"
-date: "2024-12-22"
+date: "2025-08-18"
 author: "Lenka Suncokretić"
 category: "Psychology"
 tags:
@@ -12,15 +12,13 @@ tags:
     "Resilience",
     "Leadership",
     "Mindfulness",
-    "Self-Improvement"
+    "Self-Improvement",
   ]
 excerpt: "A comprehensive exploration of Emotional Agility - Dr. Susan David's science-based framework for navigating life's challenges with purpose, resilience, and authenticity. Learn the four movements that transform reactive patterns into value-driven responses."
 readingTime: "45 min"
 wordCount: 13000
 hasInfographic: true
 ---
-
-# The Agile Mind: A Comprehensive Framework for Thriving in the Face of Stress and Change
 
 ## Introduction: Beyond Reactivity—The Imperative of Emotional Agility in a Complex World
 
@@ -35,6 +33,8 @@ The antithesis of this skill is emotional rigidity, a state where individuals be
 **Brooding**, an obsessive rumination where individuals become entangled in their feelings and the unhelpful narratives that accompany them, replaying grievances and anxieties without resolution.<sup>11</sup> Both bottling and brooding lock a person into a cycle of reactivity, preventing growth and undermining well-being.<sup>11</sup>
 
 This report presents the central thesis that thriving in the modern world is not achieved by eliminating so-called "negative" emotions, but by fundamentally reorienting our relationship with them. It requires a paradigm shift away from the traditional focus on emotional control or suppression toward a model of emotional utilization.<sup>15</sup> The framework of Emotional Agility posits that all emotions, especially the most difficult ones, are not adversaries to be conquered. Instead, they are adaptive data sources—valuable information and signposts that signal what we truly care about.<sup>11</sup> By developing a flexible, courageous, and value-driven relationship with our entire inner world, we can move beyond mere survival and learn to thrive.
+
+---
 
 ## Part I: The Four Movements of Emotional Agility—A Deconstructive Analysis
 
@@ -89,6 +89,8 @@ Complementing this is the **"Teeter-Totter" Principle**, which emphasizes the im
 
 Finally, Moving On involves a critical shift in motivation. By aligning actions with core values, motivation moves from being extrinsic ("have-to") to intrinsic ("want-to").<sup>15</sup> This sense of autonomy—the feeling that one is acting out of free will and personal conviction—is a powerful prerequisite for initiating and sustaining positive change.<sup>25</sup> This is how Emotional Agility empowers individuals to not just get unstuck, but to actively and intentionally shape the trajectory of their work and lives.
 
+---
+
 ## Part II: The Tangible Dividends of Emotional Agility
 
 The practice of Emotional Agility is not merely a theoretical exercise; it yields concrete, measurable benefits across every domain of life. From enhancing personal resilience and mitigating the physiological impact of stress to transforming leadership effectiveness and deepening interpersonal relationships, the framework provides a universal mechanism for navigating complexity. This mechanism is the replacement of an automatic, emotion-driven _reaction_ with a considered, value-driven _response_. The space created by "Stepping Out" is where the entire value of the framework is realized, allowing individuals to operate with intention rather than impulse, a principle that applies universally whether one is facing a stressful deadline, a difficult conversation with a colleague, or a conflict with a loved one.<sup>1</sup>
@@ -127,6 +129,8 @@ The same logic applies to friendships and family relationships. When a friend ca
 
 Ultimately, the power of Emotional Agility in relationships stems from its capacity to foster authenticity.<sup>17</sup> When individuals are able to be real with their own full range of emotions—to Show Up to them with courage and compassion—they create the psychological safety for others to do the same. This allows for deeper, more genuine connections built on mutual understanding and respect, rather than on pretense or the avoidance of difficult conversations.<sup>9</sup>
 
+---
+
 ## Part III: Emotional Agility in the Psychological Landscape
 
 Emotional Agility does not exist in a vacuum. It is part of a broader ecosystem of psychological concepts related to emotional functioning, including emotional intelligence, resilience, and mindfulness. While these terms are often used interchangeably, they represent distinct, albeit related, constructs. A nuanced understanding requires a clear differentiation of their primary focus, key skills, and ultimate goals. This comparative analysis highlights the unique and vital contribution of Emotional Agility as a comprehensive, action-oriented framework for living a value-driven life.
@@ -157,16 +161,60 @@ _wise and value-congruent action informed by that awareness_.
 
 To distill these distinctions into a clear and accessible format, the following table provides a side-by-side comparison of these four critical psychological skills. This highlights the unique contribution of Emotional Agility as a comprehensive framework that integrates awareness with value-driven action.
 
-| **Concept** | **Primary Focus** | **Key Skills** | **Ultimate Goal** |
-| --- | --- | --- | --- |
-| **Emotional Agility** | Navigating emotions to act in alignment with core values. | Showing Up, Stepping Out, Walking Your Why, Moving On. | A meaningful, value-driven life despite stress and setbacks. |
-| --- | --- | --- | --- |
-| **Emotional Intelligence** | Perceiving, understanding, and managing own and others' emotions. | Self-awareness, self-regulation, empathy, social skills. | Effective personal and interpersonal functioning. |
-| --- | --- | --- | --- |
-| **Resilience** | Recovering and adapting in the face of adversity. | Bouncing back, coping, transforming challenges. | Thriving and growth after experiencing difficulty. |
-| --- | --- | --- | --- |
-| **Mindfulness** | Non-judgmental, present-moment awareness. | Focused attention, observation, acceptance. | Clarity, calm, and reduced reactivity. |
-| --- | --- | --- | --- |
+<table>
+  <tr>
+   <td><strong>Concept</strong>
+   </td>
+   <td><strong>Primary Focus</strong>
+   </td>
+   <td><strong>Key Skills</strong>
+   </td>
+   <td><strong>Ultimate Goal</strong>
+   </td>
+  </tr>
+  <tr>
+   <td><strong>Emotional Agility</strong>
+   </td>
+   <td>Navigating emotions to act in alignment with core values.
+   </td>
+   <td>Showing Up, Stepping Out, Walking Your Why, Moving On.
+   </td>
+   <td>A meaningful, value-driven life despite stress and setbacks.
+   </td>
+  </tr>
+  <tr>
+   <td><strong>Emotional Intelligence</strong>
+   </td>
+   <td>Perceiving, understanding, and managing own and others' emotions.
+   </td>
+   <td>Self-awareness, self-regulation, empathy, social skills.
+   </td>
+   <td>Effective personal and interpersonal functioning.
+   </td>
+  </tr>
+  <tr>
+   <td><strong>Resilience</strong>
+   </td>
+   <td>Recovering and adapting in the face of adversity.
+   </td>
+   <td>Bouncing back, coping, transforming challenges.
+   </td>
+   <td>Thriving and growth after experiencing difficulty.
+   </td>
+  </tr>
+  <tr>
+   <td><strong>Mindfulness</strong>
+   </td>
+   <td>Non-judgmental, present-moment awareness.
+   </td>
+   <td>Focused attention, observation, acceptance.
+   </td>
+   <td>Clarity, calm, and reduced reactivity.
+   </td>
+  </tr>
+</table>
+
+---
 
 ## Part IV: A Practical Guide to Cultivating Emotional Agility
 
@@ -200,8 +248,10 @@ These exercises help to clarify the core values that will serve as your internal
 These exercises focus on translating values into small, concrete actions.
 
 - **"Tiny Tweak" Identification:** Choose one of your most important core values. Then, identify one small, concrete, and achievable action you can take in the next 24 hours that would be an expression of that value. For example, if you value "learning," a tiny tweak might be to spend 15 minutes reading a book instead of scrolling on social media. The key is to make the action small enough that it feels easy to accomplish.<sup>25</sup>
-- **Habit Piggybacking:** This technique, also known as habit stacking, involves linking a new, desired behavior to a well-established existing habit. The formula is: "After \[current habit\], I will \[new habit\]." For instance, "After I pour my morning coffee, I will think of one thing I am grateful for" (aligning with a value of gratitude). This leverages existing neural pathways to make the new, value-aligned behavior more automatic.<sup>26</sup>
+- **Habit Piggybacking:** This technique, also known as habit stacking, involves linking a new, desired behavior to a well-established existing habit. The formula is: "After [current habit], I will [new habit]." For instance, "After I pour my morning coffee, I will think of one thing I am grateful for" (aligning with a value of gratitude). This leverages existing neural pathways to make the new, value-aligned behavior more automatic.<sup>26</sup>
 - **Behavioral Activation:** This is a powerful strategy for counteracting the inertia of negative moods like sadness or apathy. The exercise involves scheduling small activities that provide a sense of either mastery (e.g., organizing a drawer, learning a new skill) or pleasure (e.g., listening to music, going for a walk in nature). Intentionally engaging in these value-aligned behaviors, even when you don't feel like it, can create a positive feedback loop that buoys your mood and energy.<sup>40</sup>
+
+---
 
 ## Part V: Nuances, Challenges, and Critiques
 
@@ -225,6 +275,8 @@ Despite its strengths, the application of Emotional Agility is not without its c
 - **Cultural and Contextual Considerations:** The expression, interpretation, and social acceptability of emotions can vary significantly across cultures. For example, in more hierarchical or collectivist business cultures, such as those found in parts of India, the open expression of emotion or challenging of authority—even when value-aligned—may present unique challenges. The application of the framework may therefore require careful adaptation to fit specific cultural and organizational contexts.<sup>20</sup>
 - **The Risk of Intellectualization:** A potential pitfall is using the language and concepts of Emotional Agility to intellectually analyze or "figure out" emotions rather than truly feeling and accepting them. If the framework is used to bypass the raw, visceral experience of an emotion, it can become another form of avoidance. The foundational importance of "Showing Up"—the compassionate, embodied acceptance of feeling—is crucial to prevent the framework from becoming a purely cognitive exercise.
 
+---
+
 ## Conclusion: Embracing the Process—Emotional Agility as a Lifelong Practice
 
 The journey from emotional rigidity to Emotional Agility is a transformative one. It involves a fundamental shift in perspective: from viewing our inner world as a battlefield of warring emotions to be controlled, to seeing it as an ecosystem of valuable information to be understood. The four movements—Showing Up, Stepping Out, Walking Your Why, and Moving On—provide a structured, evidence-based pathway for this journey. They form a dynamic and cyclical process that begins with courageous acceptance, moves through clarifying perspective, is guided by deeply held values, and culminates in intentional, meaningful action.
@@ -235,50 +287,50 @@ In her manifesto for Emotional Agility, Dr. Susan David presents a powerful call
 
 #### Works cited
 
-1. Mastering Emotional Agility: A Vital Leadership Skill for Modern Workplaces, accessed August 18, 2025, <https://www.yorkcountychamber.com/2025/01/29/mastering-emotional-agility-a-vital-leadership-skill-for-modern-workplaces/>
-2. Why Emotional Agility Is The Most Important Skill You Need To Know with Susan David, accessed August 18, 2025, <https://lewishowes.com/podcast/why-emotional-agility-is-the-most-important-skill-you-need-to-know-with-susan-david/>
-3. <www.goodrx.com>, accessed August 18, 2025, <https://www.goodrx.com/health-topic/mental-health/how-to-practice-emotional-agility#:~:text=Emotional%20agility%20refers%20to%20using,Thrive%20in%20Work%20and%20Life.%E2%80%9D>
-4. Four Steps To Achieve Emotional Agility - Susan David, accessed August 18, 2025, <https://www.susandavid.com/video/four-steps-to-achieve-emotional-agility/>
-5. Emotional Agility: Get Unstuck, Embrace Change, and Thrive in Work and Life by Susan David, Hardcover | Barnes & Noble®, accessed August 18, 2025, <https://www.barnesandnoble.com/w/emotional-agility-susan-david/1122789446>
-6. Emotional Agility by Susan David - Porchlight Book Company, accessed August 18, 2025, <https://www.porchlightbooks.com/products/emotional-agility-susan-david-9781592409495>
-7. What Is Emotional Agility and How to Practice It - GoodRx, accessed August 18, 2025, <https://www.goodrx.com/health-topic/mental-health/how-to-practice-emotional-agility>
-8. Emotional Agility and Its Importance in Emotional Intelligence | Blog | TalktoAngel, accessed August 18, 2025, <https://www.talktoangel.com/blog/emotional-agility-and-its-importance-in-emotional-intelligence>
-9. How Emotional Agility Can Help Your Mental Health - Grow Therapy, accessed August 18, 2025, <https://growtherapy.com/blog/what-is-emotional-agility/>
-10. Book Summary - Emotional Agility (Susan David) - Readingraphics, accessed August 18, 2025, <https://readingraphics.com/book-summary-emotional-agility/>
-11. Susan David: Emotional Agility - Sounds True, accessed August 18, 2025, <https://resources.soundstrue.com/transcript/susan-david-emotional-agility/>
-12. The 5 Biggest Problems for Millennial Women, and How Emotional Agility Can Help Solve Them, accessed August 18, 2025, <https://nextbigideaclub.com/magazine/conversation-the-5-biggest-problems-for-working-women-and-how-emotional-agility-can-help-solve-them/20546/>
-13. The Power of Emotional Agility: Transforming Stress into Strength - Give Yourself Kindness, accessed August 18, 2025, <https://giveyourselfkindness.com/blogs/wellness/emotional-agility-for-stress>
-14. A Look at Susan David's Book Emotional Agility | The Art Of, accessed August 18, 2025, <https://www.theartof.com/articles/a-look-at-susan-davids-book-emotional-agility>
-15. 4 Simple Steps to Emotional Agility, According to Psychologist Susan David, accessed August 18, 2025, <https://blog.mindvalley.com/emotional-agility/>
-16. Emotional Agility Makes You a Better Leader, Here's Why. - Niagara Institute, accessed August 18, 2025, <https://www.niagarainstitute.com/blog/emotional-agility>
-17. Cultivating Emotional Agility for a Healthy Workplace - Lyra Health, accessed August 18, 2025, <https://www.lyrahealth.com/blog/emotional-agility/>
-18. Dr. Susan David - Emotional Agility - Ed Mylett, accessed August 18, 2025, <https://www.edmylett.com/podcast/dr-susan-david-emotional-agility>
-19. What is Emotional Agility? — Amy Launder | Psychotherapy & Counselling Services, accessed August 18, 2025, <https://www.amylaunder.com/articles/what-is-emotional-agility>
-20. Emotional Agility as a Future-Ready Leadership Skill, accessed August 18, 2025, <https://ijisrt.com/assets/upload/files/IJISRT25JUN750.pdf>
-21. Emotional Agility Leadership Assessments | Human Edge, accessed August 18, 2025, <https://human-edge.com/emotional-agility-is-the-key-to-leadership/>
-22. The Emotional Agility Manifesto - Susan David, accessed August 18, 2025, <https://www.susandavid.com/newsletter/the-emotional-agility-manifesto/>
-23. Emotional Agility - Learning Omnivores, accessed August 18, 2025, <https://learningomnivores.com/what-were-reading/emotional-agility/>
-24. Susan David: The gift and power of emotional courage | TED Talk, accessed August 18, 2025, <https://www.ted.com/talks/susan_david_the_gift_and_power_of_emotional_courage?language=en>
-25. Emotional Agility by Susan David - Ryan Delaney, accessed August 18, 2025, <https://www.ryandelaney.co/book-notes/emotional-agility-summary>
-26. Emotional Agility | Summary, Quotes, FAQ, Audio - SoBrief, accessed August 18, 2025, <https://sobrief.com/books/emotional-agility>
-27. Emotional Agility – Can It Improve Relationships? - Marriage.com, accessed August 18, 2025, <https://www.marriage.com/advice/relationship/emotional-agility/>
-28. The Four Principles of Emotional Agility | Susan David clip - YouTube, accessed August 18, 2025, <https://www.youtube.com/watch?v=DWJnHYSY50U>
-29. Resilience vs. Emotional Agility - Psychology Today, accessed August 18, 2025, <https://www.psychologytoday.com/us/blog/mindful-beats/202403/resilience-vs-emotional-agility-0>
-30. Building Resilience Through Emotional Agility - Ei4Change, accessed August 18, 2025, <https://ei4change.com/building-resilience-through-emotional-agility/>
-31. The Power of Emotional Agility - Leadership Circle®, accessed August 18, 2025, <https://leadershipcircle.com/blog/emotional-agility/>
-32. Mastering Emotional Agility: A Guide for Leaders and Professionals, accessed August 18, 2025, <https://www.intentionaleaders.com/blog/mastering-emotional-agility-guide-for-leaders-and-professionals>
-33. Mastering Emotional Agility: A Blueprint for Exceptional Leadership - Her New Standard, accessed August 18, 2025, <https://hernewstandard.com/mastering-emotional-agility-in-leadership/>
-34. Emotional Agility: The Leadership Edge That Drives Sustainable Success - Medium, accessed August 18, 2025, <https://medium.com/@rhudso_agile-leadsUAE/emotional-agility-the-leadership-edge-that-drives-sustainable-success-154ce482dc51>
-35. How Emotional Agility Improves Relationships: An Interview with Susan David, Ph.D., accessed August 18, 2025, <https://www.gottman.com/blog/emotional-agility-improves-relationships-interview-susan-david-ph-d/>
-36. 7 Emotional Agility Tools to Better Navigate Panic Overwhelm - Greatness, accessed August 18, 2025, <https://greatness.com/7-emotional-agility-tools-to-better-navigate-panic-overwhelm/>
-37. The Connection Between Emotional Intelligence, Mindfulness, and Resilience - Ei4Change, accessed August 18, 2025, <https://ei4change.com/connection-emotional-intelligence-mindfulness-resilience/>
-38. A Pathway to Emotional Agility - Grow Mindfulness, accessed August 18, 2025, <https://growmindfulness.com/mindfulness-a-pathway-to-emotional-agility/>
-39. Emotional Agility: Own Your Emotions So They Don't Own You, accessed August 18, 2025, <https://www.agility11.com/blog/2020/4/13/emotional-agility-own-your-emotions-so-they-dont-own-you>
-40. 5 Exercises for Building Emotional Resilience | National Gaucher Foundation, accessed August 18, 2025, <https://www.gaucherdisease.org/blog/5-exercises-for-building-emotional-resilience/>
-41. 5 Practical Exercises to Build Emotional Agility in Coaching Sessions - IGH3P, accessed August 18, 2025, <https://www.igh3p.com/blog/108754-practical-exercises-to-build-emotional>
-42. Emotion-Values Exercise with Susan David! - YouTube, accessed August 18, 2025, <https://www.youtube.com/watch?v=bHy82ragB3o>
-43. Emotional agility by Susan David – Book review : r/BettermentBookClub - Reddit, accessed August 18, 2025, <https://www.reddit.com/r/BettermentBookClub/comments/i3lc7f/emotional_agility_by_susan_david_book_review/>
-44. Anyone else feel like authors never really explain EXACTLY what it is we need to do practically to heal? : r/CPTSD - Reddit, accessed August 18, 2025, <https://www.reddit.com/r/CPTSD/comments/1buzzbr/anyone_else_feel_like_authors_never_really/>
-45. Emotional Agility at Work: The Secret to Boosting Performance and Team Culture, accessed August 18, 2025, <https://emovation.ph/emotional-agility-at-work-the-secret-to-boosting-performance-and-team-culture/>
-46. 8 Misconceptions About Emotional Intelligence - Inclusion Geeks, accessed August 18, 2025, <https://www.inclusiongeeks.com/8-misconceptions-about-emotional-intelligence/>
-47. The 8 Myths About Emotions That Are Holding Us Back - Amy Morin, LCSW, accessed August 18, 2025, <https://amymorinlcsw.com/the-8-myths-about-emotions-that-are-holding-us-back/>
+1. Mastering Emotional Agility: A Vital Leadership Skill for Modern Workplaces, accessed August 18, 2025, [https://www.yorkcountychamber.com/2025/01/29/mastering-emotional-agility-a-vital-leadership-skill-for-modern-workplaces/](https://www.yorkcountychamber.com/2025/01/29/mastering-emotional-agility-a-vital-leadership-skill-for-modern-workplaces/)
+2. Why Emotional Agility Is The Most Important Skill You Need To Know with Susan David, accessed August 18, 2025, [https://lewishowes.com/podcast/why-emotional-agility-is-the-most-important-skill-you-need-to-know-with-susan-david/](https://lewishowes.com/podcast/why-emotional-agility-is-the-most-important-skill-you-need-to-know-with-susan-david/)
+3. www.goodrx.com, accessed August 18, 2025, [https://www.goodrx.com/health-topic/mental-health/how-to-practice-emotional-agility#:~:text=Emotional%20agility%20refers%20to%20using,Thrive%20in%20Work%20and%20Life.%E2%80%9D](https://www.goodrx.com/health-topic/mental-health/how-to-practice-emotional-agility#:~:text=Emotional%20agility%20refers%20to%20using,Thrive%20in%20Work%20and%20Life.%E2%80%9D)
+4. Four Steps To Achieve Emotional Agility - Susan David, accessed August 18, 2025, [https://www.susandavid.com/video/four-steps-to-achieve-emotional-agility/](https://www.susandavid.com/video/four-steps-to-achieve-emotional-agility/)
+5. Emotional Agility: Get Unstuck, Embrace Change, and Thrive in Work and Life by Susan David, Hardcover | Barnes & Noble®, accessed August 18, 2025, [https://www.barnesandnoble.com/w/emotional-agility-susan-david/1122789446](https://www.barnesandnoble.com/w/emotional-agility-susan-david/1122789446)
+6. Emotional Agility by Susan David - Porchlight Book Company, accessed August 18, 2025, [https://www.porchlightbooks.com/products/emotional-agility-susan-david-9781592409495](https://www.porchlightbooks.com/products/emotional-agility-susan-david-9781592409495)
+7. What Is Emotional Agility and How to Practice It - GoodRx, accessed August 18, 2025, [https://www.goodrx.com/health-topic/mental-health/how-to-practice-emotional-agility](https://www.goodrx.com/health-topic/mental-health/how-to-practice-emotional-agility)
+8. Emotional Agility and Its Importance in Emotional Intelligence | Blog | TalktoAngel, accessed August 18, 2025, [https://www.talktoangel.com/blog/emotional-agility-and-its-importance-in-emotional-intelligence](https://www.talktoangel.com/blog/emotional-agility-and-its-importance-in-emotional-intelligence)
+9. How Emotional Agility Can Help Your Mental Health - Grow Therapy, accessed August 18, 2025, [https://growtherapy.com/blog/what-is-emotional-agility/](https://growtherapy.com/blog/what-is-emotional-agility/)
+10. Book Summary - Emotional Agility (Susan David) - Readingraphics, accessed August 18, 2025, [https://readingraphics.com/book-summary-emotional-agility/](https://readingraphics.com/book-summary-emotional-agility/)
+11. Susan David: Emotional Agility - Sounds True, accessed August 18, 2025, [https://resources.soundstrue.com/transcript/susan-david-emotional-agility/](https://resources.soundstrue.com/transcript/susan-david-emotional-agility/)
+12. The 5 Biggest Problems for Millennial Women, and How Emotional Agility Can Help Solve Them, accessed August 18, 2025, [https://nextbigideaclub.com/magazine/conversation-the-5-biggest-problems-for-working-women-and-how-emotional-agility-can-help-solve-them/20546/](https://nextbigideaclub.com/magazine/conversation-the-5-biggest-problems-for-working-women-and-how-emotional-agility-can-help-solve-them/20546/)
+13. The Power of Emotional Agility: Transforming Stress into Strength - Give Yourself Kindness, accessed August 18, 2025, [https://giveyourselfkindness.com/blogs/wellness/emotional-agility-for-stress](https://giveyourselfkindness.com/blogs/wellness/emotional-agility-for-stress)
+14. A Look at Susan David's Book Emotional Agility | The Art Of, accessed August 18, 2025, [https://www.theartof.com/articles/a-look-at-susan-davids-book-emotional-agility](https://www.theartof.com/articles/a-look-at-susan-davids-book-emotional-agility)
+15. 4 Simple Steps to Emotional Agility, According to Psychologist Susan David, accessed August 18, 2025, [https://blog.mindvalley.com/emotional-agility/](https://blog.mindvalley.com/emotional-agility/)
+16. Emotional Agility Makes You a Better Leader, Here's Why. - Niagara Institute, accessed August 18, 2025, [https://www.niagarainstitute.com/blog/emotional-agility](https://www.niagarainstitute.com/blog/emotional-agility)
+17. Cultivating Emotional Agility for a Healthy Workplace - Lyra Health, accessed August 18, 2025, [https://www.lyrahealth.com/blog/emotional-agility/](https://www.lyrahealth.com/blog/emotional-agility/)
+18. Dr. Susan David - Emotional Agility - Ed Mylett, accessed August 18, 2025, [https://www.edmylett.com/podcast/dr-susan-david-emotional-agility](https://www.edmylett.com/podcast/dr-susan-david-emotional-agility)
+19. What is Emotional Agility? — Amy Launder | Psychotherapy & Counselling Services, accessed August 18, 2025, [https://www.amylaunder.com/articles/what-is-emotional-agility](https://www.amylaunder.com/articles/what-is-emotional-agility)
+20. Emotional Agility as a Future-Ready Leadership Skill, accessed August 18, 2025, [https://ijisrt.com/assets/upload/files/IJISRT25JUN750.pdf](https://ijisrt.com/assets/upload/files/IJISRT25JUN750.pdf)
+21. Emotional Agility Leadership Assessments | Human Edge, accessed August 18, 2025, [https://human-edge.com/emotional-agility-is-the-key-to-leadership/](https://human-edge.com/emotional-agility-is-the-key-to-leadership/)
+22. The Emotional Agility Manifesto - Susan David, accessed August 18, 2025, [https://www.susandavid.com/newsletter/the-emotional-agility-manifesto/](https://www.susandavid.com/newsletter/the-emotional-agility-manifesto/)
+23. Emotional Agility - Learning Omnivores, accessed August 18, 2025, [https://learningomnivores.com/what-were-reading/emotional-agility/](https://learningomnivores.com/what-were-reading/emotional-agility/)
+24. Susan David: The gift and power of emotional courage | TED Talk, accessed August 18, 2025, [https://www.ted.com/talks/susan_david_the_gift_and_power_of_emotional_courage?language=en](https://www.ted.com/talks/susan_david_the_gift_and_power_of_emotional_courage?language=en)
+25. Emotional Agility by Susan David - Ryan Delaney, accessed August 18, 2025, [https://www.ryandelaney.co/book-notes/emotional-agility-summary](https://www.ryandelaney.co/book-notes/emotional-agility-summary)
+26. Emotional Agility | Summary, Quotes, FAQ, Audio - SoBrief, accessed August 18, 2025, [https://sobrief.com/books/emotional-agility](https://sobrief.com/books/emotional-agility)
+27. Emotional Agility – Can It Improve Relationships? - Marriage.com, accessed August 18, 2025, [https://www.marriage.com/advice/relationship/emotional-agility/](https://www.marriage.com/advice/relationship/emotional-agility/)
+28. The Four Principles of Emotional Agility | Susan David clip - YouTube, accessed August 18, 2025, [https://www.youtube.com/watch?v=DWJnHYSY50U](https://www.youtube.com/watch?v=DWJnHYSY50U)
+29. Resilience vs. Emotional Agility - Psychology Today, accessed August 18, 2025, [https://www.psychologytoday.com/us/blog/mindful-beats/202403/resilience-vs-emotional-agility-0](https://www.psychologytoday.com/us/blog/mindful-beats/202403/resilience-vs-emotional-agility-0)
+30. Building Resilience Through Emotional Agility - Ei4Change, accessed August 18, 2025, [https://ei4change.com/building-resilience-through-emotional-agility/](https://ei4change.com/building-resilience-through-emotional-agility/)
+31. The Power of Emotional Agility - Leadership Circle®, accessed August 18, 2025, [https://leadershipcircle.com/blog/emotional-agility/](https://leadershipcircle.com/blog/emotional-agility/)
+32. Mastering Emotional Agility: A Guide for Leaders and Professionals, accessed August 18, 2025, [https://www.intentionaleaders.com/blog/mastering-emotional-agility-guide-for-leaders-and-professionals](https://www.intentionaleaders.com/blog/mastering-emotional-agility-guide-for-leaders-and-professionals)
+33. Mastering Emotional Agility: A Blueprint for Exceptional Leadership - Her New Standard, accessed August 18, 2025, [https://hernewstandard.com/mastering-emotional-agility-in-leadership/](https://hernewstandard.com/mastering-emotional-agility-in-leadership/)
+34. Emotional Agility: The Leadership Edge That Drives Sustainable Success - Medium, accessed August 18, 2025, [https://medium.com/@rhudso_agile-leadsUAE/emotional-agility-the-leadership-edge-that-drives-sustainable-success-154ce482dc51](https://medium.com/@rhudso_agile-leadsUAE/emotional-agility-the-leadership-edge-that-drives-sustainable-success-154ce482dc51)
+35. How Emotional Agility Improves Relationships: An Interview with Susan David, Ph.D., accessed August 18, 2025, [https://www.gottman.com/blog/emotional-agility-improves-relationships-interview-susan-david-ph-d/](https://www.gottman.com/blog/emotional-agility-improves-relationships-interview-susan-david-ph-d/)
+36. 7 Emotional Agility Tools to Better Navigate Panic Overwhelm - Greatness, accessed August 18, 2025, [https://greatness.com/7-emotional-agility-tools-to-better-navigate-panic-overwhelm/](https://greatness.com/7-emotional-agility-tools-to-better-navigate-panic-overwhelm/)
+37. The Connection Between Emotional Intelligence, Mindfulness, and Resilience - Ei4Change, accessed August 18, 2025, [https://ei4change.com/connection-emotional-intelligence-mindfulness-resilience/](https://ei4change.com/connection-emotional-intelligence-mindfulness-resilience/)
+38. A Pathway to Emotional Agility - Grow Mindfulness, accessed August 18, 2025, [https://growmindfulness.com/mindfulness-a-pathway-to-emotional-agility/](https://growmindfulness.com/mindfulness-a-pathway-to-emotional-agility/)
+39. Emotional Agility: Own Your Emotions So They Don't Own You, accessed August 18, 2025, [https://www.agility11.com/blog/2020/4/13/emotional-agility-own-your-emotions-so-they-dont-own-you](https://www.agility11.com/blog/2020/4/13/emotional-agility-own-your-emotions-so-they-dont-own-you)
+40. 5 Exercises for Building Emotional Resilience | National Gaucher Foundation, accessed August 18, 2025, [https://www.gaucherdisease.org/blog/5-exercises-for-building-emotional-resilience/](https://www.gaucherdisease.org/blog/5-exercises-for-building-emotional-resilience/)
+41. 5 Practical Exercises to Build Emotional Agility in Coaching Sessions - IGH3P, accessed August 18, 2025, [https://www.igh3p.com/blog/108754-practical-exercises-to-build-emotional](https://www.igh3p.com/blog/108754-practical-exercises-to-build-emotional)
+42. Emotion-Values Exercise with Susan David! - YouTube, accessed August 18, 2025, [https://www.youtube.com/watch?v=bHy82ragB3o](https://www.youtube.com/watch?v=bHy82ragB3o)
+43. Emotional agility by Susan David – Book review : r/BettermentBookClub - Reddit, accessed August 18, 2025, [https://www.reddit.com/r/BettermentBookClub/comments/i3lc7f/emotional_agility_by_susan_david_book_review/](https://www.reddit.com/r/BettermentBookClub/comments/i3lc7f/emotional_agility_by_susan_david_book_review/)
+44. Anyone else feel like authors never really explain EXACTLY what it is we need to do practically to heal? : r/CPTSD - Reddit, accessed August 18, 2025, [https://www.reddit.com/r/CPTSD/comments/1buzzbr/anyone_else_feel_like_authors_never_really/](https://www.reddit.com/r/CPTSD/comments/1buzzbr/anyone_else_feel_like_authors_never_really/)
+45. Emotional Agility at Work: The Secret to Boosting Performance and Team Culture, accessed August 18, 2025, [https://emovation.ph/emotional-agility-at-work-the-secret-to-boosting-performance-and-team-culture/](https://emovation.ph/emotional-agility-at-work-the-secret-to-boosting-performance-and-team-culture/)
+46. 8 Misconceptions About Emotional Intelligence - Inclusion Geeks, accessed August 18, 2025, [https://www.inclusiongeeks.com/8-misconceptions-about-emotional-intelligence/](https://www.inclusiongeeks.com/8-misconceptions-about-emotional-intelligence/)
+47. The 8 Myths About Emotions That Are Holding Us Back - Amy Morin, LCSW, accessed August 18, 2025, [https://amymorinlcsw.com/the-8-myths-about-emotions-that-are-holding-us-back/](https://amymorinlcsw.com/the-8-myths-about-emotions-that-are-holding-us-back/)

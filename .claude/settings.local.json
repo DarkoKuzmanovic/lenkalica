@@ -13,8 +13,12 @@
       "Bash(npm ls:*)",
       "Bash(mkdir:*)",
       "Bash(mv:*)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(node:*)"
     ],
-    "deny": []
+    "deny": [],
+    "additionalDirectories": [
+      "D:\\d D:\\source\\repos"
+    ]
   }
 }

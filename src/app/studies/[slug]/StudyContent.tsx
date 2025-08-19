@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 interface StudyContentProps {
   content: string;
@@ -45,9 +46,9 @@ export default function StudyContent({ content, tags }: StudyContentProps) {
 
       {/* Study Navigation */}
       <div className="flex justify-between items-center mt-16 pt-8 border-t border-base-300">
-        <a href="/studies" className="btn btn-outline">
+        <Link href="/studies" className="btn btn-outline">
           ← Back to Studies
-        </a>
+        </Link>
         <div className="text-sm text-base-content/60">
           Scroll to top
           <button
