@@ -21,4 +21,4 @@ This file contains a list of suggestions for improving the project.
 
 ## Documentation
 
-- [ ] Enhance the `README.md` file with detailed instructions on setting up and running the project locally, as well as a comprehensive overview of the project's features and architecture.
+- [x] Enhance the `README.md` file with detailed instructions on setting up and running the project locally, as well as a comprehensive overview of the project's features and architecture.
