@@ -5,6 +5,7 @@ A Next.js 15 content blog featuring articles, podcasts, comics, and shorts about
 ## 🚀 Features
 
 ### Content Management
+
 - **Articles**: Markdown-based articles with frontmatter metadata
 - **Podcasts**: RSS feed generation and audio content management
 - **Comics**: Interactive comic content with visual storytelling
@@ -12,18 +13,21 @@ A Next.js 15 content blog featuring articles, podcasts, comics, and shorts about
 - **Studies**: Interactive educational content with infographic support
 
 ### Audio System
+
 - **Dual-mode Audio**: Seamless switching between web and Android native players
 - **Android Integration**: Native media controls, notification support, and system integration
 - **Web Audio Player**: Full-featured HTML5 audio player for web browsers
 - **Global State Management**: Unified audio context across the application
 
 ### User Experience
+
 - **Responsive Design**: Mobile-first approach with Tailwind CSS utilities
 - **Theme Support**: Light/dark theme switching with persistent preferences
 - **Progressive Enhancement**: Works without JavaScript, enhanced with it
 - **Accessibility**: WCAG-compliant components and navigation
 
 ### Technical Features
+
 - **Next.js 15**: Modern React framework with App Router
 - **TypeScript**: Strict typing for enhanced developer experience
 - **DaisyUI**: Beautiful, accessible component library
@@ -40,12 +44,14 @@ A Next.js 15 content blog featuring articles, podcasts, comics, and shorts about
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone <repository-url>
    cd lenkalica
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    # or
@@ -57,12 +63,15 @@ A Next.js 15 content blog featuring articles, podcasts, comics, and shorts about
    ```
 
 3. **Set up environment variables** (optional)
+
    ```bash
    cp .env.example .env.local
    ```
+
    Configure any required API keys or external service credentials.
 
 4. **Start the development server**
+
    ```bash
    npm run dev
    # or
@@ -78,7 +87,7 @@ A Next.js 15 content blog featuring articles, podcasts, comics, and shorts about
 
 ## 📁 Project Structure
 
-```
+``` bash
 src/
 ├── app/                    # Next.js App Router pages
 │   ├── articles/          # Article pages and routing
@@ -114,19 +123,23 @@ public/
 ## 🎵 Audio Architecture
 
 ### Components
+
 - **AudioContext**: Global state management for audio playback
 - **AndroidAudioPlayer**: Native Android media player with system controls
 - **AudioPlayer**: Web-based HTML5 audio player
 - **ConditionalAudioPlayer**: Platform-aware player selection
 
 ### Android Integration
+
 The application detects Android app environment and provides:
+
 - Native media notifications
 - System media controls (play/pause/seek)
 - Background playback support
 - Lock screen controls
 
 ### API Interface
+
 ```typescript
 // Audio Context Methods
 playAudio(url: string, title: string, author?: string)
@@ -143,12 +156,14 @@ window.Android.pauseMediaNotification()
 ## 🎨 Styling & UI
 
 ### Design System
+
 - **DaisyUI**: Primary component library built on Tailwind CSS
 - **Tailwind CSS**: Utility-first CSS framework
 - **Theme System**: Support for light and dark themes
 - **Typography**: Noto Sans, Noto Serif, and Literata fonts
 
 ### Responsive Design
+
 - Mobile-first approach
 - Breakpoint-based layouts
 - Touch-friendly interactions
@@ -173,12 +188,15 @@ npm run clean       # Clean build artifacts
 ## 📝 Content Management
 
 ### Articles
+
 Articles are stored as Markdown files in `content/articles/` with the following naming convention:
+
 - File: `001-Article-Title.md`
 - Audio: `public/audio/001-Article-Title.mp3`
 - Cover: `public/images/covers/001-Article-Title.png`
 
 ### Frontmatter Structure
+
 ```yaml
 ---
 title: "Article Title"
@@ -204,6 +222,7 @@ audioFile: "/audio/001-Article-Title.mp3"
 ## 🚀 Deployment
 
 ### Vercel (Recommended)
+
 The application is optimized for deployment on Vercel:
 
 1. Connect your repository to Vercel
@@ -211,13 +230,16 @@ The application is optimized for deployment on Vercel:
 3. Deploy automatically on push to main branch
 
 ### Other Platforms
+
 The application can be deployed to any platform that supports Next.js:
+
 - Netlify
 - Railway
 - DigitalOcean App Platform
 - AWS Amplify
 
 ### Build Configuration
+
 ```bash
 npm run build  # Generates optimized production build
 npm start      # Serves the production build
@@ -228,15 +250,19 @@ npm start      # Serves the production build
 The web application seamlessly integrates with a companion Android app:
 
 ### Detection
+
 The app automatically detects Android environment using:
+
 ```typescript
-const isAndroid = typeof window !== 'undefined' && 
-  window.Android && 
+const isAndroid = typeof window !== 'undefined' &&
+  window.Android &&
   typeof window.Android.startMediaNotification === 'function';
 ```
 
 ### Media Controls
+
 When running in the Android app, users get:
+
 - Native notification controls
 - Lock screen media controls
 - Background audio playback
@@ -257,6 +283,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 📞 Support
 
 For questions, issues, or contributions, please:
+
 - Open an issue on GitHub
 - Check the documentation in the `/docs` folder
 - Review the `CLAUDE.md` file for development guidelines
