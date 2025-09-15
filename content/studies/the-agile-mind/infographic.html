@@ -8,39 +8,53 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&display=swap" rel="stylesheet" />
+    <link href="https://db.onlinewebfonts.com/c/1e44faec07b8b81f60a3215d76bd0086?family=Irvin-Heading" rel="stylesheet" />
     <!-- Chosen Palette: Serene Harmony -->
     <!-- Application Structure Plan: The SPA is designed as a guided, vertical journey. It starts with a captivating hero section to introduce the concept, followed by a process-oriented exploration of the 'Four Movements'. This section uses interactive tabs to allow users to explore each step without being overwhelmed. Next, a 'Benefits' section uses dynamic cards to showcase tangible outcomes. A comparative analysis section uses an interactive chart to clarify distinctions between EA and related concepts. Finally, an actionable 'Toolkit' section provides practical exercises in an accordion format. This structure was chosen to guide the user from theory to practice, making a complex psychological framework digestible and actionable. The flow is logical: What it is -> How it works -> Why it matters -> How it compares -> How to do it. -->
     <!-- Visualization & Content Choices: 1. Four Movements Diagram: Report Info -> The core process of EA. Goal -> Organize & Explain. Viz -> Interactive tabbed diagram (HTML/CSS/JS). Interaction -> Clicking tabs reveals detailed content for each step. Justification -> Breaks down a complex process into manageable, self-paced steps, enhancing comprehension. 2. Benefits Section: Report Info -> Tangible outcomes of EA. Goal -> Inform & Motivate. Viz -> Clickable info cards (HTML/CSS/JS). Interaction -> Clicking a card reveals more detailed text. Justification -> Presents key benefits concisely, with an option to drill down for more detail, catering to different levels of user interest. 3. Comparative Analysis Chart: Report Info -> EA vs. EI, Resilience, Mindfulness. Goal -> Compare & Differentiate. Viz -> Interactive Radar Chart (Chart.js). Interaction -> Hovering over points shows details; buttons can toggle datasets. Justification -> A radar chart visually represents the multi-faceted nature of these concepts and allows for easy comparison of their strengths and focus areas. 4. Practical Toolkit: Report Info -> Actionable exercises. Goal -> Instruct & Enable. Viz -> Accordion UI (HTML/CSS/JS). Interaction -> Clicking a heading expands to show the exercise. Justification -> Organizes a large number of exercises cleanly, allowing users to focus on one at a time. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
       body {
-        font-family: "Inter", sans-serif;
-        background-color: #fdfbf8;
-        color: #4a4a4a;
+        font-family: "Literata", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+        background-color: oklch(var(--b1));
+        color: oklch(var(--bc));
+      }
+      h1, h2, h3, h4 {
+        font-family: "Irvin-Heading", serif;
+        font-weight: 700;
+        letter-spacing: -0.1px;
       }
       .nav-link {
         transition: color 0.3s, border-bottom-color 0.3s;
         border-bottom: 2px solid transparent;
+        color: oklch(var(--bc));
       }
       .nav-link:hover,
       .nav-link.active {
-        color: #c8a07d;
-        border-bottom-color: #c8a07d;
+        color: oklch(var(--p));
+        border-bottom-color: oklch(var(--p));
       }
       .tab.active {
-        background-color: #c8a07d;
-        color: #ffffff;
+        background-color: oklch(var(--p));
+        color: oklch(var(--pc));
       }
       .tab {
         transition: background-color 0.3s, color 0.3s;
+        color: oklch(var(--bc));
+        background-color: oklch(var(--b2));
+      }
+      .tab:hover {
+        background-color: oklch(var(--b3));
       }
       .benefit-card {
         transition: transform 0.3s, box-shadow 0.3s;
+        background-color: oklch(var(--b1));
+        border: 1px solid oklch(var(--b3));
       }
       .benefit-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 10px 15px -3px oklch(var(--b3) / 0.3), 0 4px 6px -2px oklch(var(--b3) / 0.2);
       }
       .accordion-content {
         max-height: 0;
@@ -56,6 +70,53 @@
         height: 300px;
         max-height: 400px;
       }
+      .bg-white {
+        background-color: oklch(var(--b1)) !important;
+      }
+      .text-gray-600 {
+        color: oklch(var(--bc) / 0.7) !important;
+      }
+      .text-gray-700 {
+        color: oklch(var(--bc) / 0.8) !important;
+      }
+      .accordion-item {
+        background-color: oklch(var(--b1));
+        border: 1px solid oklch(var(--b3));
+      }
+      .accordion-header {
+        color: oklch(var(--p));
+      }
+      /* DaisyUI CSS variables for consistent theming */
+      :root {
+        --p: 0.7 0.126 162.48;
+        --pc: 0.9 0.02 162.48;
+        --s: 0.69 0.134 342.55;
+        --sc: 0.9 0.02 342.55;
+        --a: 0.76 0.184 183.61;
+        --ac: 0.15 0.02 183.61;
+        --n: 0.32 0.033 278.64;
+        --nc: 0.9 0.02 278.64;
+        --b1: 1 0 0;
+        --b2: 0.96 0 0;
+        --b3: 0.92 0.004 291.75;
+        --bc: 0.15 0.02 278.64;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --p: 0.7 0.126 162.48;
+          --pc: 0.15 0.02 162.48;
+          --s: 0.69 0.134 342.55;
+          --sc: 0.15 0.02 342.55;
+          --a: 0.76 0.184 183.61;
+          --ac: 0.15 0.02 183.61;
+          --n: 0.32 0.033 278.64;
+          --nc: 0.75 0.014 278.64;
+          --b1: 0.25 0.015 278.64;
+          --b2: 0.21 0.015 278.64;
+          --b3: 0.17 0.015 278.64;
+          --bc: 0.75 0.014 278.64;
+        }
+      }
       @media (min-width: 768px) {
         .chart-container {
           height: 400px;
@@ -64,9 +125,9 @@
     </style>
   </head>
   <body class="antialiased">
-    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+    <header style="background-color: oklch(var(--b1) / 0.8); backdrop-filter: blur(12px);" class="sticky top-0 z-50 shadow-sm">
       <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-        <h1 class="text-2xl font-bold text-[#4A4A4A]">The Agile Mind</h1>
+        <h1 class="text-2xl font-bold" style="color: oklch(var(--bc))">The Agile Mind</h1>
         <div class="hidden md:flex space-x-8">
           <a href="#intro" class="nav-link active">Introduction</a>
           <a href="#framework" class="nav-link">The Framework</a>
@@ -87,7 +148,7 @@
 
     <main>
       <section id="intro" class="container mx-auto px-6 py-16 text-center">
-        <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#C8A07D]">Emotional Agility</h2>
+        <h2 class="text-4xl md:text-5xl font-bold mb-4" style="color: oklch(var(--p))">Emotional Agility</h2>
         <p class="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
           A revolutionary, science-based approach to navigate life's twists and turns with self-acceptance,
           clear-sightedness, and an open mind.
@@ -101,7 +162,7 @@
         </p>
       </section>
 
-      <section id="framework" class="py-16 bg-white">
+      <section id="framework" class="py-16" style="background-color: oklch(var(--b1))">
         <div class="container mx-auto px-6">
           <div class="text-center mb-12">
             <h2 class="text-3xl font-bold">The Four Movements of Emotional Agility</h2>
@@ -128,7 +189,7 @@
 
             <div id="tab-content" class="p-4">
               <div id="showing-up" class="tab-pane active">
-                <h3 class="text-2xl font-bold mb-4 text-[#C8A07D]">Showing Up: The Courage to Face Your Inner World</h3>
+                <h3 class="text-2xl font-bold mb-4" style="color: oklch(var(--p))">Showing Up: The Courage to Face Your Inner World</h3>
                 <p class="text-gray-700 leading-relaxed">
                   This is the foundational practice of facing your thoughts, emotions, and behaviors willingly, with
                   curiosity and kindness, rather than ignoring or judging them. It's about accepting the full spectrum
@@ -138,7 +199,7 @@
                 </p>
               </div>
               <div id="stepping-out" class="tab-pane hidden">
-                <h3 class="text-2xl font-bold mb-4 text-[#C8A07D]">
+                <h3 class="text-2xl font-bold mb-4" style="color: oklch(var(--p))">
                   Stepping Out: Creating Space Between Stimulus and Response
                 </h3>
                 <p class="text-gray-700 leading-relaxed">
@@ -151,7 +212,7 @@
                 </p>
               </div>
               <div id="walking-why" class="tab-pane hidden">
-                <h3 class="text-2xl font-bold mb-4 text-[#C8A07D]">Walking Your Why: The Compass of Core Values</h3>
+                <h3 class="text-2xl font-bold mb-4" style="color: oklch(var(--p))">Walking Your Why: The Compass of Core Values</h3>
                 <p class="text-gray-700 leading-relaxed">
                   This step involves identifying your core values and using them as an internal compass to guide your
                   behavior. The goal is to be driven by your deeply held principles, not by knee-jerk emotional
@@ -161,7 +222,7 @@
                 </p>
               </div>
               <div id="moving-on" class="tab-pane hidden">
-                <h3 class="text-2xl font-bold mb-4 text-[#C8A07D]">Moving On: The Power of Intentional Action</h3>
+                <h3 class="text-2xl font-bold mb-4" style="color: oklch(var(--p))">Moving On: The Power of Intentional Action</h3>
                 <p class="text-gray-700 leading-relaxed">
                   This final movement is where insight translates into behavior. It's about making small, deliberate
                   adjustments—or "tiny tweaks"—to your mindset and habits to align your actions with your values.
@@ -187,7 +248,7 @@
           </div>
           <div class="grid md:grid-cols-3 gap-8">
             <div class="benefit-card bg-white p-8 rounded-lg shadow-md cursor-pointer">
-              <h3 class="text-2xl font-bold mb-4 text-[#C8A07D]">Stress & Resilience</h3>
+              <h3 class="text-2xl font-bold mb-4" style="color: oklch(var(--p))">Stress & Resilience</h3>
               <p class="text-gray-700">
                 Learn how emotional agility provides the "how-to" for bouncing back from adversity, creating a
                 psychological buffer that mitigates the fight-or-flight response and allows for clear-headed
@@ -195,14 +256,14 @@
               </p>
             </div>
             <div class="benefit-card bg-white p-8 rounded-lg shadow-md cursor-pointer">
-              <h3 class="text-2xl font-bold mb-4 text-[#C8A07D]">Leadership & Work</h3>
+              <h3 class="text-2xl font-bold mb-4" style="color: oklch(var(--p))">Leadership & Work</h3>
               <p class="text-gray-700">
                 Discover why it's a cornerstone of effective leadership. Agile leaders create psychological safety,
                 boost team performance, and reduce burnout by navigating uncertainty with focus and intention.
               </p>
             </div>
             <div class="benefit-card bg-white p-8 rounded-lg shadow-md cursor-pointer">
-              <h3 class="text-2xl font-bold mb-4 text-[#C8A07D]">Relationships</h3>
+              <h3 class="text-2xl font-bold mb-4" style="color: oklch(var(--p))">Relationships</h3>
               <p class="text-gray-700">
                 See how it transforms interpersonal dynamics. By creating space to choose a response that honors your
                 values, you can move from reactive conflict to authentic connection with partners, family, and friends.
@@ -212,7 +273,7 @@
         </div>
       </section>
 
-      <section id="compare" class="py-16 bg-white">
+      <section id="compare" class="py-16" style="background-color: oklch(var(--b1))">
         <div class="container mx-auto px-6">
           <div class="text-center mb-12">
             <h2 class="text-3xl font-bold">How Emotional Agility Compares</h2>
@@ -240,7 +301,7 @@
           <div class="max-w-3xl mx-auto space-y-4">
             <div class="accordion-item bg-white rounded-lg shadow-md">
               <button
-                class="accordion-header w-full text-left p-6 font-bold text-xl text-[#C8A07D] flex justify-between items-center"
+                class="accordion-header w-full text-left p-6 font-bold text-xl flex justify-between items-center"
               >
                 <span>Exercises for "Showing Up"</span>
                 <span class="transform transition-transform duration-300">▼</span>
@@ -264,7 +325,7 @@
             </div>
             <div class="accordion-item bg-white rounded-lg shadow-md">
               <button
-                class="accordion-header w-full text-left p-6 font-bold text-xl text-[#C8A07D] flex justify-between items-center"
+                class="accordion-header w-full text-left p-6 font-bold text-xl flex justify-between items-center"
               >
                 <span>Exercises for "Stepping Out"</span>
                 <span class="transform transition-transform duration-300">▼</span>
@@ -289,7 +350,7 @@
             </div>
             <div class="accordion-item bg-white rounded-lg shadow-md">
               <button
-                class="accordion-header w-full text-left p-6 font-bold text-xl text-[#C8A07D] flex justify-between items-center"
+                class="accordion-header w-full text-left p-6 font-bold text-xl flex justify-between items-center"
               >
                 <span>Exercises for "Walking Your Why"</span>
                 <span class="transform transition-transform duration-300">▼</span>
@@ -309,7 +370,7 @@
             </div>
             <div class="accordion-item bg-white rounded-lg shadow-md">
               <button
-                class="accordion-header w-full text-left p-6 font-bold text-xl text-[#C8A07D] flex justify-between items-center"
+                class="accordion-header w-full text-left p-6 font-bold text-xl flex justify-between items-center"
               >
                 <span>Exercises for "Moving On"</span>
                 <span class="transform transition-transform duration-300">▼</span>
@@ -336,7 +397,7 @@
       </section>
     </main>
 
-    <footer class="bg-white mt-16">
+    <footer class="mt-16" style="background-color: oklch(var(--b1))">
       <div class="container mx-auto px-6 py-8 text-center text-gray-600">
         <p>
           &copy; 2024 The Agile Mind. An interactive exploration of Emotional Agility based on the work of Dr. Susan
@@ -441,26 +502,26 @@
               {
                 label: "Emotional Agility",
                 data: [5, 5, 5, 3, 5],
-                backgroundColor: "rgba(200, 160, 125, 0.2)",
-                borderColor: "rgba(200, 160, 125, 1)",
+                backgroundColor: "oklch(0.7 0.126 162.48 / 0.2)",
+                borderColor: "oklch(0.7 0.126 162.48)",
                 borderWidth: 2,
-                pointBackgroundColor: "rgba(200, 160, 125, 1)",
+                pointBackgroundColor: "oklch(0.7 0.126 162.48)",
               },
               {
                 label: "Emotional Intelligence",
                 data: [5, 2, 3, 5, 4],
-                backgroundColor: "rgba(74, 74, 74, 0.2)",
-                borderColor: "rgba(74, 74, 74, 1)",
+                backgroundColor: "oklch(0.69 0.134 342.55 / 0.2)",
+                borderColor: "oklch(0.69 0.134 342.55)",
                 borderWidth: 2,
-                pointBackgroundColor: "rgba(74, 74, 74, 1)",
+                pointBackgroundColor: "oklch(0.69 0.134 342.55)",
               },
               {
                 label: "Resilience",
                 data: [3, 3, 4, 2, 5],
-                backgroundColor: "rgba(150, 150, 150, 0.2)",
-                borderColor: "rgba(150, 150, 150, 1)",
+                backgroundColor: "oklch(0.76 0.184 183.61 / 0.2)",
+                borderColor: "oklch(0.76 0.184 183.61)",
                 borderWidth: 2,
-                pointBackgroundColor: "rgba(150, 150, 150, 1)",
+                pointBackgroundColor: "oklch(0.76 0.184 183.61)",
               },
             ],
           },
@@ -470,20 +531,21 @@
             scales: {
               r: {
                 angleLines: {
-                  color: "#ddd",
+                  color: "oklch(var(--b3))",
                 },
                 grid: {
-                  color: "#eee",
+                  color: "oklch(var(--b3))",
                 },
                 pointLabels: {
                   font: {
                     size: 14,
+                    family: "Literata"
                   },
-                  color: "#4A4A4A",
+                  color: "oklch(var(--bc))",
                 },
                 ticks: {
-                  backdropColor: "#FDFBF8",
-                  color: "#888",
+                  backdropColor: "oklch(var(--b1))",
+                  color: "oklch(var(--bc) / 0.6)",
                   stepSize: 1,
                 },
                 suggestedMin: 0,
@@ -496,8 +558,9 @@
                 labels: {
                   font: {
                     size: 14,
+                    family: "Literata"
                   },
-                  color: "#4A4A4A",
+                  color: "oklch(var(--bc))",
                 },
               },
               tooltip: {
