@@ -83,7 +83,7 @@ A Next.js 15 content blog featuring articles, podcasts, comics, and shorts about
    ```
 
 5. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000) to see the application
+   Navigate to [http://localhost:3000](http://localhost:3000) to see the application.
 
 ## 📁 Project Structure
 
