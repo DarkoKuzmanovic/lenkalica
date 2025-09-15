@@ -12,6 +12,38 @@
     url("https://db.onlinewebfonts.com/t/1e44faec07b8b81f60a3215d76bd0086.svg#Irvin-Heading") format("svg");
 }
 
+/* MDEditor monospace font fix for cursor positioning - aggressive targeting */
+.w-md-editor textarea,
+.w-md-editor-text-input,
+.w-md-editor-text-textarea,
+.w-md-editor-text,
+.w-md-editor .w-md-editor-text-input,
+.w-md-editor .w-md-editor-text-textarea,
+.w-md-editor .w-md-editor-text,
+.w-md-editor-input,
+.w-md-editor-focus,
+div[data-color-mode] textarea,
+div[data-color-mode] .w-md-editor-text-input {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  font-weight: normal !important;
+}
+
+/* Target any textarea within MDEditor containers */
+[class*="w-md-editor"] textarea,
+[class*="w-md-editor"] input[type="text"],
+.w-md-editor * {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace !important;
+}
+
+/* Selection styling */
+.w-md-editor textarea::selection,
+.w-md-editor-text-input::selection,
+.w-md-editor-text-textarea::selection {
+  background-color: rgba(59, 130, 246, 0.3) !important;
+}
+
 @layer base {
   /* Typography */
   h1,

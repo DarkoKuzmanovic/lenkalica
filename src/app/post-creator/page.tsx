@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { DocumentArrowDownIcon, BookmarkIcon, FolderOpenIcon } from "@heroicons/react/24/outline";
+import { useTheme } from "next-themes";
 import MDEditor from "@uiw/react-md-editor";
 
 interface SavedPrompt {
@@ -12,6 +13,8 @@ interface SavedPrompt {
 }
 
 export default function PostCreatorPage() {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [generatedContent, setGeneratedContent] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
@@ -26,6 +29,7 @@ export default function PostCreatorPage() {
 
   // Load saved prompts on mount
   useEffect(() => {
+    setMounted(true);
     const saved = localStorage.getItem("savedPrompts");
     if (saved) {
       setSavedPrompts(JSON.parse(saved));
@@ -246,15 +250,21 @@ export default function PostCreatorPage() {
                   Save as Markdown
                 </button>
               </div>
-              <div data-color-mode="dark">
-                <MDEditor
-                  value={generatedContent}
-                  onChange={(value) => setGeneratedContent(value || "")}
-                  preview="live"
-                  height={600}
-                  className="w-full"
-                />
-              </div>
+              {mounted ? (
+                <div data-color-mode={theme === "dark" ? "dark" : "light"}>
+                  <MDEditor
+                    value={generatedContent}
+                    onChange={(value) => setGeneratedContent(value || "")}
+                    preview="live"
+                    height={600}
+                    className="w-full"
+                  />
+                </div>
+              ) : (
+                <div className="w-full h-[600px] bg-base-200 rounded-lg animate-pulse flex items-center justify-center">
+                  <span className="text-base-content/60">Loading editor...</span>
+                </div>
+              )}
             </div>
           )}
         </div>

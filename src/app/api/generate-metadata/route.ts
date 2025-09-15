@@ -1,63 +1,81 @@
 import { NextRequest, NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Initialize Gemini API with proper error handling
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const genAI = GEMINI_API_KEY && new GoogleGenerativeAI(GEMINI_API_KEY);
+// Initialize OpenRouter API with proper error handling
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
-const PROMPT = `You are a helpful assistant that generates metadata for a given article content.
-  The metadata should be in JSON format and include the following fields:
+const SYSTEM_PROMPT = `You are a helpful assistant that generates metadata for article content. Return ONLY valid JSON with these fields:
 
-  - category: string (e.g., "History", "Culture", "Travel", "Current Events")
-  - tags: string[] (an array of relevant keywords, maximum 10, e.g., ["city", "country", "monument"])
-  - excerpt: string (a short summary of the article, maximum 200 characters)
-  - author: string (The author of this article)
+- category: string (e.g., "History", "Culture", "Travel", "Current Events")
+- tags: string[] (an array of relevant keywords, maximum 10)
+- excerpt: string (a short summary, maximum 200 characters)
+- author: string (use "Darko Kuzmanovic" as default author)
 
-  Example:
-  {
-    "category": "History",
-    "tags": ["city", "country", "monument"],
-    "excerpt": "A short summary of the article.",
-    "author": "John Doe"
-  }
-  `;
+Return only the JSON object, no other text or formatting.`;
 
 export async function POST(req: NextRequest) {
   try {
-    const { content } = await req.json();
+    const { content, title } = await req.json();
 
-
-    // If Gemini API is not available, return default metadata
-    if (!genAI) {
-      console.warn("Gemini API key not configured, using default metadata");
+    // If OpenRouter API is not available, return default metadata
+    if (!OPENROUTER_API_KEY) {
+      console.warn("OpenRouter API key not configured, using default metadata");
       return NextResponse.json({
         metadata: {
           category: "Current Events",
           tags: ["general"],
           excerpt: content.slice(0, 197) + "...",
-          author: "Lenkalica Staff",
+          author: "Darko Kuzmanovic",
         },
       });
     }
 
-    // Generate metadata using Gemini
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-pro-exp-02-05" });
-    const result = await model.generateContent(PROMPT + content);
-    const response = await result.response;
-    let responseText = response.text();
+    // Generate metadata using OpenRouter
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+        "Content-Type": "application/json",
+        "HTTP-Referer": "https://lenkalica.com",
+        "X-Title": "Lenkalica Blog Metadata Generator",
+      },
+      body: JSON.stringify({
+        model: "openai/gpt-4o-mini-2024-07-18", // Using a more reliable free model
+        messages: [
+          {
+            role: "system",
+            content: SYSTEM_PROMPT
+          },
+          {
+            role: "user",
+            content: `Title: ${title}\n\nContent: ${content}`
+          }
+        ],
+        temperature: 0.3,
+        max_tokens: 500,
+      }),
+    });
 
-    // Remove ```json and ``` from the response
-    responseText = responseText.replace(/^```json\s*/i, "").replace(/```\s*$/i, "");
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error("OpenRouter API error:", errorData);
+      throw new Error(`OpenRouter API error: ${response.status} ${response.statusText}`);
+    }
+
+    const apiResponse = await response.json();
+    let responseText = apiResponse.choices[0]?.message?.content || "";
+
+    // Clean up the response (remove any markdown formatting)
+    responseText = responseText.replace(/^```json\s*/i, "").replace(/```\s*$/i, "").trim();
 
     let metadata;
     try {
       metadata = JSON.parse(responseText);
     } catch (parseError) {
-      console.error("Error parsing Gemini response:", parseError);
+      console.error("Error parsing OpenRouter response:", parseError);
       console.error("Response text:", responseText);
       return NextResponse.json(
         {
-          error: "Failed to parse Gemini response",
+          error: "Failed to parse OpenRouter response",
           details: parseError instanceof Error ? parseError.message : "Unknown parsing error",
           response: responseText,
         },

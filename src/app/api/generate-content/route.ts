@@ -1,65 +1,62 @@
 import { NextRequest, NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Initialize Gemini API with proper error handling
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-let genAI: GoogleGenerativeAI | null = null;
-
-// Only initialize if API key is available
-if (GEMINI_API_KEY) {
-  genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-} else {
-  console.error("GEMINI_API_KEY is not set in environment variables");
-}
+// Initialize OpenRouter API with proper error handling
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
 export async function POST(req: NextRequest) {
   try {
     const { prompt, systemPrompt, temperature, topP } = await req.json();
 
-
-    // If Gemini API is not available, return error
-    if (!genAI) {
-      console.error("Gemini API key not configured");
-      return NextResponse.json({ error: "Gemini API key not configured" }, { status: 500 });
+    // If OpenRouter API is not available, return error
+    if (!OPENROUTER_API_KEY) {
+      console.error("OpenRouter API key not configured");
+      return NextResponse.json({ error: "OpenRouter API key not configured" }, { status: 500 });
     }
 
-    // Generate content using Gemini
+    // Generate content using OpenRouter
     try {
-      const model = genAI.getGenerativeModel({
-        model: "gemini-2.0-pro-exp-02-05",
-        generationConfig: {
-          temperature,
-          topP,
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+          "Content-Type": "application/json",
+          "HTTP-Referer": "https://lenkalica.com",
+          "X-Title": "Lenkalica Blog Content Generator",
         },
+        body: JSON.stringify({
+          model: "openai/gpt-4o-mini-2024-07-18",
+          messages: [
+            {
+              role: "system",
+              content: systemPrompt
+            },
+            {
+              role: "user",
+              content: prompt
+            }
+          ],
+          temperature: temperature,
+          top_p: topP,
+          max_tokens: 4000,
+        }),
       });
 
-
-      // Generate content with proper format
-      const result = await model.generateContent([
-        { text: "System: " + systemPrompt },
-        { text: "\n\nUser: " + prompt },
-      ]);
-
-
-      const response = await result.response;
-
-      // Check if the response has a 'promptFeedback' field which indicates issues with the prompt
-      if (response.promptFeedback) {
-        return NextResponse.json(
-          {
-            error: "Prompt feedback error",
-            details: response.promptFeedback,
-          },
-          { status: 400 } // Use 400 for client-side errors
-        );
+      if (!response.ok) {
+        const errorData = await response.text();
+        console.error("OpenRouter API error:", errorData);
+        throw new Error(`OpenRouter API error: ${response.status} ${response.statusText}`);
       }
 
-      const content = response.text();
+      const apiResponse = await response.json();
+      const content = apiResponse.choices[0]?.message?.content || "";
 
+      if (!content) {
+        throw new Error("No content received from OpenRouter API");
+      }
 
       return NextResponse.json({ content });
     } catch (modelError) {
-      console.error("Gemini API Error:", modelError);
+      console.error("OpenRouter API Error:", modelError);
       // Add more detailed error information
       const errorMessage =
         modelError instanceof Error ? `${modelError.message}\n${modelError.stack || ""}` : "Unknown model error";

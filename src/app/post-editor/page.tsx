@@ -3,9 +3,12 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { PhotoIcon } from "@heroicons/react/24/outline";
+import { useTheme } from "next-themes";
 import MDEditor from "@uiw/react-md-editor";
 
 export default function PostEditorPage() {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [postNumber, setPostNumber] = useState("");
   const [title, setTitle] = useState("");
   const [coverImage, setCoverImage] = useState<File | null>(null);
@@ -14,10 +17,28 @@ export default function PostEditorPage() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGeneratingMetadata, setIsGeneratingMetadata] = useState(false);
+  const [isDragOver, setIsDragOver] = useState(false);
 
   useEffect(() => {
-    // Set initial post number
-    setPostNumber("007");
+    setMounted(true);
+    // Auto-fetch the next post number
+    const fetchNextPostNumber = async () => {
+      try {
+        const response = await fetch("/api/posts/next-number");
+        if (response.ok) {
+          const { nextNumber } = await response.json();
+          setPostNumber(nextNumber);
+        } else {
+          console.error("Failed to fetch next post number");
+          setPostNumber("013"); // fallback
+        }
+      } catch (error) {
+        console.error("Error fetching next post number:", error);
+        setPostNumber("013"); // fallback
+      }
+    };
+
+    fetchNextPostNumber();
   }, []);
 
   const handleCoverImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,6 +73,37 @@ export default function PostEditorPage() {
       console.error("Error uploading image:", error);
       alert("Failed to upload image");
     }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(false);
+
+    const files = Array.from(e.dataTransfer.files);
+    const imageFiles = files.filter(file => file.type.startsWith('image/'));
+
+    if (imageFiles.length === 0) {
+      alert("Please drop image files only");
+      return;
+    }
+
+    // Upload each image file
+    imageFiles.forEach(file => {
+      handleInlineImageUpload(file);
+    });
   };
 
   const handleAudioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -197,6 +249,11 @@ author: "${metadata.author}"
                 className="input input-bordered w-full"
                 required
               />
+              {title && (
+                <div className="mt-2 text-sm text-base-content/70">
+                  <span className="font-medium">Filename preview:</span> {postNumber}-{formatFileName(title)}.md
+                </div>
+              )}
             </div>
           </div>
 
@@ -240,6 +297,7 @@ author: "${metadata.author}"
             <div className="flex justify-between items-center mb-2">
               <label className="label">
                 <span className="label-text">Content</span>
+                <span className="label-text-alt text-base-content/60">Drag & drop images or use the button</span>
               </label>
               <div className="flex items-center gap-2">
                 <input
@@ -259,14 +317,35 @@ author: "${metadata.author}"
               </div>
             </div>
 
-            <div data-color-mode="dark">
-              <MDEditor
-                value={content}
-                onChange={(value) => setContent(value || "")}
-                preview="live"
-                height={600}
-                className="w-full"
-              />
+            <div
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              className={`relative ${isDragOver ? 'ring-2 ring-primary ring-offset-2 bg-primary/5' : ''}`}
+            >
+              {isDragOver && (
+                <div className="absolute inset-0 bg-primary/10 border-2 border-dashed border-primary z-10 flex items-center justify-center rounded-lg">
+                  <div className="text-center">
+                    <PhotoIcon className="h-12 w-12 mx-auto text-primary mb-2" />
+                    <p className="text-primary font-medium">Drop images here to add them to your post</p>
+                  </div>
+                </div>
+              )}
+              {mounted ? (
+                <div data-color-mode={theme === "dark" ? "dark" : "light"}>
+                  <MDEditor
+                    value={content}
+                    onChange={(value) => setContent(value || "")}
+                    preview="live"
+                    height={600}
+                    className="w-full"
+                  />
+                </div>
+              ) : (
+                <div className="w-full h-[600px] bg-base-200 rounded-lg animate-pulse flex items-center justify-center">
+                  <span className="text-base-content/60">Loading editor...</span>
+                </div>
+              )}
             </div>
           </div>
 
