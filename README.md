@@ -87,7 +87,7 @@ A Next.js 15 content blog featuring articles, podcasts, comics, and shorts about
 
 ## 📁 Project Structure
 
-``` bash
+```bash
 src/
 ├── app/                    # Next.js App Router pages
 │   ├── articles/          # Article pages and routing
@@ -254,9 +254,8 @@ The web application seamlessly integrates with a companion Android app:
 The app automatically detects Android environment using:
 
 ```typescript
-const isAndroid = typeof window !== 'undefined' &&
-  window.Android &&
-  typeof window.Android.startMediaNotification === 'function';
+const isAndroid =
+  typeof window !== "undefined" && window.Android && typeof window.Android.startMediaNotification === "function";
 ```
 
 ### Media Controls
