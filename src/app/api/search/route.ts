@@ -106,14 +106,17 @@ export async function GET(request: NextRequest) {
     const shorts = await getAllShorts();
     for (const short of shorts) {
       const matchesTitle = searchInText(short.title, query);
+      const matchesContent = searchInText(short.content, query);
+      const matchesExcerpt = short.excerpt && searchInText(short.excerpt, query);
 
-      if (matchesTitle) {
+      if (matchesTitle || matchesContent || matchesExcerpt) {
         results.push({
           id: short.id,
           title: short.title,
           type: "short",
-          url: `/shorts`,
-          image: short.image,
+          url: `/shorts/${short.id}`,
+          excerpt: short.excerpt || createExcerpt(short.content.replace(/<[^>]*>/g, ""), query),
+          image: short.coverImage,
           date: short.date,
         });
       }

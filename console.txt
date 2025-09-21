@@ -1,0 +1,38 @@
+Download the React DevTools for a better development experience: https://react.dev/link/react-devtools react-dom-client.development.js:24651:17
+Image with src "/jecilkic.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes warn-once.js:16:21
+Feature Policy: Skipping unsupported feature name “accelerometer”. main-app.js:1407:16
+Feature Policy: Skipping unsupported feature name “autoplay”. main-app.js:1407:16
+Feature Policy: Skipping unsupported feature name “clipboard-write”. main-app.js:1407:16
+Feature Policy: Skipping unsupported feature name “encrypted-media”. main-app.js:1407:16
+Feature Policy: Skipping unsupported feature name “gyroscope”. main-app.js:1407:16
+Feature Policy: Skipping unsupported feature name “picture-in-picture”. main-app.js:1407:16
+Feature Policy: Skipping unsupported feature name “accelerometer”. main-app.js:11217:63
+Feature Policy: Skipping unsupported feature name “autoplay”. main-app.js:11217:63
+Feature Policy: Skipping unsupported feature name “clipboard-write”. main-app.js:11217:63
+Feature Policy: Skipping unsupported feature name “encrypted-media”. main-app.js:11217:63
+Feature Policy: Skipping unsupported feature name “gyroscope”. main-app.js:11217:63
+Feature Policy: Skipping unsupported feature name “picture-in-picture”. main-app.js:11217:63
+Cookie warnings 3
+Cookie “__Secure-YEC” has been rejected because it is in a cross-site context and its “SameSite” is “Lax” or “Strict”. cmkAbDUEoyA
+[Fast Refresh] rebuilding 2 hot-reloader-client.js:241:25
+Image with src "https://apod.nasa.gov/apod/image/2509/SunsetMonths_Vanzella_1080.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes warn-once.js:16:21
+[Fast Refresh] done in 52ms hot-reloader-client.js:68:13
+Image with src "https://www.artic.edu/iiif/2/0cbe27e8-2fec-3445-bc48-ce40a8f2dc25/full/843,/0/default.jpg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes warn-once.js:16:21
+[Fast Refresh] done in 1111ms hot-reloader-client.js:68:13
+Error setting up word of the day: Error: Failed to fetch word of the day
+    fetchWord webpack-internal:///(app-pages-browser)/./src/components/WordOfDay.tsx:44
+intercept-console-error.js:51:32
+Error setting up word of the day: Error: Failed to fetch word of the day
+    fetchWord webpack-internal:///(app-pages-browser)/./src/components/WordOfDay.tsx:44
+intercept-console-error.js:51:32
+[Fast Refresh] rebuilding hot-reloader-client.js:241:25
+[Fast Refresh] done in 434ms hot-reloader-client.js:68:13
+[Fast Refresh] rebuilding hot-reloader-client.js:241:25
+[Fast Refresh] done in 494ms hot-reloader-client.js:68:13
+Error loading shorts: Error: Failed to fetch shorts: 500
+    fetchShorts webpack-internal:///(app-pages-browser)/./src/app/shorts/page.tsx:51
+intercept-console-error.js:51:32
+Error loading shorts: Error: Failed to fetch shorts: 500
+    fetchShorts webpack-internal:///(app-pages-browser)/./src/app/shorts/page.tsx:51
+intercept-console-error.js:51:32
+The resource at “http://192.168.0.103:3000/_next/image?url=%2Fjecilkic.png&w=3840&q=75” preloaded with link preload was not used within a few seconds. Make sure all attributes of the preload tag are set correctly. shorts

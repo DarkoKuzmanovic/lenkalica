@@ -1,10 +1,10 @@
 "use client";
 
-import type { Short } from "@/lib/shorts";
-import { useEffect, useState } from "react";
-import ShortsCard from "@/components/ShortsCard";
-import ShortsSkeleton from "@/components/ShortsSkeleton";
+import ShortCard from "@/components/ShortCard";
+import SkeletonCard from "@/components/SkeletonCard";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import type { Short } from "@/lib/shorts";
 import Pagination from "@/components/Pagination";
 
 interface PaginatedResponse {
@@ -37,13 +37,19 @@ export default function ShortsPage() {
   const fetchShorts = async (page: number) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/shorts?page=${page}&limit=6`);
+      const response = await fetch(`/api/shorts?page=${page}&limit=12`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch shorts: ${response.status}`);
+      }
       const data: PaginatedResponse = await response.json();
-      setShorts(data.data);
-      setCurrentPage(data.currentPage);
-      setTotalPages(data.totalPages);
+      setShorts(data.data || []);
+      setCurrentPage(data.currentPage || 1);
+      setTotalPages(data.totalPages || 1);
     } catch (error) {
       console.error("Error loading shorts:", error);
+      setShorts([]);
+      setCurrentPage(1);
+      setTotalPages(1);
     } finally {
       setIsLoading(false);
     }
@@ -53,52 +59,81 @@ export default function ShortsPage() {
     fetchShorts(currentPage);
   }, [currentPage]);
 
-  const handlePrevious = () => {
-    if (currentPage > 1) setCurrentPage((prev) => prev - 1);
-  };
-
-  const handleNext = () => {
-    if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <div className="py-16">
-      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+    <div className="min-h-screen py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto">
-          <h1 className="mb-4">Shorts</h1>
-          <p className="text-base-content/70">A curated collection of interesting articles from around the web.</p>
+        <div className="text-center mb-12">
+          <motion.h1 
+            className="text-4xl md:text-5xl font-bold text-base-content mb-4"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            Shorts
+          </motion.h1>
+          <motion.p 
+            className="text-lg text-base-content/70 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            Quick reads about fascinating topics from around the world
+          </motion.p>
         </div>
 
         {/* Content */}
         {isLoading ? (
-          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {Array.from({ length: 6 }).map((_, index) => (
-              <ShortsSkeleton key={index} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {Array.from({ length: 12 }).map((_, index) => (
+              <SkeletonCard key={index} />
             ))}
           </div>
+        ) : !shorts || shorts.length === 0 ? (
+          <motion.div 
+            className="text-center py-16"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <div className="text-6xl mb-4">📝</div>
+            <h3 className="text-2xl font-semibold mb-2">No shorts yet</h3>
+            <p className="text-base-content/70">
+              Check back soon for quick and interesting reads!
+            </p>
+          </motion.div>
         ) : (
           <>
             <motion.div
-              className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
               variants={container}
               initial="hidden"
               animate="show"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
-              {shorts.map((short) => (
+              {shorts.map((short, index) => (
                 <motion.div key={short.id} variants={item}>
-                  <ShortsCard short={short} />
+                  <ShortCard 
+                    short={short} 
+                    priority={index < 4}
+                  />
                 </motion.div>
               ))}
             </motion.div>
 
-            {/* Pagination Controls */}
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPrevious={handlePrevious}
-              onNext={handleNext}
-            />
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="mt-12">
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                />
+              </div>
+            )}
           </>
         )}
       </div>

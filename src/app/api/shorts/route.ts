@@ -4,7 +4,7 @@ import { getAllShorts } from "@/lib/shorts";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const page = parseInt(searchParams.get("page") || "1", 10);
-  const limit = parseInt(searchParams.get("limit") || "6", 10);
+  const limit = parseInt(searchParams.get("limit") || "12", 10);
 
   try {
     const shorts = await getAllShorts();
@@ -19,6 +19,7 @@ export async function GET(request: NextRequest) {
       data: paginatedShorts,
       currentPage: page,
       totalPages,
+      total: shorts.length,
     });
   } catch (err) {
     console.error("Failed to fetch shorts:", err);

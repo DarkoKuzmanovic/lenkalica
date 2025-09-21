@@ -54,7 +54,14 @@ export default function Header() {
               whileHover={{ scale: 1.1 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
-              <Image src="/jecilkic.png" alt="Lenkalica Logo" fill className="object-cover" priority />
+              <Image 
+                src="/jecilkic.png" 
+                alt="Lenkalica Logo" 
+                fill 
+                className="object-cover" 
+                priority 
+                sizes="40px"
+              />
             </motion.div>
             <motion.span
               className="text-2xl font-bold text-base-content transition-colors duration-200 group-hover:text-primary"
