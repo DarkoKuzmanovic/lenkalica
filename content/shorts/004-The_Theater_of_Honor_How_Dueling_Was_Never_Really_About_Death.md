@@ -1,26 +1,27 @@
 ---
-title: The Theater of Honor: How Dueling Was Never Really About Death
+title: The Theater of Honor - How Dueling Was Never Really About Death
 date: "2025-09-21"
 category: "History"
-tags: [
-  "dueling",
-  "honor",
-  "masculinity",
-  "Alexander Hamilton",
-  "Aaron Burr",
-  "code duello",
-  "American history",
-  "violence",
-  "social norms",
-  "reputation"
-]
+tags:
+  [
+    "dueling",
+    "honor",
+    "masculinity",
+    "Alexander Hamilton",
+    "Aaron Burr",
+    "code duello",
+    "American history",
+    "violence",
+    "social norms",
+    "reputation",
+  ]
 excerpt: "This article explores the true nature of dueling, revealing it as a performance of honor rather than a mere contest of violence."
 author: "Darko Kuzmanovic"
 ---
 
 On the morning of July 11, 1804, as mist clung to the banks of the Hudson River at Weehawken, two men faced each other with loaded pistols in what would become America's most infamous duel. Alexander Hamilton, the brilliant architect of the nation's financial system, stood opposite Aaron Burr, the sitting Vice President of the United States. Yet for all the historical weight of that moment—with Hamilton's death the following day fundamentally altering American politics—the encounter embodied a profound misunderstanding that persists to this day. Popular imagination casts dueling as a barbaric blood sport, a primitive contest where gentlemen sought to kill one another over trivial slights. The truth is far more nuanced and, in its way, more fascinating. [^1][^2]
 
-**The true purpose of dueling was not murder but theater—an elaborate performance of masculine honor in which "satisfaction" meant proving one's willingness to risk everything, not necessarily to destroy everything.** This distinction transforms our understanding of what was, for centuries, one of the most formalized systems of conflict resolution ever devised.
+**The true purpose of dueling was not murder but theater—an elaborate performance masculine honor in which "satisfaction" meant proving one's willingness to risk everything, not necessarily to destroy everything.** This distinction transforms our understanding of what was, for centuries, one of the most formalized systems of conflict resolution ever devised.
 
 ## The Architecture of Satisfaction
 
@@ -72,140 +73,71 @@ The theater of honor that played out on misty fields at dawn for three centuries
 <div style="text-align: center">⁂</div>
 
 [^1]: https://en.wikipedia.org/wiki/Duel
-
 [^2]: https://www.gilderlehrman.org/history-resources/essays/understanding-burr-hamilton-duel
-
 [^3]: https://www.pbs.org/wgbh/americanexperience/features/duel-code-duello-rules-dueling/
-
 [^4]: https://www.denix.es/en/catalogue/historical-weapons-xvi-xix-c/pistols/2-1196-l/
-
 [^5]: https://www.artofmanliness.com/character/knowledge-of-men/man-knowledge-an-affair-of-honor-the-duel/
-
 [^6]: https://www.mkadr.com/2025/02/when-pistols-were-part-of-the-peace-process-what-gun-dueling-can-teach-us-about-modern-mediation/
-
 [^7]: https://www.sfu.ca/~allen/dueling7.pdf
-
 [^8]: https://eprints.whiterose.ac.uk/id/eprint/1629/1/shoemaker.r.b1.pdf
-
 [^9]: https://en.wikipedia.org/wiki/Deloping
-
 [^10]: https://en.wikipedia.org/wiki/Burr–Hamilton_duel
-
 [^11]: https://www.reddit.com/r/AskHistorians/comments/11wi28a/as_i_understand_it_sword_duels_between_gentlemen/
-
 [^12]: https://www.youtube.com/watch?v=TfhVQ0YbixA
-
 [^13]: https://regencyfictionwriters.org/placeholder-for-duelling-article/
-
 [^14]: https://en.wikipedia.org/wiki/Duelling_pistol
-
 [^15]: https://blog.medieval-shop.co.uk/duel-pistols-honor-technique-and-cases-that-tell-stories.html
-
 [^16]: https://www.reddit.com/r/AskHistorians/comments/uzebul/why_is_it_that_british_gentlemen_stereotypically/
-
 [^17]: https://www.artofmanliness.com/featured/honor-during-victorian-era/
-
 [^18]: https://research-information.bris.ac.uk/en/publications/dueling-conflicting-masculinities-and-the-victorian-gentleman
-
 [^19]: https://simonpare.net/blog/pistols-at-dawn-or-literary-duels
-
 [^20]: https://blogs.loc.gov/law/2016/06/so-youve-been-challenged-to-a-duel-what-are-the-rules/
-
 [^21]: https://www.reddit.com/r/todayilearned/comments/1nmn9uz/til_that_historical_duels_werent_about_killing/
-
 [^22]: https://stephenliddell.co.uk/2017/04/05/how-to-have-your-own-duel/
-
 [^23]: https://cornishbirdblog.com/pistols-at-dawn-duelling-in-cornwall/
-
 [^24]: https://en.wikipedia.org/wiki/Code_duello
-
 [^25]: http://www.sfu.ca/~allen/dueling7.pdf
-
 [^26]: https://www.reddit.com/r/OldSchoolCool/comments/jjqz7a/pistol_duel_1896_by_the_lumi%C3%A8re_brothers_colorised/
-
 [^27]: https://www.glennsreflections.com/index.php/2023/06/01/the-code-duello/
-
 [^28]: https://www.gethistories.com/p/a-history-of-duels-part-1
-
 [^29]: https://www.irishcentral.com/roots/history/dueling-irish-origins
-
 [^30]: https://diannedurantewriter.com/archives/1646
-
 [^31]: https://www.lemondededartagnan.org/en/cape-sword/duels
-
 [^32]: https://www.taylorfrancis.com/chapters/edit/10.4324/9781351243292-11/popular-duels-honor-violence-reconciliation-augsburg-street-fight-1642-ann-tlusty
-
 [^33]: https://www.gilderlehrman.org/history-resources/spotlight-primary-source/aaron-burr-fugitive-and-traitor-1804
-
 [^34]: https://www.pbs.org/wgbh/americanexperience/features/duel-alexander-hamilton-and-aaron-burrs-duel/
-
 [^35]: http://www.eyewitnesstohistory.com/duel.htm
-
 [^36]: https://www.britannica.com/event/Burr-Hamilton-duel
-
 [^37]: https://founders.archives.gov/documents/Hamilton/01-26-02-0001-0279
-
 [^38]: https://www.thecollector.com/dueling-early-modern-europe-north-america/
-
 [^39]: https://library.tc.columbia.edu/blog/content/2025/july/today-in-history-burr-hamilton-duel.php
-
 [^40]: https://constitutioncenter.org/blog/burr-vs-hamilton-behind-the-ultimate-political-feud
-
 [^41]: https://founders.archives.gov/documents/Hamilton/01-26-02-0001-0212
-
 [^42]: https://www.reddit.com/r/AskHistorians/comments/18iqe7u/duelling_and_honour_in_late_18_early_19_century/
-
 [^43]: https://artsandculture.google.com/story/the-hamilton-burr-duel-the-gilder-lehrman-institute-of-american-history/kAWRzaIwoPWXLQ?hl=en
-
 [^44]: https://en.wikipedia.org/wiki/Aaron_Burr
-
 [^45]: https://historicinterpreter.wordpress.com/2014/12/01/the-duel-of-honor/
-
 [^46]: https://www.nyhistory.org/blogs/summer-of-hamilton-family-activities-remembering-the-hamilton-burr-duel
-
 [^47]: https://artsandculture.google.com/story/the-art-of-duelling-cultures-and-ethical-codes-war-museum-athens/bwUx5KP_o3VfEw?hl=en
-
 [^48]: https://www.youtube.com/watch?v=GXcSzokYUHs
-
 [^49]: https://www.ranker.com/list/every-rule-in-code-duello/justin-andress
-
 [^50]: https://www.sensibleselfdefenseblog.com/2017/11/deliberate-practice-makes-perfect.html?m=1
-
 [^51]: https://www.reddit.com/r/AskHistorians/comments/8oztq3/im_having_quite_a_hard_time_imagining_the/
-
 [^52]: http://www.poliscidata.com/blog/exploring-the-influence-of-dueling-norms-on-the-right-to-bear-arms-in-early-america/
-
 [^53]: https://www.sos.ky.gov/land/resources/articles/Documents/CodeDuello.pdf
-
 [^54]: https://sofrep.com/news/the-code-of-honor-understanding-the-rules-of-dueling-in-the-1800s/
-
 [^55]: https://news.ycombinator.com/item?id=28452815
-
 [^56]: https://business-digest.eu/6-popular-misconceptions-about-deliberate-practice/?lang=en
-
 [^57]: https://www.reddit.com/r/wma/comments/8tnkmt/best_choice_of_weapons_in_a_duel/
-
 [^58]: https://en.wikipedia.org/wiki/Bladensburg_Dueling_Grounds
-
 [^59]: https://www.youtube.com/watch?v=hVTKzwJ-Ks4
-
 [^60]: https://vaventura.com/wp-content/uploads/2015/08/gentleman2.pdf
-
 [^61]: https://www.youtube.com/watch?v=zWJgYL91tJA
-
 [^62]: https://www.jstor.org/stable/26599099
-
 [^63]: https://www.americanheritage.com/bloodshed-dawn
-
 [^64]: https://forums.fatsharkgames.com/t/weapon-selection-make-duelling-swords-available-for-veteran-and-zealot/89637?page=3
-
 [^65]: https://www.jstor.org/stable/3679357
-
 [^66]: https://www.neh.gov/article/dueling-violence-gentlemen
-
 [^67]: https://forums.fatsharkgames.com/t/dual-wielding-system-for-one-handed-compact-weapons/68930
-
 [^68]: https://www.cambridge.org/core/journals/journal-of-british-studies/article/dueling-conflicting-masculinities-and-the-victorian-gentleman/5D060268BB6F2F37DA5648407FCC7C78
-
 [^69]: https://www.academia.edu/3671276/_A_Hero_in_Transition_the_Victorian_Gentleman_as_a_Revisited_Paradigm_of_Masculinity_
-
