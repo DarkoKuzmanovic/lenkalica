@@ -145,8 +145,10 @@ export default function PostEditorPage() {
       }
 
       const { metadata } = await response.json();
+      // Process title to replace semicolons with dashes
+      const processedTitle = title.replace(/:/g, ' -');
       const metadataContent = `---
-title: ${title}
+title: ${processedTitle}
 date: "${new Date().toISOString().split("T")[0]}"
 category: "${metadata.category}"
 tags: ${JSON.stringify(metadata.tags, null, 2)}

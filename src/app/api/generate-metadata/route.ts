@@ -10,6 +10,8 @@ const SYSTEM_PROMPT = `You are a helpful assistant that generates metadata for a
 - excerpt: string (a short summary, maximum 200 characters)
 - author: string (use "Darko Kuzmanovic" as default author)
 
+IMPORTANT: Ensure that titles never contain semicolons ":" as they break article listing. Use "-" or em dash "—" instead.
+
 Return only the JSON object, no other text or formatting.`;
 
 export async function POST(req: NextRequest) {
@@ -81,6 +83,11 @@ export async function POST(req: NextRequest) {
         },
         { status: 500 }
       );
+    }
+
+    // Post-process to ensure titles don't contain semicolons
+    if (metadata.title) {
+      metadata.title = metadata.title.replace(/:/g, ' -');
     }
 
     return NextResponse.json({ metadata });
