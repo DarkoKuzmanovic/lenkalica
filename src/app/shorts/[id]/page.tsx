@@ -91,7 +91,9 @@ export default function ShortPage({ params }: { params: Promise<{ id: string }> 
               priority
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            {/* 30% dark overlay for better text readability */}
+            <div className="absolute inset-0 bg-black/30" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
             <div className="absolute bottom-0 left-0 p-6 text-white">
               <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2 leading-tight">
                 {short.title}

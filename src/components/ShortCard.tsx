@@ -54,8 +54,10 @@ export default function ShortCard({ short, variant = 'default', priority = false
           priority={priority}
           sizes={variant === 'featured' ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 100vw, 33vw"}
         />
+        {/* 30% dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/30" />
         {isNew && (
-          <div className="absolute top-4 left-4 badge badge-accent badge-sm animate-pulse">
+          <div className="absolute top-4 left-4 badge badge-accent badge-sm animate-pulse z-10">
             New
           </div>
         )}
