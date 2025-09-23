@@ -33,7 +33,7 @@ export default function ShortPage({ params }: { params: Promise<{ id: string }> 
 
   useEffect(() => {
     if (!id) return;
-    
+
     const loadShort = async () => {
       try {
         const response = await fetch(`/api/shorts/${id}`);
@@ -82,7 +82,7 @@ export default function ShortPage({ params }: { params: Promise<{ id: string }> 
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Hero Section */}
         <header className="mb-8">
-          <div className="relative w-full h-64 md:h-80 lg:h-96 rounded-2xl overflow-hidden mb-6">
+          <div className="relative w-full aspect-square md:aspect-video lg:aspect-video max-h-96 rounded-2xl overflow-hidden mb-6">
             <Image
               src={short.coverImage}
               alt={short.title}
@@ -93,13 +93,19 @@ export default function ShortPage({ params }: { params: Promise<{ id: string }> 
             />
             {/* 30% dark overlay for better text readability */}
             <div className="absolute inset-0 bg-black/30" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-            <div className="absolute bottom-0 left-0 p-6 text-white">
-              <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2 leading-tight">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            <div className="absolute bottom-0 left-0 p-6 drop-shadow-lg">
+              <h1
+                className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2 leading-tight text-white"
+                style={{ textShadow: "0 2px 8px rgba(0,0,0,0.65)" }}
+              >
                 {short.title}
               </h1>
               {short.excerpt && (
-                <p className="text-lg opacity-90 max-w-2xl leading-relaxed">
+                <p
+                  className="text-lg text-white/90 max-w-2xl leading-relaxed"
+                  style={{ textShadow: "0 1px 6px rgba(0,0,0,0.55)" }}
+                >
                   {short.excerpt}
                 </p>
               )}
@@ -110,10 +116,10 @@ export default function ShortPage({ params }: { params: Promise<{ id: string }> 
         </header>
 
         {/* Content */}
-        <div 
+        <div
           className="prose prose-lg max-w-none
-            prose-headings:text-base-content 
-            prose-p:text-base-content/90 
+            prose-headings:text-base-content
+            prose-p:text-base-content/90
             prose-strong:text-base-content
             prose-em:text-base-content
             prose-blockquote:text-base-content/80
@@ -135,10 +141,7 @@ export default function ShortPage({ params }: { params: Promise<{ id: string }> 
 
         {/* Back to Shorts */}
         <div className="mt-12 pt-8 border-t border-base-300">
-          <Link
-            href="/shorts"
-            className="btn btn-outline btn-primary"
-          >
+          <Link href="/shorts" className="btn btn-outline btn-primary">
             ← Back to Shorts
           </Link>
         </div>

@@ -30,14 +30,14 @@ export default function ShortCard({ short, variant = "default", priority = false
     return `${baseClasses} ${variantClasses[variant]}`;
   };
 
-  const getFigureHeight = () => {
-    const heights = {
-      default: "h-56",
-      featured: "h-72",
-      compact: "h-32",
-      list: "h-32",
+  const getFigureClasses = () => {
+    const classes = {
+      default: "aspect-square",
+      featured: "aspect-square lg:aspect-video", // Square on mobile, video on large screens for featured
+      compact: "aspect-square",
+      list: "aspect-square",
     };
-    return heights[variant];
+    return classes[variant];
   };
 
   return (
@@ -46,7 +46,7 @@ export default function ShortCard({ short, variant = "default", priority = false
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
       className={getCardClasses()}
     >
-      <figure className={`relative ${getFigureHeight()} overflow-hidden`}>
+      <figure className={`relative ${getFigureClasses()} overflow-hidden`}>
         <Image
           src={short.coverImage}
           alt={short.title}
