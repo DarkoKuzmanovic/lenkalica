@@ -59,9 +59,18 @@ export default function ShortsPage() {
     fetchShorts(currentPage);
   }, [currentPage]);
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   return (
@@ -69,7 +78,7 @@ export default function ShortsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <motion.h1 
+          <motion.h1
             className="text-4xl md:text-5xl font-bold text-base-content mb-4"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -77,7 +86,7 @@ export default function ShortsPage() {
           >
             Shorts
           </motion.h1>
-          <motion.p 
+          <motion.p
             className="text-lg text-base-content/70 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -91,20 +100,16 @@ export default function ShortsPage() {
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {Array.from({ length: 12 }).map((_, index) => (
-              <SkeletonCard key={index} />
+              <div key={index} className={index === 0 ? "md:col-span-2" : ""}>
+                <SkeletonCard variant={index === 0 ? "wide" : "default"} />
+              </div>
             ))}
           </div>
         ) : !shorts || shorts.length === 0 ? (
-          <motion.div 
-            className="text-center py-16"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
+          <motion.div className="text-center py-16" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <div className="text-6xl mb-4">📝</div>
             <h3 className="text-2xl font-semibold mb-2">No shorts yet</h3>
-            <p className="text-base-content/70">
-              Check back soon for quick and interesting reads!
-            </p>
+            <p className="text-base-content/70">Check back soon for quick and interesting reads!</p>
           </motion.div>
         ) : (
           <>
@@ -115,11 +120,8 @@ export default function ShortsPage() {
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             >
               {shorts.map((short, index) => (
-                <motion.div key={short.id} variants={item}>
-                  <ShortCard 
-                    short={short} 
-                    priority={index < 4}
-                  />
+                <motion.div key={short.id} variants={item} className={index === 0 ? "md:col-span-2" : ""}>
+                  <ShortCard short={short} priority={index < 4} variant={index === 0 ? "wide" : "default"} />
                 </motion.div>
               ))}
             </motion.div>
@@ -130,7 +132,8 @@ export default function ShortsPage() {
                 <Pagination
                   currentPage={currentPage}
                   totalPages={totalPages}
-                  onPageChange={handlePageChange}
+                  onPrevious={handlePrevious}
+                  onNext={handleNext}
                 />
               </div>
             )}

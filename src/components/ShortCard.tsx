@@ -5,18 +5,22 @@ import Link from "next/link";
 import type { Short } from "@/lib/shorts";
 import { calculateReadingTime } from "@/utils/readingTime";
 import { motion } from "framer-motion";
+import { ClockIcon } from "@heroicons/react/20/solid";
+
+const THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000;
 
 interface ShortCardProps {
   short: Short;
-  variant?: "default" | "featured" | "compact" | "list";
+  variant?: "default" | "featured" | "compact" | "list" | "wide";
   priority?: boolean;
 }
 
 export default function ShortCard({ short, variant = "default", priority = false }: ShortCardProps) {
   const readingTime = calculateReadingTime(short.content);
+  const readingMinutes = Number.parseInt(readingTime, 10) || 1;
 
-  // Check if short is new (published within last 7 days)
-  const isNew = new Date().getTime() - new Date(short.date).getTime() < 7 * 24 * 60 * 60 * 1000;
+  // Mark as new only if published within the last 3 days
+  const isNew = Date.now() - new Date(short.date).getTime() < THREE_DAYS_MS;
 
   const getCardClasses = () => {
     const baseClasses =
@@ -26,6 +30,7 @@ export default function ShortCard({ short, variant = "default", priority = false
       featured: "card-featured lg:col-span-2",
       compact: "card-compact",
       list: "card-list",
+      wide: "md:h-full",
     };
     return `${baseClasses} ${variantClasses[variant]}`;
   };
@@ -36,6 +41,7 @@ export default function ShortCard({ short, variant = "default", priority = false
       featured: "aspect-square lg:aspect-video", // Square on mobile, video on large screens for featured
       compact: "aspect-square",
       list: "aspect-square",
+      wide: "aspect-square md:aspect-[2/1]",
     };
     return classes[variant];
   };
@@ -70,18 +76,28 @@ export default function ShortCard({ short, variant = "default", priority = false
 
         {short.excerpt && <p className="text-base-content/70 text-sm line-clamp-3 leading-relaxed">{short.excerpt}</p>}
 
-        <div className="card-actions justify-between items-center mt-4">
-          <div className="flex flex-wrap gap-2 text-xs">
-            <div className="badge badge-ghost badge-sm">{readingTime}</div>
-            {short.category && <div className="badge badge-secondary badge-sm">{short.category}</div>}
+        <div className="card-actions mt-4 flex items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2 overflow-hidden">
+            <div className="badge badge-ghost badge-sm inline-flex items-center gap-1">
+              <ClockIcon className="h-3.5 w-3.5" aria-hidden="true" />
+              <span>{readingMinutes} min</span>
+            </div>
+            {short.category && (
+              <div
+                className="badge badge-secondary badge-sm inline-flex items-center max-w-[7rem] overflow-hidden whitespace-nowrap"
+                title={short.category}
+              >
+                <span className="truncate">{short.category}</span>
+              </div>
+            )}
           </div>
 
           <time className="text-xs text-base-content/60" dateTime={short.date}>
-            {new Date(short.date).toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-              year: "numeric",
-            })}
+            {new Intl.DateTimeFormat("en-GB", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "2-digit",
+            }).format(new Date(short.date))}
           </time>
         </div>
       </div>

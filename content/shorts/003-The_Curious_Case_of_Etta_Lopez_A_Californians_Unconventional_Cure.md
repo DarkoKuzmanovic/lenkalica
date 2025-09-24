@@ -1,19 +1,20 @@
 ---
 title: The Curious Case of Etta Lopez - A Californian's Unconventional Cure
 date: "2025-09-21"
-category: "Current Events"
-tags: [
-  "Etta Lopez",
-  "California",
-  "addiction",
-  "tobacco ban",
-  "mass incarceration",
-  "rehabilitation",
-  "public health",
-  "criminal justice",
-  "smoking cessation",
-  "mental health"
-]
+category: "News"
+tags:
+  [
+    "Etta Lopez",
+    "California",
+    "addiction",
+    "tobacco ban",
+    "mass incarceration",
+    "rehabilitation",
+    "public health",
+    "criminal justice",
+    "smoking cessation",
+    "mental health",
+  ]
 excerpt: "Etta Lopez's unconventional method to quit smoking by assaulting a deputy highlights the intersection of addiction and America's carceral system."
 author: "Darko Kuzmanovic"
 ---
@@ -58,74 +59,38 @@ The Sacramento County Jail, where Lopez served her sentence, was not designed to
 <div style="text-align: center">⁂</div>
 
 [^1]: https://www.police1.com/bizarre/articles/calif-woman-slaps-cop-to-kick-her-tobacco-habit-RBbSmBnN9ASNUQ2q/
-
 [^2]: https://www.cbsnews.com/sacramento/news/sacramento-womans-alleged-stop-smoking-plan-slap-a-deputy/
-
 [^3]: https://www.usatoday.com/story/news/nation/2013/05/10/quit-smoking/2151181/
-
 [^4]: https://www.cbsnews.com/sacramento/news/woman-gets-63-days-to-stop-smoking-for-slapping-deputy/
-
 [^5]: https://www.latimes.com/local/lanow/la-xpm-2013-may-11-la-me-ln-woman-hit-sheriffs-deputy-to-quit-smoking-authorities-allege-20130511-story.html
-
 [^6]: https://www.seattletimes.com/nation-world/california-prisons-now-nonsmoking/
-
 [^7]: https://www.latimes.com/archives/la-xpm-2005-jun-30-me-smoking30-story.html
-
 [^8]: https://www.latimes.com/archives/la-xpm-2002-jul-02-me-cigs2-story.html
-
 [^9]: https://pmc.ncbi.nlm.nih.gov/articles/PMC5807014/
-
 [^10]: https://www.iprt.ie/international-news/prison-smokescreen-by-tony-newman-alternet.org/
-
 [^11]: https://pmc.ncbi.nlm.nih.gov/articles/PMC2117377/
-
 [^12]: https://pmc.ncbi.nlm.nih.gov/articles/PMC10875655/
-
 [^13]: https://pmc.ncbi.nlm.nih.gov/articles/PMC6416677/
-
 [^14]: https://pmc.ncbi.nlm.nih.gov/articles/PMC2598573/
-
 [^15]: https://www.penalreform.org/blog/tobacco-use-in-prison-settings-a-need-for/
-
 [^16]: https://pmc.ncbi.nlm.nih.gov/articles/PMC4535991/
-
 [^17]: https://abc7chicago.com/archive/9096693/
-
 [^18]: https://www.bbc.com/news/uk-24170235
-
 [^19]: https://www.reddit.com/r/todayilearned/comments/1nkb3ma/til_in_2013_a_california_woman_waited_outside_a/
-
 [^20]: https://www.tobaccoinduceddiseases.org/Experiences-of-quitting-smoking-in-prisons-A-qualitative-nstudy-of-people-in-custody,183604,0,2.html
-
 [^21]: https://www.nbcnews.com/id/wbna8423005
-
 [^22]: https://www.cbc.ca/news/world/u-s-woman-slaps-cop-for-jail-time-to-stop-smoking-1.1391279
-
 [^23]: https://www.bbc.com/news/world-europe-guernsey-20874316
-
 [^24]: https://en.wikipedia.org/wiki/List_of_smoking_bans_in_the_United_States
-
 [^25]: https://nypost.com/2013/05/10/calif-woman-hit-cop-to-go-to-jail-to-quit-smoking/
-
 [^26]: https://www.prisonlegalnews.org/news/2016/aug/2/prison-tobacco-bans-reduce-smoking-related-deaths/
-
 [^27]: https://www.instagram.com/p/DOwELm7jfMS/
-
 [^28]: https://tobaccocontrol.bmj.com/content/tobaccocontrol/26/5/495.full.pdf
-
 [^29]: https://www.deccanherald.com/archives/to-quit-smoking-us-woman-2259566
-
 [^30]: https://thepeninsulaqatar.com/article/12/05/2013/to-quit-smoking-us-woman-slaps-policeman
-
 [^31]: https://www.nbcnews.com/news/us-news/california-woman-who-slapped-deputy-so-she-could-quit-smoking-flna1c9884147
-
 [^32]: https://www.instagram.com/p/DOxzPCQDZ86/
-
 [^33]: https://jhmhp.amegroups.org/article/view/4256/html
-
 [^34]: https://bhwellness.org/wp-content/uploads/Providing-Tobaco-Cessation-Services-in-Correctional-Settings-Frameworks-Feasibility-and-Effectiveness.pdf
-
 [^35]: https://smokingcessationleadership.ucsf.edu/justice-involved
-
 [^36]: https://www.tobaccopreventioncessation.com/pdf-109784-41111?filename=41111.pdf
-
