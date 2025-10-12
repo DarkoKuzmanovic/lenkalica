@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import { useTheme } from "next-themes";
@@ -8,6 +8,7 @@ import MDEditor from "@uiw/react-md-editor";
 
 export default function ShortsEditorPage() {
   const { theme } = useTheme();
+  const coverImageInputRef = useRef<HTMLInputElement>(null);
   const [mounted, setMounted] = useState(false);
   const [shortNumber, setShortNumber] = useState("");
   const [title, setTitle] = useState("");
@@ -193,6 +194,11 @@ author: "${metadata.author}"
       setCoverImage(null);
       setImagePreview(null);
 
+      // Reset the file input value
+      if (coverImageInputRef.current) {
+        coverImageInputRef.current.value = "";
+      }
+
       // Fetch next short number
       const nextNumberResponse = await fetch("/api/shorts/next-number");
       if (nextNumberResponse.ok) {
@@ -259,6 +265,7 @@ author: "${metadata.author}"
             <input
               type="file"
               id="coverImage"
+              ref={coverImageInputRef}
               accept="image/*"
               onChange={handleCoverImageChange}
               className="file-input file-input-bordered w-full"
