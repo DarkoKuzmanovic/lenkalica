@@ -88,7 +88,6 @@ export default function Header() {
           >
             {[
               { href: "/articles", label: "Articles" },
-              { href: "/studies", label: "Studies" },
               { href: "/shorts", label: "Shorts" },
               { href: "/comics", label: "Comics" },
               { href: "/podcasts", label: "Podcasts" },
@@ -160,7 +159,6 @@ export default function Header() {
                 >
                   {[
                     { href: "/articles", label: "Articles" },
-                    { href: "/studies", label: "Studies" },
                     { href: "/shorts", label: "Shorts" },
                     { href: "/comics", label: "Comics" },
                     { href: "/podcasts", label: "Podcasts" },
