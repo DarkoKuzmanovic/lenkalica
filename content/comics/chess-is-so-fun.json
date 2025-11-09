@@ -1,7 +1,7 @@
 {
   "id": "chess-is-so-fun",
   "title": "Chess Is So Fun",
-  "image": "/images/comics/chess-is-so-fun.jpeg",
+  "image": "https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/comics/chess-is-so-fun.jpeg",
   "tags": [],
   "publishDate": "2025-01-27T00:00:00.000Z",
   "createdAt": "2025-01-27T21:56:47.056Z",

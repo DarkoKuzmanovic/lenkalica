@@ -21,7 +21,7 @@ author: "Lenka Suncokretić"
 
 Nestled near the small town of Gryfino in northwestern Poland lies one of the world’s most peculiar natural curiosities: the Crooked Forest, locally called Krzywy Las. This grove of approximately 400 pine trees is distinguished by an uncanny growth pattern shared by each tree—an abrupt, J-shaped bend near the base before the trunk curves skyward. Despite the trees’ strange posture, the forest thrives quietly, baffling scientists, locals, and visitors alike. Nearly a century after these trees first took root, the cause behind their eerie curves remains unresolved. This article explores the Crooked Forest’s history, the mystery surrounding its formation, the leading theories, and the enduring fascination it holds in nature and culture.
 
-![](/images/iS1yuk2-Z3SQzfJxBB9jk.jpeg)
+![](https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/iS1yuk2-Z3SQzfJxBB9jk.jpeg)
 
 ## Setting the Scene: The Unique J-Shaped Pines
 

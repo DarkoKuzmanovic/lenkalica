@@ -1,7 +1,7 @@
 {
   "id": "is-this-art",
   "title": "Is This Art?",
-  "image": "/images/comics/is-this-art.png",
+  "image": "https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/comics/is-this-art.png",
   "tags": [],
   "publishDate": "2025-02-17T00:00:00.000Z",
   "createdAt": "2025-02-17T20:03:13.355Z",

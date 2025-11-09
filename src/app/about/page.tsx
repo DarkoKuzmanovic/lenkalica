@@ -6,11 +6,11 @@ import { useState, useEffect } from "react";
 // Function to get available cover images
 const getAvailableCoverImages = () => {
   // Currently we have images 1 and 2
-  return [1, 2, 3].map((num) => `/images/about-cover-${num}.png`);
+  return [1, 2, 3].map((num) => `https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/about-cover-${num}.png`);
 };
 
 export default function AboutPage() {
-  const [coverImage, setCoverImage] = useState<string>("/images/about-cover-1.png");
+  const [coverImage, setCoverImage] = useState<string>("https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/about-cover-1.png");
 
   useEffect(() => {
     const images = getAvailableCoverImages();
@@ -66,7 +66,7 @@ export default function AboutPage() {
             <br />
             Remind me to tell you more in-depth about some cool features of it.
           </p>
-          <Image src="/images/signature.png" alt="With Love, Your Daka" width={300} height={300} />
+          <Image src="https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/signature.png" alt="With Love, Your Daka" width={300} height={300} />
         </div>
       </div>
     </div>

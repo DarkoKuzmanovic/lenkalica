@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     await writeFile(filepath, buffer);
 
     // Return the public URL
-    const imageUrl = `/images/${filename}`;
+    const imageUrl = `https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/${filename}`;
 
     return NextResponse.json({ imageUrl });
   } catch (error) {

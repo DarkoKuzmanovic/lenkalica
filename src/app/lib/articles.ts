@@ -27,8 +27,8 @@ export function getAllArticles(): Article[] {
         id,
         title: data.title,
         content,
-        coverImage: `/images/covers/${id}.png`,
-        audioFile: `/audio/${id}.mp3`,
+        coverImage: `https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/covers/${id}.png`,
+        audioFile: `https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/audio/${id}.mp3`,
       };
     })
     .sort((a, b) => (a.id > b.id ? 1 : -1));
@@ -44,8 +44,8 @@ export function getArticleById(id: string): Article | undefined {
       id,
       title: data.title,
       content,
-      coverImage: `/images/covers/${id}.png`,
-      audioFile: `/audio/${id}.mp3`,
+      coverImage: `https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/covers/${id}.png`,
+      audioFile: `https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/audio/${id}.mp3`,
     };
   } catch {
     return undefined;

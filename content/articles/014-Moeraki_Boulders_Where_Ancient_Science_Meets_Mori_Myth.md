@@ -22,7 +22,7 @@ author: "Lenka Suncokretiċ"
 
 At dawn on Koekohe Beach, fifty miles north of Dunedin, the Moeraki Boulders emerge from receding waters like ancient planets scattered across an alien shore. The spheres—some massive enough to dwarf a standing person, others small enough to cradle—rest on golden sand with the unsettling perfection of geometric forms that nature rarely produces. **Each boulder contains sixty million years of patient mineral precipitation**, yet in the rose-gold light of a South Island sunrise, they appear freshly arrived, as if deposited by retreating gods.
 
-![](/images/hIM0-gz3aVR1pfdyrVdu1.jpg)
+![](https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/hIM0-gz3aVR1pfdyrVdu1.jpg)
 
 Here, along the wave-cut Otago coastline, two profound ways of knowing the world converge in stone. Modern geology explains these formations as septarian concretions—calcite-cemented masses that grew with mathematical precision around organic nuclei buried in Paleocene seafloor mud. But to the Kāi Tahu people, indigenous to this coast for over a millennium, these are **Te Kaihīnaki**, the sacred food baskets and water gourds that spilled from the ancestral waka Āraiteuru when it foundered in heavy seas, its precious cargo of kūmara seeds destined to feed a new world transformed forever into stone.
 
@@ -32,7 +32,7 @@ The coexistence of these explanations—one rooted in deep geological time, the 
 
 The formation story that geology tells is itself a kind of creation myth, involving timescales that stretch comprehension. **Sixty million years ago, when the ancestors of horses were the size of dogs and flowering plants were evolutionary newcomers**, this stretch of New Zealand lay beneath a shallow Paleocene sea. In the fine-grained mud of that ancient seafloor, organic matter—a leaf, a shell, a fish bone—became the nucleus around which calcium carbonate began its infinitesimally slow precipitation.
 
-![](/images/hIM0-gz3aVR1pfdyrVdu1.jpg)
+![](https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/hIM0-gz3aVR1pfdyrVdu1.jpg)
 
 The process unfolded with the patience of geological time itself. **Each of the largest boulders, reaching 2.2 meters in diameter, required between four and five and a half million years to achieve its final form**, growing concentrically as calcium diffused through the surrounding sediment. The spherical shape—so perfect it seems manufactured—resulted from what geologists call "mass diffusion," a process that allowed minerals to precipitate uniformly in all directions from the central organic core.
 
@@ -86,7 +86,7 @@ The concept of mātauranga Māori—comprehensive traditional knowledge encompas
 
 Walking among the Moeraki Boulders at low tide, when their full forms are exposed and accessible, visitors often report experiencing what could be called "geological vertigo"—a dizzying awareness of the temporal scales embedded in these stone spheres. **Each boulder represents a duration of formation that exceeds the entire evolutionary history of mammals**; collectively, they anchor this stretch of Otago coastline to depths of time that make human history seem momentary.
 
-![](/images/ZAAV7hdRkDs1YUzvN2_wl.jpg)
+![](https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/ZAAV7hdRkDs1YUzvN2_wl.jpg)
 
 Yet they also embody the most immediate and sensual aspects of landscape experience. Their surfaces, smoothed by millions of years of wave action, invite touch. Their hollow interiors, lined with calcite crystals, transform sunlight into prismatic displays. Their arrangement across the beach creates an ever-changing geometry as tides advance and retreat, sometimes submerging the smaller spheres entirely, sometimes revealing formations that have been buried under shifting sand for decades.
 

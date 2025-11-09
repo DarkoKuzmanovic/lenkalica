@@ -39,15 +39,15 @@ async function readComicMetadata(id: string): Promise<Partial<Comic> | null> {
     if (!fs.existsSync(metadataPath)) {
       return null;
     }
-    
+
     const metadataContent = fs.readFileSync(metadataPath, "utf-8");
     const metadata = JSON.parse(metadataContent);
-    
+
     // Convert date strings back to Date objects
     if (metadata.publishDate) metadata.publishDate = new Date(metadata.publishDate);
     if (metadata.createdAt) metadata.createdAt = new Date(metadata.createdAt);
     if (metadata.updatedAt) metadata.updatedAt = new Date(metadata.updatedAt);
-    
+
     return metadata;
   } catch (error) {
     console.error(`Error reading metadata for comic ${id}:`, error);
@@ -58,7 +58,7 @@ async function readComicMetadata(id: string): Promise<Partial<Comic> | null> {
 // Helper function to write comic metadata
 async function writeComicMetadata(comic: Comic): Promise<void> {
   await ensureMetadataDirectory();
-  
+
   const metadataPath = getComicMetadataPath(comic.id);
   const metadataToWrite = {
     ...comic,
@@ -66,7 +66,7 @@ async function writeComicMetadata(comic: Comic): Promise<void> {
     createdAt: comic.createdAt.toISOString(),
     updatedAt: comic.updatedAt.toISOString(),
   };
-  
+
   await writeFile(metadataPath, JSON.stringify(metadataToWrite, null, 2));
 }
 
@@ -76,7 +76,7 @@ export async function getAllComics(): Promise<Comic[]> {
     fs.mkdirSync(comicsDirectory, { recursive: true });
     return [];
   }
-  
+
   await ensureMetadataDirectory();
 
   const fileNames = fs.readdirSync(comicsDirectory);
@@ -87,23 +87,23 @@ export async function getAllComics(): Promise<Comic[]> {
       const filePath = path.join(comicsDirectory, fileName);
       const stats = fs.statSync(filePath);
       const id = fileName.replace(/\.[^/.]+$/, ""); // Remove file extension
-      
+
       // Try to read metadata
       const metadata = await readComicMetadata(id);
-      
+
       if (metadata) {
         // Return comic with full metadata
         return {
           ...metadata,
           id,
-          image: `/images/comics/${fileName}`,
+          image: `https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/comics/${fileName}`,
         } as Comic;
       } else {
         // Create legacy comic with basic info
         return {
           id,
           title: id, // Use filename as title for legacy comics
-          image: `/images/comics/${fileName}`,
+          image: `https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/comics/${fileName}`,
           tags: [],
           publishDate: stats.birthtime,
           createdAt: stats.birthtime,
@@ -115,7 +115,7 @@ export async function getAllComics(): Promise<Comic[]> {
 
   // Wait for all async operations to complete
   const resolvedComics = await Promise.all(comics);
-  
+
   // Sort by publishDate, newest first (fallback to timestamp for legacy)
   return resolvedComics.sort((a, b) => {
     const dateA = a.publishDate || (a.timestamp ? new Date(a.timestamp) : new Date(0));
@@ -134,18 +134,18 @@ export async function getComicById(id: string): Promise<Comic | null> {
 export async function createComic(comicData: Omit<Comic, "id" | "createdAt" | "updatedAt">, imageFileName: string): Promise<Comic> {
   const now = new Date();
   const id = imageFileName.replace(/\.[^/.]+$/, ""); // Use filename as ID
-  
+
   const newComic: Comic = {
     ...comicData,
     id,
-    image: `/images/comics/${imageFileName}`,
+    image: `https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/comics/${imageFileName}`,
     createdAt: now,
     updatedAt: now,
   };
-  
+
   // Write metadata
   await writeComicMetadata(newComic);
-  
+
   return newComic;
 }
 
@@ -155,7 +155,7 @@ export async function updateComic(id: string, updates: Partial<Comic>): Promise<
   if (!existingComic) {
     return null;
   }
-  
+
   const updatedComic: Comic = {
     ...existingComic,
     ...updates,
@@ -163,7 +163,7 @@ export async function updateComic(id: string, updates: Partial<Comic>): Promise<
     image: existingComic.image, // Ensure image path doesn't change
     updatedAt: new Date(),
   };
-  
+
   await writeComicMetadata(updatedComic);
   return updatedComic;
 }
@@ -175,19 +175,19 @@ export async function deleteComic(id: string): Promise<boolean> {
     if (!comic) {
       return false;
     }
-    
+
     // Delete metadata file
     const metadataPath = getComicMetadataPath(id);
     if (fs.existsSync(metadataPath)) {
       fs.unlinkSync(metadataPath);
     }
-    
+
     // Delete image file
     const imagePath = path.join(process.cwd(), "public", comic.image);
     if (fs.existsSync(imagePath)) {
       fs.unlinkSync(imagePath);
     }
-    
+
     return true;
   } catch (error) {
     console.error(`Error deleting comic ${id}:`, error);
@@ -205,13 +205,13 @@ export async function getComicsBySeries(series: string): Promise<Comic[]> {
 export async function getAllSeries(): Promise<string[]> {
   const comics = await getAllComics();
   const seriesSet = new Set<string>();
-  
+
   comics.forEach(comic => {
     if (comic.series) {
       seriesSet.add(comic.series);
     }
   });
-  
+
   return Array.from(seriesSet).sort();
 }
 
@@ -219,8 +219,8 @@ export async function getAllSeries(): Promise<string[]> {
 export async function searchComics(query: string): Promise<Comic[]> {
   const comics = await getAllComics();
   const lowercaseQuery = query.toLowerCase();
-  
-  return comics.filter(comic => 
+
+  return comics.filter(comic =>
     comic.title.toLowerCase().includes(lowercaseQuery) ||
     (comic.description && comic.description.toLowerCase().includes(lowercaseQuery)) ||
     comic.tags.some(tag => tag.toLowerCase().includes(lowercaseQuery))

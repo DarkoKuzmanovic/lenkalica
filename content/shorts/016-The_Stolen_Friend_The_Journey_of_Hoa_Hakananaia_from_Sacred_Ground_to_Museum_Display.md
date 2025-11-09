@@ -22,7 +22,7 @@ author: "Darko Kuzmanovic"
 
 On a November day in 1868, two crew members from the British Royal Navy survey ship HMS *Topaze* stumbled upon something extraordinary while exploring the ceremonial village of Orongo on Easter Island. Buried up to its shoulders inside a stone house called Taura Renga sat a basalt moai—a statue unlike most others on the island[1][4]. The crew members had discovered Hoa Hakananai'a, a name that translates variously as "lost friend," "hidden friend," or most poignantly, "stolen friend"[1][4]. Within days, Commodore Richard Powell would make the decision that would forever separate this sacred statue from its homeland, setting in motion a controversy that continues to this day.
 
-![](/images/8SSIqOqfMX6wBVJKuh1kq.png)
+![](https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/8SSIqOqfMX6wBVJKuh1kq.png)
 <sub>Hoa Hakananai'a moai statue displayed in the British Museum alongside Polynesian artifacts</sub>
 
 ## The Sacred Sentinel of Orongo
@@ -33,7 +33,7 @@ The statue possesses the characteristic features of Easter Island moai: a heavy 
 
 What makes Hoa Hakananai'a truly unique are the intricate petroglyphs carved on its back[1][4]. These low-relief designs are associated with the tangata manu, or birdman cult, that developed around 1400 AD—well after the statue itself was carved[1]. The statue appears to have had two distinct lives: first erected on an ahu-like ceremonial platform, and later moved into the stone house at Orongo, where its ritual function transformed to align with the emerging birdman religion[1][3].
 
-![](/images/th7tAq_dmSCthRK5HhZ26.png)
+![](https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/th7tAq_dmSCthRK5HhZ26.png)
 <sub>Ancient birdman petroglyph carved into a rocky surface at Orongo, Easter Island, depicting the iconic humanoid-bird figure associated with the island's Birdman cult</sub>
 
 ## The Birdman Cult: A Spiritual Revolution
@@ -42,12 +42,12 @@ The ceremonial village of Orongo, perched on a narrow strip between the crater e
 
 Each spring, the arrival of the manutara—the sooty tern—to the offshore islets triggered the tangata manu competition[22][24][26]. Representatives called hopu, chosen by priests to represent different clans, would descend the sheer cliffs of Rano Kau, swim across dangerous shark-infested waters approximately 1.4 kilometers to Motu Nui islet, and wait for the birds to lay their first eggs[24][78][82]. The first to return with an intact egg would secure ritual authority for his patron for one year, fundamentally shifting power dynamics on the island[24][31].
 
-![](/images/ZF4L-_Blprai_t7l00FM5.png)
+![](https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/ZF4L-_Blprai_t7l00FM5.png)
 <sub>Stone houses at Orongo ceremonial village on Easter Island linked to birdman competition</sub>
 
 This competition was perilous. Many hopu died from shark attacks, drowning, or falls while climbing the treacherous cliffs[24][28]. Yet the stakes were enormous: in a society where traditional hereditary power structures had fractured, the tangata manu competition offered different clans the chance to rule[31]. The winner, considered sacred and embodying the creator god Make Make, lived in ceremonial seclusion for a year[22][24]. The last known competition took place around 1866 or 1867, just before Christian missionaries suppressed the practice[28][31][82].
 
-![](/images/p8g_muUay1l7vRx5Q0rp8.png)
+![](https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/p8g_muUay1l7vRx5Q0rp8.png)
 <sub>The Orongo ceremonial village crater on Easter Island, showing the unique landscape of Rano Kau crater surrounding the site</sub>
 
 The petroglyphs on Hoa Hakananai'a's back bear witness to this spiritual transformation. The carvings include birdman figures, the M-shaped symbol representing the vulva and fertility, and circular designs connected to the cult's rituals[4][7]. The statue itself became a bridge between the old religion of ancestor worship and the new birdman cult, its body representing one era and its decorated back another[15].
@@ -56,7 +56,7 @@ The petroglyphs on Hoa Hakananai'a's back bear witness to this spiritual transfo
 
 To understand what makes Hoa Hakananai'a exceptional, one must visit Rano Raraku, the volcanic crater that served as the quarry for approximately 95% of Easter Island's moai[37][39][47]. Here, in what Katherine Routledge—the British archaeologist who led the first true archaeological survey of the island in 1914—called "the nursery," some 397 moai remain in various stages of completion[37][94].
 
-![](/images/ZK3dbW7DtevlQW4oLwokB.png)
+![](https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/ZK3dbW7DtevlQW4oLwokB.png)
 <sub>Moai statues partially buried at Rano Raraku, the volcanic quarry on Easter Island where these iconic figures were carved</sub>
 
 The sight is surreal: dozens of stone heads emerge from the grassy slopes, while hundreds of hollows and figures appear carved into the rocky surface of the mountain[37]. Some statues stand vertically with heads pointing upward, others are inverted, and still others lie horizontally, stacked in seemingly inaccessible positions[37]. The quarry operated for approximately 500 years until the early eighteenth century, during which time the moai grew increasingly larger and more refined[39][47].
@@ -75,14 +75,14 @@ By the time European explorers arrived in 1722, the population had crashed from 
 
 The environmental collapse coincided with the toppling of moai. Around 1600 AD, statues began to be sporadically knocked down, evidence of the loss of confidence in the efficacy of ancestor worship[7]. This crisis created the conditions for the emergence of the birdman cult, which offered a new spiritual framework and a new basis for political authority[1][12].
 
-![](/images/PE93fU-8YJnkd5l6cjPIr.png)
+![](https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/PE93fU-8YJnkd5l6cjPIr.png)
 <sub>Row of Moai statues at Orongo ceremonial village on Easter Island, Chile, featuring the iconic pukao stone on one statue's head</sub>
 
 ## The HMS Topaze and the Taking of Hoa Hakananai'a
 
 Into this transformed landscape sailed HMS *Topaze*, a 51-gun wooden screw frigate of the Royal Navy, in November 1868[21][23]. Under the command of Commodore Richard Ashmore Powell, the ship was conducting survey work in the Pacific. The crew had already removed one moai, Moai Hava, from the Mataveri area on November 2 when two crew members searching Orongo village discovered Hoa Hakananai'a[1][21].
 
-![](/images/cjxLO1HZQ74pf7Smf69G7.png)
+![](https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/cjxLO1HZQ74pf7Smf69G7.png)
 <sub>The HMS Topaze, a mid-19th century naval ship, displayed with signal flags in a historic black and white photograph</sub>
 
 Powell decided to take this second statue as well. The stone house at Taura Renga was dismantled, and Hoa Hakananai'a was unearthed from where it stood buried up to its shoulders or more[4][21]. With picks, ropes, and timbers from the ship, approximately 50 men excavated the sculpture and dragged it three miles across rough ground on a sledge[23][29]. A Rapanui man named Tepano later recalled that the crew, followed by a Rapanui chief, dragged the moai down to the beach and floated it out to the ship on a raft made with empty casks[1][4]. The chief was so moved by the scene that he had it tattooed on his arm[1].

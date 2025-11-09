@@ -49,7 +49,7 @@ export async function getAllShorts(): Promise<Short[]> {
         const contentHtml = processedContent.toString();
 
         // Construct image path
-        const coverImage = `/images/covers/${id}.png`;
+        const coverImage = `https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/covers/${id}.png`;
 
         return {
           id,
@@ -89,7 +89,7 @@ export async function getShortById(id: string): Promise<Short | null> {
     const contentHtml = processedContent.toString();
 
     // Construct image path
-    const coverImage = `/images/covers/${id}.png`;
+    const coverImage = `https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/covers/${id}.png`;
 
     return {
       id,

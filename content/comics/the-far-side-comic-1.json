@@ -1,7 +1,7 @@
 {
   "id": "the-far-side-comic-1",
   "title": "The Far Side Commic 1",
-  "image": "/images/comics/the-far-side-comic-1.png",
+  "image": "https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/comics/the-far-side-comic-1.png",
   "tags": [
     "the far side"
   ],

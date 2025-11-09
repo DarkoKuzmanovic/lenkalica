@@ -47,7 +47,7 @@ export async function GET() {
 
     // Get the base URL from environment variable or default to production URL
     const baseUrl = ensureHttps(process.env.NEXT_PUBLIC_BASE_URL || "lenkalica.vercel.app");
-    const podcastCoverUrl = `${baseUrl}/images/podcast-cover.jpg`;
+    const podcastCoverUrl = `https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/podcast-cover.jpg`;
 
     // Create the RSS feed
     const rss = `<?xml version="1.0" encoding="UTF-8"?>

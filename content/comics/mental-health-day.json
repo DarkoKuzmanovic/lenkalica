@@ -1,7 +1,7 @@
 {
   "id": "mental-health-day",
   "title": "Mental Health Day",
-  "image": "/images/comics/mental-health-day.png",
+  "image": "https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/comics/mental-health-day.png",
   "tags": [],
   "publishDate": "2025-02-17T00:00:00.000Z",
   "createdAt": "2025-02-17T18:53:25.597Z",

@@ -1,2 +1,4 @@
 .next/cache/webpack
 node_modules
+public/audio
+public/images

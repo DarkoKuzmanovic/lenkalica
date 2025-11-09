@@ -20,7 +20,7 @@ author: "Darko Kuzmanovic"
 
 In Glasgow, football is religion and politics woven into cloth, song, and scar. The rivalry between Celtic and Rangers, dubbed the Old Firm, is a tale of two clubs who became the avatars for the city’s deepest, sometimes ugliest, divides. It is sport as theatre, but the drama contains echoes of real conflict—between Catholic and Protestant, Irish nationalist and British unionist, left and right, oppressed and establishment.
 
-![](/images/uT7FleD9JCqfYI-2Sgkrs.jpg)
+![](https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/uT7FleD9JCqfYI-2Sgkrs.jpg)
 
 ### Beginnings in Immigration and Poverty
 
@@ -60,7 +60,7 @@ Sectarianism, most agree, has lessened in day-to-day life, diluted in post-indus
 - The financial gap between the clubs is often cited: in recent years, Celtic has greatly outperformed Rangers in profits and merchandising, yet both clubs sit atop Scotland in gate receipts and fan engagement[^29][^30][^31].
 - The rivalry is among Europe’s most lucrative, with Old Firm matches selling out and drawing huge TV audiences worldwide; the economic impact on Glasgow is measured in millions annually[^32][^33][^34].
 
-![](/images/af8v_SjfRGCnZhS_nGZ2V.jpg)
+![](https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/af8v_SjfRGCnZhS_nGZ2V.jpg)
 
 ### The Enduring Spectacle
 
