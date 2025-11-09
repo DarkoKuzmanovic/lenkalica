@@ -29,7 +29,13 @@ export async function getAllArticles(): Promise<Article[]> {
     return [];
   }
 
-  const fileNames = fs.readdirSync(articlesDirectory);
+  let fileNames: string[];
+  try {
+    fileNames = fs.readdirSync(articlesDirectory);
+  } catch (error) {
+    console.error("Error reading articles directory:", error);
+    return [];
+  }
 
   const articles = await Promise.all(
     fileNames

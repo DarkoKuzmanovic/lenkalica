@@ -79,7 +79,13 @@ export async function getAllComics(): Promise<Comic[]> {
 
   await ensureMetadataDirectory();
 
-  const fileNames = fs.readdirSync(comicsDirectory);
+  let fileNames: string[];
+  try {
+    fileNames = fs.readdirSync(comicsDirectory);
+  } catch (error) {
+    console.error("Error reading comics directory:", error);
+    return [];
+  }
 
   const comics = fileNames
     .filter((fileName) => /\.(jpg|jpeg|png|gif|webp)$/i.test(fileName))

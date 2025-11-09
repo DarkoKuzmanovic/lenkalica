@@ -38,12 +38,30 @@ export default function ArticlesPage() {
     setIsLoading(true);
     try {
       const response = await fetch(`/api/articles?page=${page}&limit=6`);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data: PaginatedResponse = await response.json();
-      setArticles(data.data);
-      setCurrentPage(data.currentPage);
-      setTotalPages(data.totalPages);
+
+      // Ensure data exists and has the expected structure
+      if (data && Array.isArray(data.data)) {
+        setArticles(data.data);
+        setCurrentPage(data.currentPage || 1);
+        setTotalPages(data.totalPages || 1);
+      } else {
+        console.error("Invalid data structure received:", data);
+        setArticles([]);
+        setCurrentPage(1);
+        setTotalPages(1);
+      }
     } catch (error) {
       console.error("Error loading articles:", error);
+      // Set default values on error
+      setArticles([]);
+      setCurrentPage(1);
+      setTotalPages(1);
     } finally {
       setIsLoading(false);
     }
@@ -88,8 +106,8 @@ export default function ArticlesPage() {
             >
               {articles.map((article, index) => (
                 <motion.div key={article.id} variants={item}>
-                  <ArticleCard 
-                    article={article} 
+                  <ArticleCard
+                    article={article}
                     variant={index === 0 && currentPage === 1 ? 'featured' : 'default'}
                     priority={index === 0}
                   />

@@ -28,7 +28,13 @@ export async function getAllShorts(): Promise<Short[]> {
     return [];
   }
 
-  const fileNames = fs.readdirSync(shortsDirectory);
+  let fileNames: string[];
+  try {
+    fileNames = fs.readdirSync(shortsDirectory);
+  } catch (error) {
+    console.error("Error reading shorts directory:", error);
+    return [];
+  }
 
   const shorts = await Promise.all(
     fileNames

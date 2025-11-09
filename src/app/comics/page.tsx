@@ -41,12 +41,30 @@ export default function ComicsPage() {
     setIsLoading(true);
     try {
       const response = await fetch(`/api/comics?page=${page}&limit=9`);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data: PaginatedResponse = await response.json();
-      setComics(data.data);
-      setCurrentPage(data.currentPage);
-      setTotalPages(data.totalPages);
+
+      // Ensure data exists and has the expected structure
+      if (data && Array.isArray(data.data)) {
+        setComics(data.data);
+        setCurrentPage(data.currentPage || 1);
+        setTotalPages(data.totalPages || 1);
+      } else {
+        console.error("Invalid data structure received:", data);
+        setComics([]);
+        setCurrentPage(1);
+        setTotalPages(1);
+      }
     } catch (error) {
       console.error("Error loading comics:", error);
+      // Set default values on error
+      setComics([]);
+      setCurrentPage(1);
+      setTotalPages(1);
     } finally {
       setIsLoading(false);
     }
