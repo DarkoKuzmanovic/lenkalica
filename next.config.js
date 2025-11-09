@@ -19,6 +19,7 @@ const nextConfig = {
       "scienmag.com",
       "www.science.org",
       "science.org",
+      "raw.githubusercontent.com", // GitHub raw content domain
     ],
     // Add support for remote patterns to be more flexible
     remotePatterns: [
@@ -45,6 +46,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "**.science.org",
+      },
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com", // GitHub raw content
       },
     ],
   },

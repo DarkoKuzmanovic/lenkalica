@@ -71,13 +71,41 @@ async function writeComicMetadata(comic: Comic): Promise<void> {
 }
 
 export async function getAllComics(): Promise<Comic[]> {
+  await ensureMetadataDirectory();
+
+  // Try to read from metadata files first (this will work in production)
+  let metadataFiles: string[];
+  try {
+    metadataFiles = fs.readdirSync(comicsMetadataDirectory)
+      .filter(file => file.endsWith('.json'));
+  } catch (error) {
+    console.error("Error reading comics metadata directory:", error);
+    metadataFiles = [];
+  }
+
+  // If we have metadata files, use them
+  if (metadataFiles.length > 0) {
+    const comics = await Promise.all(
+      metadataFiles.map(async (fileName) => {
+        const id = fileName.replace('.json', '');
+        const metadata = await readComicMetadata(id);
+
+        if (metadata) {
+          return metadata as Comic;
+        }
+        return null;
+      })
+    );
+
+    return comics.filter(comic => comic !== null);
+  }
+
+  // Fallback to reading from images directory (for development)
   // Create directories if they don't exist
   if (!fs.existsSync(comicsDirectory)) {
     fs.mkdirSync(comicsDirectory, { recursive: true });
     return [];
   }
-
-  await ensureMetadataDirectory();
 
   let fileNames: string[];
   try {
