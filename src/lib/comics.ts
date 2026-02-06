@@ -227,7 +227,7 @@ export async function deleteComic(id: string): Promise<boolean> {
     // Delete image file only if it's a local path
     // Remote URLs (GitHub, CDN, etc.) cannot be deleted via filesystem
     const isRemoteUrl = comic.image.startsWith("http://") || comic.image.startsWith("https://");
-    
+
     if (isRemoteUrl) {
       console.log(`Comic ${id} uses remote image URL, skipping file deletion: ${comic.image}`);
     } else {
