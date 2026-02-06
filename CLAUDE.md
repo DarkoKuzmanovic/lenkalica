@@ -50,8 +50,7 @@ The application features a sophisticated audio system with dual-mode support:
 #### Android Integration
 
 - **Detection**: `src/utils/androidDetection.ts` and `src/hooks/useAndroidDetection.ts`
-- **Media Controls**: `src/utils/androidMediaControls.ts` for native Android interface
-- **Setup Component**: `AndroidMediaSetup.tsx` for initialization
+- **AudioContext Integration**: Platform-aware callbacks in `src/context/AudioContext.tsx`
 
 ### Content Architecture
 

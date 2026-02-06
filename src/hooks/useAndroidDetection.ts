@@ -1,19 +1,19 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { isLenkalicaApp } from '@/utils/androidDetection';
+import { useState, useEffect } from "react";
+import { isLenkalicaApp } from "@/utils/androidDetection";
 
 export function useAndroidDetection() {
-  const [isAndroid, setIsAndroid] = useState(false);
+  // Initialize synchronously on client to prevent flash of wrong component
+  const [isAndroid] = useState(() => (typeof window !== "undefined" ? isLenkalicaApp() : false));
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setIsAndroid(isLenkalicaApp());
     setMounted(true);
   }, []);
 
   return {
     isAndroid,
-    mounted
+    mounted,
   };
 }

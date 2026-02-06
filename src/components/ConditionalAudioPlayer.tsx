@@ -6,7 +6,12 @@ import AndroidAudioPlayer from "./AndroidAudioPlayer";
 
 // Component that conditionally renders the appropriate audio player
 export default function ConditionalAudioPlayer() {
-  const { isAndroid } = useAndroidDetection();
+  const { isAndroid, mounted } = useAndroidDetection();
+
+  // Prevent hydration mismatch by not rendering until mounted
+  if (!mounted) {
+    return null;
+  }
 
   // Use Android-native audio player when running in Android app
   if (isAndroid) {

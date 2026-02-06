@@ -2,9 +2,6 @@
 
 import { useRef, useState, useEffect } from "react";
 import { useAudioContext } from "@/context/AudioContext";
-import { useAndroidDetection } from "@/hooks/useAndroidDetection";
-import { getAndroidInterface } from "@/utils/androidDetection";
-import { setupAndroidMediaControls, clearAndroidMediaControls } from "@/utils/androidMediaControls";
 
 export default function AudioPlayer() {
   const {
@@ -19,22 +16,6 @@ export default function AudioPlayer() {
   const [isPinned, setIsPinned] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const { isAndroid } = useAndroidDetection();
-
-  // Set up Android media control callbacks
-  useEffect(() => {
-    if (isAndroid && audioRef.current) {
-      setupAndroidMediaControls(audioRef.current, setCurrentTime, resumeAudio, pauseAudio);
-      
-      // Cleanup function only clears if this component is unmounting completely
-      return () => {
-        // Only clear if no audio is playing (component being destroyed, not just re-rendered)
-        if (!audioUrl) {
-          clearAndroidMediaControls();
-        }
-      };
-    }
-  }, [isAndroid, resumeAudio, pauseAudio, audioUrl]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -46,61 +27,15 @@ export default function AudioPlayer() {
     }
   }, [isPlaying, audioUrl]);
 
-  // Android media notification integration
-  useEffect(() => {
-    if (isAndroid && title) {
-      const androidInterface = getAndroidInterface();
-      if (androidInterface) {
-        androidInterface.startMediaNotification(title);
-      }
-    }
-  }, [isAndroid, title]);
-
-  useEffect(() => {
-    if (isAndroid) {
-      const androidInterface = getAndroidInterface();
-      if (androidInterface) {
-        if (isPlaying) {
-          // Resume notification (startMediaNotification handles both start and resume)
-          if (title) {
-            androidInterface.startMediaNotification(title);
-          }
-        } else if (audioUrl) {
-          // Pause notification
-          androidInterface.pauseMediaNotification();
-        }
-      }
-    }
-  }, [isAndroid, isPlaying, audioUrl, title]);
-
   const handleTimeUpdate = () => {
     if (audioRef.current) {
-      const current = audioRef.current.currentTime;
-      const total = audioRef.current.duration;
-      setCurrentTime(current);
-
-      // Update Android Media Player notification position
-      if (isAndroid && total && !isNaN(total)) {
-        const androidInterface = getAndroidInterface();
-        if (androidInterface) {
-          androidInterface.updateMediaPosition(Math.floor(current), Math.floor(total));
-        }
-      }
+      setCurrentTime(audioRef.current.currentTime);
     }
   };
 
   const handleLoadedMetadata = () => {
     if (audioRef.current) {
-      const total = audioRef.current.duration;
-      setDuration(total);
-
-      // Send initial duration to Android Media Player notification
-      if (isAndroid && total && !isNaN(total)) {
-        const androidInterface = getAndroidInterface();
-        if (androidInterface) {
-          androidInterface.updateMediaPosition(0, Math.floor(total));
-        }
-      }
+      setDuration(audioRef.current.duration);
     }
   };
 
@@ -109,14 +44,6 @@ export default function AudioPlayer() {
     if (audioRef.current) {
       audioRef.current.currentTime = time;
       setCurrentTime(time);
-
-      // Update Android Media Player notification position when seeking
-      if (isAndroid && audioRef.current.duration && !isNaN(audioRef.current.duration)) {
-        const androidInterface = getAndroidInterface();
-        if (androidInterface) {
-          androidInterface.updateMediaPosition(Math.floor(time), Math.floor(audioRef.current.duration));
-        }
-      }
     }
   };
 
@@ -219,24 +146,7 @@ export default function AudioPlayer() {
         </div>
       </div>
 
-      <audio
-        ref={audioRef}
-        src={audioUrl}
-        onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={handleLoadedMetadata}
-        onSeeked={() => {
-          // Update position when seeking is complete
-          if (audioRef.current && isAndroid && audioRef.current.duration && !isNaN(audioRef.current.duration)) {
-            const androidInterface = getAndroidInterface();
-            if (androidInterface) {
-              androidInterface.updateMediaPosition(
-                Math.floor(audioRef.current.currentTime),
-                Math.floor(audioRef.current.duration)
-              );
-            }
-          }
-        }}
-      />
+      <audio ref={audioRef} src={audioUrl} onTimeUpdate={handleTimeUpdate} onLoadedMetadata={handleLoadedMetadata} />
     </div>
   );
 }

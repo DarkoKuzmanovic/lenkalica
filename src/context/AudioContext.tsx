@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { getAndroidInterface, isLenkalicaApp } from "@/utils/androidDetection";
+import { getAndroidInterface } from "@/utils/androidDetection";
 import { useAndroidDetection } from "@/hooks/useAndroidDetection";
 
 interface AudioContextType {
@@ -35,7 +35,9 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (isAndroid) {
       // Define global callback for Android to update our state
-      (window as unknown as { updateAudioContextState?: (playing: boolean) => void }).updateAudioContextState = (playing: boolean) => {
+      (window as unknown as { updateAudioContextState?: (playing: boolean) => void }).updateAudioContextState = (
+        playing: boolean,
+      ) => {
         setIsPlaying(playing);
       };
 
@@ -48,7 +50,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   const playAudio = (url: string, title: string) => {
     setCurrentAudio(url);
     setCurrentTitle(title);
-    
+
     if (isAndroid) {
       // For Android, don't set isPlaying here - let Android native update it
       // The AndroidAudioPlayer will handle the actual playback
@@ -96,15 +98,8 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
       if (androidInterface) {
         androidInterface.stopMediaNotification();
       }
-    } else {
-      // For web mode
-      if (isLenkalicaApp()) {
-        const androidInterface = getAndroidInterface();
-        if (androidInterface) {
-          androidInterface.stopMediaNotification();
-        }
-      }
     }
+    // For web mode, just clear state without Android calls
 
     setCurrentAudio(null);
     setCurrentTitle(null);

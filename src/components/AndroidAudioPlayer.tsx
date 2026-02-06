@@ -20,6 +20,7 @@ export default function AndroidAudioPlayer() {
     if (isPlaying) {
       androidInterface.pauseMediaNotification();
     } else {
+      // Honor the playing state from context when resuming
       if (title) {
         androidInterface.startMediaNotification(title);
       }
@@ -30,7 +31,7 @@ export default function AndroidAudioPlayer() {
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     const time = Number(e.target.value);
     setCurrentTime(time);
-    
+
     const androidInterface = getAndroidInterface();
     if (androidInterface) {
       if (androidInterface.seekToPosition) {
@@ -44,7 +45,14 @@ export default function AndroidAudioPlayer() {
   // Set up Android callbacks to receive playback state
   useEffect(() => {
     // Define callbacks for Android to update our UI
-    (window as unknown as { updateWebPlayerState?: (playing: boolean, position: number, totalDuration: number) => void }).updateWebPlayerState = (playing: boolean, position: number, totalDuration: number) => {
+    // Race condition protection: callbacks are re-registered when audioUrl changes,
+    // so cleanup removes stale callbacks before new ones are added
+    (
+      window as unknown as {
+        updateWebPlayerState?: (playing: boolean, position: number, totalDuration: number) => void;
+      }
+    ).updateWebPlayerState = (playing: boolean, position: number, totalDuration: number) => {
+      // Sync playback state from Android's MediaPlayer
       setCurrentTime(position);
       setDuration(totalDuration);
       setIsLoading(false);
@@ -54,7 +62,9 @@ export default function AndroidAudioPlayer() {
       setIsLoading(true);
     };
 
-    (window as unknown as { onAndroidMediaReady?: (totalDuration: number) => void }).onAndroidMediaReady = (totalDuration: number) => {
+    (window as unknown as { onAndroidMediaReady?: (totalDuration: number) => void }).onAndroidMediaReady = (
+      totalDuration: number,
+    ) => {
       setDuration(totalDuration);
       setIsLoading(false);
     };
@@ -65,16 +75,15 @@ export default function AndroidAudioPlayer() {
       delete (window as unknown as { onAndroidMediaLoading?: unknown }).onAndroidMediaLoading;
       delete (window as unknown as { onAndroidMediaReady?: unknown }).onAndroidMediaReady;
     };
-  }, []);
+  }, [audioUrl]); // Re-register callbacks when track changes
 
   // Start Android media when audio URL changes
   useEffect(() => {
     if (audioUrl && title) {
       setIsLoading(true);
       const androidInterface = getAndroidInterface();
-      
+
       if (androidInterface) {
-        
         if (androidInterface.loadAndPlayAudio) {
           androidInterface.loadAndPlayAudio(audioUrl, title);
         } else {
@@ -111,7 +120,7 @@ export default function AndroidAudioPlayer() {
               <h3 className="text-sm sm:text-base font-medium truncate mb-2">
                 {title} {isLoading && <span className="text-xs opacity-60">(Loading...)</span>}
               </h3>
-              
+
               {/* Progress Bar */}
               <div className="flex items-center gap-2">
                 <span className="text-xs sm:text-sm shrink-0">{formatTime(currentTime)}</span>
@@ -164,11 +173,7 @@ export default function AndroidAudioPlayer() {
                 )}
               </button>
 
-              <button 
-                onClick={stopAudio} 
-                disabled={isLoading}
-                className="btn btn-circle btn-ghost btn-sm sm:btn-md"
-              >
+              <button onClick={stopAudio} disabled={isLoading} className="btn btn-circle btn-ghost btn-sm sm:btn-md">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"

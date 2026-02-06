@@ -106,8 +106,7 @@ src/
 │   └── useAndroidDetection.ts    # Android platform detection
 ├── lib/                   # Utility libraries
 ├── utils/                 # Utility functions
-│   ├── androidDetection.ts       # Android platform utilities
-│   └── androidMediaControls.ts   # Android media interface
+│   └── androidDetection.ts       # Android platform utilities
 └── styles/                # CSS and styling
 
 content/
