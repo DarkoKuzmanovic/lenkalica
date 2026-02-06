@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { renderMarkdownToHtml } from "./markdown";
+import { isSafeContentId } from "@/utils/validation";
 
 const articlesDirectory = path.join(process.cwd(), "content/articles");
 
@@ -70,6 +71,12 @@ export async function getAllArticles(): Promise<Article[]> {
 }
 
 export async function getArticleById(id: string): Promise<Article | undefined> {
+  // Validate ID to prevent path traversal attacks
+  if (!isSafeContentId(id)) {
+    console.warn(`Invalid article ID attempted: ${id}`);
+    return undefined;
+  }
+
   try {
     const fullPath = path.join(articlesDirectory, `${id}.md`);
     const fileContents = fs.readFileSync(fullPath, "utf8");

@@ -1,10 +1,10 @@
 import { getAllArticles } from "@/lib/articles";
 import { NextRequest, NextResponse } from "next/server";
+import { parsePaginationParams } from "@/utils/validation";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const page = parseInt(searchParams.get("page") || "1", 10);
-  const limit = parseInt(searchParams.get("limit") || "6", 10);
+  const { page, limit } = parsePaginationParams(searchParams, { defaultLimit: 6, maxLimit: 100 });
 
   try {
     const allArticles = await getAllArticles();

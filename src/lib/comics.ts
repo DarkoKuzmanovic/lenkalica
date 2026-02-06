@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { writeFile, mkdir } from "fs/promises";
+import { isSafeContentId } from "@/utils/validation";
 
 export interface Comic {
   id: string;
@@ -29,6 +30,11 @@ async function ensureMetadataDirectory() {
 
 // Helper function to generate comic metadata file path
 function getComicMetadataPath(id: string): string {
+  // Validate ID to prevent path traversal
+  if (!isSafeContentId(id)) {
+    console.warn("Suspicious comic ID attempted:", id);
+    throw new Error("Invalid comic ID");
+  }
   return path.join(comicsMetadataDirectory, `${id}.json`);
 }
 

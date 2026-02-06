@@ -1,5 +1,6 @@
 import { getComicById, updateComic, deleteComic } from "@/lib/comics";
 import { NextRequest, NextResponse } from "next/server";
+import { isAuthorized } from "@/utils/validation";
 
 export async function GET(
   request: NextRequest,
@@ -23,6 +24,14 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  // Check authorization (requires API key in production)
+  if (!isAuthorized(request)) {
+    return NextResponse.json(
+      { error: "Unauthorized. API key required in production." },
+      { status: 401 },
+    );
+  }
+
   try {
     const body = await request.json();
     console.log('PUT /api/comics/[id] - Update request:', { id: params.id, body });
@@ -78,6 +87,14 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  // Check authorization (requires API key in production)
+  if (!isAuthorized(request)) {
+    return NextResponse.json(
+      { error: "Unauthorized. API key required in production." },
+      { status: 401 },
+    );
+  }
+
   try {
     const success = await deleteComic(params.id);
 

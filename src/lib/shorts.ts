@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { renderMarkdownToHtml } from "./markdown";
+import { isSafeContentId } from "@/utils/validation";
 
 const shortsDirectory = path.join(process.cwd(), "content/shorts");
 
@@ -66,6 +67,12 @@ export async function getAllShorts(): Promise<Short[]> {
 }
 
 export async function getShortById(id: string): Promise<Short | null> {
+  // Validate ID to prevent path traversal attacks
+  if (!isSafeContentId(id)) {
+    console.warn(`Invalid short ID attempted: ${id}`);
+    return null;
+  }
+
   try {
     const fullPath = path.join(shortsDirectory, `${id}.md`);
     if (!fs.existsSync(fullPath)) {

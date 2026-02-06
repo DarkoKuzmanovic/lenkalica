@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAllArticles } from "@/lib/articles";
 import { getAllShorts } from "@/lib/shorts";
+import { parsePaginationParams } from "@/utils/validation";
 
 interface SearchResult {
   id: string;
@@ -58,7 +59,7 @@ function createExcerpt(content: string, query: string, maxLength: number = 150):
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get("q");
-  const limit = parseInt(searchParams.get("limit") || "10", 10);
+  const { page, limit } = parsePaginationParams(searchParams, { defaultLimit: 10, maxLimit: 100 });
 
   if (!query || query.trim().length < 2) {
     return NextResponse.json({ results: [] });
@@ -138,9 +139,17 @@ export async function GET(request: NextRequest) {
       return 0;
     });
 
+    // Calculate pagination
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+    const paginatedResults = results.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(results.length / limit);
+
     return NextResponse.json({ 
-      results: results.slice(0, limit),
-      total: results.length
+      results: paginatedResults,
+      total: results.length,
+      currentPage: page,
+      totalPages
     });
   } catch (error) {
     console.error("Search error:", error);

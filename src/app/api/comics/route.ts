@@ -2,11 +2,14 @@ import { getAllComics, createComic } from "@/lib/comics";
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import { parsePaginationParams, isAuthorized, sanitizeFilename } from "@/utils/validation";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const page = parseInt(searchParams.get("page") || "1", 10);
-  const limit = parseInt(searchParams.get("limit") || "9", 10);
+  const { page, limit } = parsePaginationParams(searchParams, {
+    defaultLimit: 9,
+    maxLimit: 50,
+  });
   const series = searchParams.get("series");
   const search = searchParams.get("search");
   const sortBy = searchParams.get("sortBy") || "publishDate";
@@ -80,6 +83,17 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  // Check authorization (requires API key in production)
+  if (!isAuthorized(request)) {
+    return NextResponse.json(
+      { error: "Unauthorized. API key required in production." },
+      { status: 401 },
+    );
+  }
+
+  // TODO: Add rate limiting middleware here
+  // Consider using a package like 'rate-limiter-flexible' or implementing custom logic
+
   try {
     const formData = await request.formData();
     
@@ -92,11 +106,12 @@ export async function POST(request: NextRequest) {
     const tags = formData.get("tags") as string;
     const publishDate = formData.get("publishDate") as string;
     
+    // Validate required fields
     if (!imageFile) {
       return NextResponse.json({ error: "Image file is required" }, { status: 400 });
     }
     
-    if (!title) {
+    if (!title || typeof title !== "string" || title.trim().length === 0) {
       return NextResponse.json({ error: "Title is required" }, { status: 400 });
     }
     
@@ -106,14 +121,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid image file type" }, { status: 400 });
     }
     
-    // Generate filename
-    const fileExtension = imageFile.name.split('.').pop() || 'jpg';
-    const sanitizedName = title
+    // Validate file size (max 10MB)
+    const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+    if (imageFile.size > maxSize) {
+      return NextResponse.json({ error: "Image file too large (max 10MB)" }, { status: 400 });
+    }
+    
+    // Sanitize and generate filename
+    const fileExtension = imageFile.name.split('.').pop()?.toLowerCase() || 'jpg';
+    const sanitizedTitle = title
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '');
     const timestamp = Date.now();
-    const fileName = `${timestamp}-${sanitizedName}.${fileExtension}`;
+    const fileName = sanitizeFilename(`${timestamp}-${sanitizedTitle}.${fileExtension}`);
     
     // Save image file
     const comicsDirectory = path.join(process.cwd(), "public/images/comics");
@@ -133,9 +154,9 @@ export async function POST(request: NextRequest) {
     
     // Create comic metadata
     const comicData = {
-      title,
-      description: description || undefined,
-      series: series || undefined,
+      title: title.trim(),
+      description: description?.trim() || undefined,
+      series: series?.trim() || undefined,
       issueNumber: issueNumber ? parseInt(issueNumber, 10) : undefined,
       tags: tagsArray,
       publishDate: publishDate ? new Date(publishDate) : new Date(),

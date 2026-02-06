@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isAuthorized } from "@/utils/validation";
 
 // Initialize OpenRouter API with proper error handling
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
@@ -15,6 +16,14 @@ IMPORTANT: Ensure that titles never contain semicolons ":" as they break article
 Return only the JSON object, no other text or formatting.`;
 
 export async function POST(req: NextRequest) {
+  // Check authorization to prevent API credit abuse
+  if (!isAuthorized(req)) {
+    return NextResponse.json(
+      { error: "Unauthorized. API key required in production." },
+      { status: 401 },
+    );
+  }
+
   try {
     const { content, title } = await req.json();
 
@@ -79,7 +88,6 @@ export async function POST(req: NextRequest) {
         {
           error: "Failed to parse OpenRouter response",
           details: parseError instanceof Error ? parseError.message : "Unknown parsing error",
-          response: responseText,
         },
         { status: 500 }
       );
@@ -94,10 +102,11 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error("Error generating metadata:", error);
     console.error("Full error object:", error);
+    // Only return generic error to clients, don't expose stack traces
     return NextResponse.json(
       {
         error: "Failed to generate metadata",
-        details: error instanceof Error ? error.message + "\n" + (error.stack || "") : "Unknown error",
+        details: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }
     );
