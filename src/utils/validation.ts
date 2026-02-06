@@ -41,10 +41,7 @@ export interface PaginationOptions {
  * @param options - Optional configuration for limits
  * @returns Validated pagination parameters
  */
-export function parsePaginationParams(
-  searchParams: URLSearchParams,
-  options?: PaginationOptions,
-): PaginationParams {
+export function parsePaginationParams(searchParams: URLSearchParams, options?: PaginationOptions): PaginationParams {
   const defaultLimit = options?.defaultLimit ?? 10;
   const maxLimit = options?.maxLimit ?? 100;
   const minLimit = options?.minLimit ?? 1;

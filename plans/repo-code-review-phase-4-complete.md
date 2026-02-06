@@ -3,6 +3,7 @@
 Successfully implemented comprehensive security measures across the entire codebase, preventing path traversal, XSS, and unauthorized access to write endpoints.
 
 **Files created/changed:**
+
 - src/utils/validation.ts (new)
 - src/lib/markdown.ts
 - src/lib/articles.ts
@@ -21,6 +22,7 @@ Successfully implemented comprehensive security measures across the entire codeb
 - package.json (added rehype-sanitize)
 
 **Functions created/changed:**
+
 - `isSafeContentId()` - NEW: Validates content IDs against path traversal
 - `parsePaginationParams()` - NEW: Validates and clamps pagination parameters
 - `sanitizeFilename()` - NEW: Removes dangerous characters from filenames
@@ -32,11 +34,13 @@ Successfully implemented comprehensive security measures across the entire codeb
 - All write endpoint handlers - Added auth, validation, file type checks
 
 **Tests created/changed:**
+
 - None (no test framework)
 
 **Review Status:** APPROVED
 
 **Security Improvements:**
+
 1. 🛡️ **Path Traversal Prevention**: Strict regex validation (alphanumeric + dash/underscore only) for all content IDs before filesystem operations
 2. 🔒 **XSS Mitigation**: HTML sanitization via rehype-sanitize with custom schema allowing safe content formatting while blocking dangerous tags/attributes
 3. 🔐 **Authentication**: All write/cost endpoints require API key in production (posts, shorts, comics, uploads, AI generation)
@@ -46,6 +50,7 @@ Successfully implemented comprehensive security measures across the entire codeb
 7. 📁 **File Upload Security**: Type validation (images: jpg/png/webp, audio: mp3/wav), size limits (10MB), sanitized filenames
 
 **Git Commit Message:**
+
 ```
 feat: Implement comprehensive security hardening
 

@@ -7,10 +7,7 @@ import { isAuthorized, sanitizeFilename } from "@/utils/validation";
 export async function POST(req: NextRequest) {
   // Check authorization (requires API key in production)
   if (!isAuthorized(req)) {
-    return NextResponse.json(
-      { error: "Unauthorized. API key required in production." },
-      { status: 401 },
-    );
+    return NextResponse.json({ error: "Unauthorized. API key required in production." }, { status: 401 });
   }
 
   // TODO: Add rate limiting middleware here

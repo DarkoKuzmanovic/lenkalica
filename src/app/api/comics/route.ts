@@ -17,26 +17,27 @@ export async function GET(request: NextRequest) {
 
   try {
     let allComics = await getAllComics();
-    
+
     // Filter by series if specified
     if (series) {
-      allComics = allComics.filter(comic => comic.series === series);
+      allComics = allComics.filter((comic) => comic.series === series);
     }
-    
+
     // Search if query specified
     if (search) {
       const lowercaseSearch = search.toLowerCase();
-      allComics = allComics.filter(comic => 
-        comic.title.toLowerCase().includes(lowercaseSearch) ||
-        (comic.description && comic.description.toLowerCase().includes(lowercaseSearch)) ||
-        comic.tags.some(tag => tag.toLowerCase().includes(lowercaseSearch))
+      allComics = allComics.filter(
+        (comic) =>
+          comic.title.toLowerCase().includes(lowercaseSearch) ||
+          (comic.description && comic.description.toLowerCase().includes(lowercaseSearch)) ||
+          comic.tags.some((tag) => tag.toLowerCase().includes(lowercaseSearch)),
       );
     }
-    
+
     // Sort comics
     allComics.sort((a, b) => {
       let aValue: string | number, bValue: string | number;
-      
+
       switch (sortBy) {
         case "title":
           aValue = a.title.toLowerCase();
@@ -56,7 +57,7 @@ export async function GET(request: NextRequest) {
           bValue = b.publishDate.getTime();
           break;
       }
-      
+
       if (sortOrder === "asc") {
         return aValue > bValue ? 1 : -1;
       } else {
@@ -85,10 +86,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   // Check authorization (requires API key in production)
   if (!isAuthorized(request)) {
-    return NextResponse.json(
-      { error: "Unauthorized. API key required in production." },
-      { status: 401 },
-    );
+    return NextResponse.json({ error: "Unauthorized. API key required in production." }, { status: 401 });
   }
 
   // TODO: Add rate limiting middleware here
@@ -96,7 +94,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const formData = await request.formData();
-    
+
     // Get form data
     const imageFile = formData.get("image") as File;
     const title = formData.get("title") as string;
@@ -105,37 +103,37 @@ export async function POST(request: NextRequest) {
     const issueNumber = formData.get("issueNumber") as string;
     const tags = formData.get("tags") as string;
     const publishDate = formData.get("publishDate") as string;
-    
+
     // Validate required fields
     if (!imageFile) {
       return NextResponse.json({ error: "Image file is required" }, { status: 400 });
     }
-    
+
     if (!title || typeof title !== "string" || title.trim().length === 0) {
       return NextResponse.json({ error: "Title is required" }, { status: 400 });
     }
-    
+
     // Validate image file type
     const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"];
     if (!allowedTypes.includes(imageFile.type)) {
       return NextResponse.json({ error: "Invalid image file type" }, { status: 400 });
     }
-    
+
     // Validate file size (max 10MB)
     const maxSize = 10 * 1024 * 1024; // 10MB in bytes
     if (imageFile.size > maxSize) {
       return NextResponse.json({ error: "Image file too large (max 10MB)" }, { status: 400 });
     }
-    
+
     // Sanitize and generate filename
-    const fileExtension = imageFile.name.split('.').pop()?.toLowerCase() || 'jpg';
+    const fileExtension = imageFile.name.split(".").pop()?.toLowerCase() || "jpg";
     const sanitizedTitle = title
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '');
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
     const timestamp = Date.now();
     const fileName = sanitizeFilename(`${timestamp}-${sanitizedTitle}.${fileExtension}`);
-    
+
     // Save image file
     const comicsDirectory = path.join(process.cwd(), "public/images/comics");
 
@@ -148,10 +146,15 @@ export async function POST(request: NextRequest) {
     const filePath = path.join(comicsDirectory, fileName);
 
     fs.writeFileSync(filePath, buffer);
-    
+
     // Parse tags
-    const tagsArray = tags ? tags.split(',').map(tag => tag.trim()).filter(Boolean) : [];
-    
+    const tagsArray = tags
+      ? tags
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter(Boolean)
+      : [];
+
     // Create comic metadata
     const comicData = {
       title: title.trim(),
@@ -161,15 +164,14 @@ export async function POST(request: NextRequest) {
       tags: tagsArray,
       publishDate: publishDate ? new Date(publishDate) : new Date(),
     };
-    
+
     const newComic = await createComic(comicData, fileName);
-    
-    return NextResponse.json({ 
-      success: true, 
+
+    return NextResponse.json({
+      success: true,
       data: newComic,
-      message: "Comic created successfully"
+      message: "Comic created successfully",
     });
-    
   } catch (error) {
     console.error("Failed to create comic:", error);
     return NextResponse.json({ error: "Failed to create comic" }, { status: 500 });

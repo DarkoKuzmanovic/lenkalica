@@ -40,19 +40,19 @@ function searchInText(text: string, query: string): boolean {
 
 function createExcerpt(content: string, query: string, maxLength: number = 150): string {
   if (!content) return "";
-  
+
   const lowerContent = content.toLowerCase();
   const lowerQuery = query.toLowerCase();
   const queryIndex = lowerContent.indexOf(lowerQuery);
-  
+
   if (queryIndex === -1) {
     return content.substring(0, maxLength) + (content.length > maxLength ? "..." : "");
   }
-  
+
   const start = Math.max(0, queryIndex - 50);
   const end = Math.min(content.length, queryIndex + query.length + 100);
   const excerpt = content.substring(start, end);
-  
+
   return (start > 0 ? "..." : "") + excerpt + (end < content.length ? "..." : "");
 }
 
@@ -96,7 +96,7 @@ export async function GET(request: NextRequest) {
 
       if (matchesTitle || matchesExcerpt) {
         // Only add if not already added as article
-        const alreadyAdded = results.some(r => r.id === podcast.id);
+        const alreadyAdded = results.some((r) => r.id === podcast.id);
         if (!alreadyAdded) {
           results.push(podcast);
         }
@@ -127,15 +127,15 @@ export async function GET(request: NextRequest) {
     results.sort((a, b) => {
       const aTitleMatch = searchInText(a.title, query);
       const bTitleMatch = searchInText(b.title, query);
-      
+
       if (aTitleMatch && !bTitleMatch) return -1;
       if (!aTitleMatch && bTitleMatch) return 1;
-      
+
       // If both or neither match title, sort by date (newest first)
       if (a.date && b.date) {
         return new Date(b.date).getTime() - new Date(a.date).getTime();
       }
-      
+
       return 0;
     });
 
@@ -145,11 +145,11 @@ export async function GET(request: NextRequest) {
     const paginatedResults = results.slice(startIndex, endIndex);
     const totalPages = Math.ceil(results.length / limit);
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       results: paginatedResults,
       total: results.length,
       currentPage: page,
-      totalPages
+      totalPages,
     });
   } catch (error) {
     console.error("Search error:", error);

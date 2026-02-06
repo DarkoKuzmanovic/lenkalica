@@ -2,10 +2,7 @@ import { getComicById, updateComic, deleteComic } from "@/lib/comics";
 import { NextRequest, NextResponse } from "next/server";
 import { isAuthorized } from "@/utils/validation";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const comic = await getComicById(params.id);
 
@@ -20,21 +17,15 @@ export async function GET(
   }
 }
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   // Check authorization (requires API key in production)
   if (!isAuthorized(request)) {
-    return NextResponse.json(
-      { error: "Unauthorized. API key required in production." },
-      { status: 401 },
-    );
+    return NextResponse.json({ error: "Unauthorized. API key required in production." }, { status: 401 });
   }
 
   try {
     const body = await request.json();
-    console.log('PUT /api/comics/[id] - Update request:', { id: params.id, body });
+    console.log("PUT /api/comics/[id] - Update request:", { id: params.id, body });
 
     // Validate required fields
     if (!body.title) {
@@ -51,17 +42,20 @@ export async function PUT(
     }
 
     // Parse tags if provided as string
-    if (body.tags && typeof body.tags === 'string') {
-      body.tags = body.tags.split(',').map((tag: string) => tag.trim()).filter(Boolean);
+    if (body.tags && typeof body.tags === "string") {
+      body.tags = body.tags
+        .split(",")
+        .map((tag: string) => tag.trim())
+        .filter(Boolean);
     }
 
     // Parse dates if provided as strings
-    if (body.publishDate && typeof body.publishDate === 'string') {
+    if (body.publishDate && typeof body.publishDate === "string") {
       body.publishDate = new Date(body.publishDate);
     }
 
     // Ensure createdAt is a Date object if provided
-    if (body.createdAt && typeof body.createdAt === 'string') {
+    if (body.createdAt && typeof body.createdAt === "string") {
       body.createdAt = new Date(body.createdAt);
     }
 
@@ -74,25 +68,18 @@ export async function PUT(
     return NextResponse.json({
       success: true,
       data: updatedComic,
-      message: "Comic updated successfully"
+      message: "Comic updated successfully",
     });
-
   } catch (error) {
     console.error(`Failed to update comic ${params.id}:`, error);
     return NextResponse.json({ error: "Failed to update comic" }, { status: 500 });
   }
 }
 
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   // Check authorization (requires API key in production)
   if (!isAuthorized(request)) {
-    return NextResponse.json(
-      { error: "Unauthorized. API key required in production." },
-      { status: 401 },
-    );
+    return NextResponse.json({ error: "Unauthorized. API key required in production." }, { status: 401 });
   }
 
   try {
@@ -104,9 +91,8 @@ export async function DELETE(
 
     return NextResponse.json({
       success: true,
-      message: "Comic deleted successfully"
+      message: "Comic deleted successfully",
     });
-
   } catch (error) {
     console.error(`Failed to delete comic ${params.id}:`, error);
     return NextResponse.json({ error: "Failed to delete comic" }, { status: 500 });

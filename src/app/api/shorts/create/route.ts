@@ -6,10 +6,7 @@ import { isAuthorized, sanitizeFilename } from "@/utils/validation";
 export async function POST(req: NextRequest) {
   // Check authorization (requires API key in production)
   if (!isAuthorized(req)) {
-    return NextResponse.json(
-      { error: "Unauthorized. API key required in production." },
-      { status: 401 },
-    );
+    return NextResponse.json({ error: "Unauthorized. API key required in production." }, { status: 401 });
   }
 
   // TODO: Add rate limiting middleware here
@@ -56,12 +53,15 @@ export async function POST(req: NextRequest) {
       }
 
       const safeCoverImageFileName = sanitizeFilename(coverImageFileName);
-      
+
       // Validate file extension
       const imageExt = safeCoverImageFileName.substring(safeCoverImageFileName.lastIndexOf(".")).toLowerCase();
       const allowedImageExtensions = [".jpg", ".jpeg", ".png", ".webp"];
       if (!allowedImageExtensions.includes(imageExt)) {
-        return NextResponse.json({ error: "Invalid cover image extension. Allowed: jpg, jpeg, png, webp" }, { status: 400 });
+        return NextResponse.json(
+          { error: "Invalid cover image extension. Allowed: jpg, jpeg, png, webp" },
+          { status: 400 },
+        );
       }
 
       const imageBuffer = Buffer.from(await coverImage.arrayBuffer());

@@ -82,8 +82,7 @@ export async function getAllComics(): Promise<Comic[]> {
   // Try to read from metadata files first (this will work in production)
   let metadataFiles: string[];
   try {
-    metadataFiles = fs.readdirSync(comicsMetadataDirectory)
-      .filter(file => file.endsWith('.json'));
+    metadataFiles = fs.readdirSync(comicsMetadataDirectory).filter((file) => file.endsWith(".json"));
   } catch (error) {
     console.error("Error reading comics metadata directory:", error);
     metadataFiles = [];
@@ -93,17 +92,17 @@ export async function getAllComics(): Promise<Comic[]> {
   if (metadataFiles.length > 0) {
     const comics = await Promise.all(
       metadataFiles.map(async (fileName) => {
-        const id = fileName.replace('.json', '');
+        const id = fileName.replace(".json", "");
         const metadata = await readComicMetadata(id);
 
         if (metadata) {
           return metadata as Comic;
         }
         return null;
-      })
+      }),
     );
 
-    return comics.filter(comic => comic !== null);
+    return comics.filter((comic) => comic !== null);
   }
 
   // Fallback to reading from images directory (for development)
@@ -167,11 +166,14 @@ export async function getAllComics(): Promise<Comic[]> {
 // Get a single comic by ID
 export async function getComicById(id: string): Promise<Comic | null> {
   const comics = await getAllComics();
-  return comics.find(comic => comic.id === id) || null;
+  return comics.find((comic) => comic.id === id) || null;
 }
 
 // Create a new comic
-export async function createComic(comicData: Omit<Comic, "id" | "createdAt" | "updatedAt">, imageFileName: string): Promise<Comic> {
+export async function createComic(
+  comicData: Omit<Comic, "id" | "createdAt" | "updatedAt">,
+  imageFileName: string,
+): Promise<Comic> {
   const now = new Date();
   const id = imageFileName.replace(/\.[^/.]+$/, ""); // Use filename as ID
 
@@ -238,7 +240,7 @@ export async function deleteComic(id: string): Promise<boolean> {
 // Get comics by series
 export async function getComicsBySeries(series: string): Promise<Comic[]> {
   const comics = await getAllComics();
-  return comics.filter(comic => comic.series === series);
+  return comics.filter((comic) => comic.series === series);
 }
 
 // Get all unique series names
@@ -246,7 +248,7 @@ export async function getAllSeries(): Promise<string[]> {
   const comics = await getAllComics();
   const seriesSet = new Set<string>();
 
-  comics.forEach(comic => {
+  comics.forEach((comic) => {
     if (comic.series) {
       seriesSet.add(comic.series);
     }
@@ -260,9 +262,10 @@ export async function searchComics(query: string): Promise<Comic[]> {
   const comics = await getAllComics();
   const lowercaseQuery = query.toLowerCase();
 
-  return comics.filter(comic =>
-    comic.title.toLowerCase().includes(lowercaseQuery) ||
-    (comic.description && comic.description.toLowerCase().includes(lowercaseQuery)) ||
-    comic.tags.some(tag => tag.toLowerCase().includes(lowercaseQuery))
+  return comics.filter(
+    (comic) =>
+      comic.title.toLowerCase().includes(lowercaseQuery) ||
+      (comic.description && comic.description.toLowerCase().includes(lowercaseQuery)) ||
+      comic.tags.some((tag) => tag.toLowerCase().includes(lowercaseQuery)),
   );
 }

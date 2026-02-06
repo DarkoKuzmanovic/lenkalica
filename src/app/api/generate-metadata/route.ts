@@ -18,10 +18,7 @@ Return only the JSON object, no other text or formatting.`;
 export async function POST(req: NextRequest) {
   // Check authorization to prevent API credit abuse
   if (!isAuthorized(req)) {
-    return NextResponse.json(
-      { error: "Unauthorized. API key required in production." },
-      { status: 401 },
-    );
+    return NextResponse.json({ error: "Unauthorized. API key required in production." }, { status: 401 });
   }
 
   try {
@@ -44,7 +41,7 @@ export async function POST(req: NextRequest) {
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+        Authorization: `Bearer ${OPENROUTER_API_KEY}`,
         "Content-Type": "application/json",
         "HTTP-Referer": "https://lenkalica.com",
         "X-Title": "Lenkalica Blog Metadata Generator",
@@ -54,12 +51,12 @@ export async function POST(req: NextRequest) {
         messages: [
           {
             role: "system",
-            content: SYSTEM_PROMPT
+            content: SYSTEM_PROMPT,
           },
           {
             role: "user",
-            content: `Title: ${title}\n\nContent: ${content}`
-          }
+            content: `Title: ${title}\n\nContent: ${content}`,
+          },
         ],
         temperature: 0.3,
         max_tokens: 500,
@@ -76,7 +73,10 @@ export async function POST(req: NextRequest) {
     let responseText = apiResponse.choices[0]?.message?.content || "";
 
     // Clean up the response (remove any markdown formatting)
-    responseText = responseText.replace(/^```json\s*/i, "").replace(/```\s*$/i, "").trim();
+    responseText = responseText
+      .replace(/^```json\s*/i, "")
+      .replace(/```\s*$/i, "")
+      .trim();
 
     let metadata;
     try {
@@ -89,13 +89,13 @@ export async function POST(req: NextRequest) {
           error: "Failed to parse OpenRouter response",
           details: parseError instanceof Error ? parseError.message : "Unknown parsing error",
         },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
     // Post-process to ensure titles don't contain semicolons
     if (metadata.title) {
-      metadata.title = metadata.title.replace(/:/g, ' -');
+      metadata.title = metadata.title.replace(/:/g, " -");
     }
 
     return NextResponse.json({ metadata });
@@ -108,7 +108,7 @@ export async function POST(req: NextRequest) {
         error: "Failed to generate metadata",
         details: error instanceof Error ? error.message : "Unknown error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
