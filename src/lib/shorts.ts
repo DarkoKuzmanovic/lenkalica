@@ -1,11 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { remark } from "remark";
-import remarkRehype from "remark-rehype";
-import rehypeRaw from "rehype-raw";
-import rehypeStringify from "rehype-stringify";
-import supersub from "remark-supersub";
+import { renderMarkdownToHtml } from "./markdown";
 
 const shortsDirectory = path.join(process.cwd(), "content/shorts");
 
@@ -46,13 +42,7 @@ export async function getAllShorts(): Promise<Short[]> {
         const { data, content } = matter(fileContents);
 
         // Convert markdown to HTML
-        const processedContent = await remark()
-          .use(supersub)
-          .use(remarkRehype, { allowDangerousHtml: true })
-          .use(rehypeRaw)
-          .use(rehypeStringify)
-          .process(content);
-        const contentHtml = processedContent.toString();
+        const contentHtml = await renderMarkdownToHtml(content);
 
         // Construct image path
         const coverImage = `https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/covers/${id}.png`;
@@ -86,13 +76,7 @@ export async function getShortById(id: string): Promise<Short | null> {
     const { data, content } = matter(fileContents);
 
     // Convert markdown to HTML
-    const processedContent = await remark()
-      .use(supersub)
-      .use(remarkRehype, { allowDangerousHtml: true })
-      .use(rehypeRaw)
-      .use(rehypeStringify)
-      .process(content);
-    const contentHtml = processedContent.toString();
+    const contentHtml = await renderMarkdownToHtml(content);
 
     // Construct image path
     const coverImage = `https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/covers/${id}.png`;
