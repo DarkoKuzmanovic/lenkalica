@@ -25,6 +25,12 @@ function generateManifest() {
 
   const files = fs.readdirSync(audioDir).filter((f) => f.endsWith(".mp3"));
 
+  // Also preserve existing manifest if directory exists but is empty (Vercel edge case)
+  if (files.length === 0) {
+    console.log("[audio-manifest] No audio files found in public/audio/, using existing manifest.");
+    return;
+  }
+
   for (const file of files) {
     const id = file.replace(/\.mp3$/, "");
     const filePath = path.join(audioDir, file);
