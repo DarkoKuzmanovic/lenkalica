@@ -224,10 +224,18 @@ export async function deleteComic(id: string): Promise<boolean> {
       fs.unlinkSync(metadataPath);
     }
 
-    // Delete image file
-    const imagePath = path.join(process.cwd(), "public", comic.image);
-    if (fs.existsSync(imagePath)) {
-      fs.unlinkSync(imagePath);
+    // Delete image file only if it's a local path
+    // Remote URLs (GitHub, CDN, etc.) cannot be deleted via filesystem
+    const isRemoteUrl = comic.image.startsWith("http://") || comic.image.startsWith("https://");
+    
+    if (isRemoteUrl) {
+      console.log(`Comic ${id} uses remote image URL, skipping file deletion: ${comic.image}`);
+    } else {
+      // Local path - attempt deletion
+      const imagePath = path.join(process.cwd(), "public", comic.image);
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
     }
 
     return true;

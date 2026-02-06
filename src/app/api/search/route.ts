@@ -13,26 +13,6 @@ interface SearchResult {
   date?: string;
 }
 
-async function getPodcasts(): Promise<SearchResult[]> {
-  try {
-    const articles = await getAllArticles();
-    return articles
-      .filter((article) => article.audioFile)
-      .map((article) => ({
-        id: article.id,
-        title: article.title,
-        type: "podcast" as const,
-        url: `/articles/${article.id}`,
-        excerpt: article.excerpt,
-        image: article.coverImage,
-        date: article.date,
-      }));
-  } catch (error) {
-    console.error("Error fetching podcasts:", error);
-    return [];
-  }
-}
-
 function searchInText(text: string, query: string): boolean {
   if (!text || !query) return false;
   return text.toLowerCase().includes(query.toLowerCase());
@@ -68,8 +48,10 @@ export async function GET(request: NextRequest) {
   try {
     const results: SearchResult[] = [];
 
-    // Search articles
+    // Load articles once and reuse for both articles and podcasts search
     const articles = await getAllArticles();
+
+    // Search articles
     for (const article of articles) {
       const matchesTitle = searchInText(article.title, query);
       const matchesContent = searchInText(article.content, query);
@@ -88,8 +70,19 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // Search podcasts (articles with audio)
-    const podcasts = await getPodcasts();
+    // Search podcasts (articles with audio) - reuse loaded articles data
+    const podcasts = articles
+      .filter((article) => article.audioFile)
+      .map((article) => ({
+        id: article.id,
+        title: article.title,
+        type: "podcast" as const,
+        url: `/articles/${article.id}`,
+        excerpt: article.excerpt,
+        image: article.coverImage,
+        date: article.date,
+      }));
+
     for (const podcast of podcasts) {
       const matchesTitle = searchInText(podcast.title, query);
       const matchesExcerpt = podcast.excerpt && searchInText(podcast.excerpt, query);
