@@ -3,11 +3,8 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
-// Function to escape XML special characters, but not URLs
-function escapeXml(unsafe: string, isUrl = false): string {
-  if (isUrl) {
-    return unsafe;
-  }
+// Function to escape XML special characters
+function escapeXml(unsafe: string): string {
   return unsafe
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -16,15 +13,27 @@ function escapeXml(unsafe: string, isUrl = false): string {
     .replace(/'/g, "&apos;");
 }
 
-// Function to validate audio file
-function validateAudioFile(audioFile: string): { isValid: boolean; size: number } {
+// Function to escape URLs for use in XML attributes
+// Only escapes characters that are invalid in XML attributes (&, ")
+// while preserving URL structure
+function escapeUrlForXmlAttribute(url: string): string {
+  return url.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+}
+
+// Function to check if URL is remote
+function isRemoteUrl(url: string): boolean {
+  return url.startsWith("http://") || url.startsWith("https://");
+}
+
+// Function to get audio file size for local files
+function getLocalAudioSize(audioFile: string): number {
   try {
-    const fullPath = path.join(process.cwd(), "public", audioFile);
+    const fullPath = path.join(process.cwd(), "public", "audio", audioFile);
     const stats = fs.statSync(fullPath);
-    return { isValid: true, size: stats.size };
+    return stats.size;
   } catch (error) {
-    console.error(`Error validating audio file ${audioFile}:`, error);
-    return { isValid: false, size: 0 };
+    console.error(`Error getting audio file size ${audioFile}:`, error);
+    return 0;
   }
 }
 
@@ -39,10 +48,9 @@ function ensureHttps(url: string): string {
 export async function GET() {
   try {
     const articles = await getAllArticles();
+    // Filter articles that have audioFile set (already validated in getAllArticles)
     const articlesWithAudio = articles.filter((article): article is typeof article & { audioFile: string } => {
-      if (typeof article.audioFile !== "string") return false;
-      const { isValid } = validateAudioFile(article.audioFile);
-      return isValid;
+      return typeof article.audioFile === "string" && article.audioFile.length > 0;
     });
 
     // Get the base URL from environment variable or default to production URL
@@ -58,9 +66,9 @@ export async function GET() {
   xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0"
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
-    <atom:link href="${escapeXml(baseUrl, true)}/api/podcast-xml" rel="self" type="application/rss+xml" />
+    <atom:link href="${escapeUrlForXmlAttribute(baseUrl)}/api/podcast-xml" rel="self" type="application/rss+xml" />
     <title>Lenkalica Podcasts</title>
-    <link>${escapeXml(baseUrl, true)}/podcasts</link>
+    <link>${escapeUrlForXmlAttribute(baseUrl)}/podcasts</link>
     <language>en-us</language>
     <copyright>© ${new Date().getFullYear()} Lenkalica</copyright>
     <itunes:author>Lenkalica</itunes:author>
@@ -73,18 +81,20 @@ export async function GET() {
     </itunes:owner>
     <itunes:explicit>false</itunes:explicit>
     <itunes:category text="Education"/>
-    <itunes:image href="${escapeXml(podcastCoverUrl, true)}"/>
+    <itunes:image href="${escapeUrlForXmlAttribute(podcastCoverUrl)}"/>
     <image>
-      <url>${escapeXml(podcastCoverUrl, true)}</url>
+      <url>${escapeUrlForXmlAttribute(podcastCoverUrl)}</url>
       <title>Lenkalica Podcasts</title>
-      <link>${escapeXml(baseUrl, true)}/podcasts</link>
+      <link>${escapeUrlForXmlAttribute(baseUrl)}/podcasts</link>
     </image>
-    <googleplay:image href="${escapeXml(podcastCoverUrl, true)}"/>
+    <googleplay:image href="${escapeUrlForXmlAttribute(podcastCoverUrl)}"/>
     ${articlesWithAudio
       .map((article) => {
-        const { size } = validateAudioFile(article.audioFile);
-        const audioUrl = `${baseUrl}${article.audioFile}`;
+        // Use audioFile directly if it's a remote URL, otherwise construct full URL
+        const audioUrl = isRemoteUrl(article.audioFile) ? article.audioFile : `${baseUrl}/audio/${article.audioFile}`;
         const articleUrl = `${baseUrl}/articles/${article.id}`;
+        // Try to get size from local file using article ID
+        const size = getLocalAudioSize(`${article.id}.mp3`);
 
         return `
     <item>
@@ -93,12 +103,16 @@ export async function GET() {
       <itunes:summary>${escapeXml(article.excerpt || "")}</itunes:summary>
       <pubDate>${new Date(article.date).toUTCString()}</pubDate>
       <enclosure
-        url="${escapeXml(audioUrl, true)}"
-        type="audio/mpeg"
-        length="${size}"
+        url="${escapeUrlForXmlAttribute(audioUrl)}"
+        type="audio/mpeg"${
+          size > 0
+            ? `
+        length="${size}"`
+            : ""
+        }
       />
-      <guid isPermaLink="false">${escapeXml(articleUrl, true)}</guid>
-      <link>${escapeXml(articleUrl, true)}</link>
+      <guid isPermaLink="false">${escapeUrlForXmlAttribute(articleUrl)}</guid>
+      <link>${escapeUrlForXmlAttribute(articleUrl)}</link>
       ${article.author ? `<itunes:author>${escapeXml(article.author)}</itunes:author>` : ""}
       <itunes:duration>10:00</itunes:duration>
       ${article.category ? `<itunes:category text="${escapeXml(article.category)}"/>` : ""}
@@ -130,7 +144,7 @@ export async function GET() {
         headers: {
           "Content-Type": "application/xml",
         },
-      }
+      },
     );
   }
 }

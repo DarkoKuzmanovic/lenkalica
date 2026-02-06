@@ -55,19 +55,25 @@ export async function getAllArticles(): Promise<Article[]> {
           .process(content);
         const contentHtml = processedContent.toString();
 
+        // Check if audio file exists locally before setting the URL
+        const audioFilePath = path.join(process.cwd(), "public", "audio", `${id}.mp3`);
+        const hasAudio = fs.existsSync(audioFilePath);
+
         return {
           id,
           title: data.title,
           date: data.date,
           content: contentHtml,
           coverImage: `https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/covers/${id}.png`,
-          audioFile: `https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/audio/${id}.mp3`,
+          audioFile: hasAudio
+            ? `https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/audio/${id}.mp3`
+            : undefined,
           excerpt: data.excerpt,
           category: data.category,
           tags: data.tags,
           author: data.author,
         };
-      })
+      }),
   );
 
   return articles.sort((a, b) => (a.date < b.date ? 1 : -1));
@@ -88,13 +94,19 @@ export async function getArticleById(id: string): Promise<Article | undefined> {
       .process(content);
     const contentHtml = processedContent.toString();
 
+    // Check if audio file exists locally before setting the URL
+    const audioFilePath = path.join(process.cwd(), "public", "audio", `${id}.mp3`);
+    const hasAudio = fs.existsSync(audioFilePath);
+
     return {
       id,
       title: data.title,
       date: data.date,
       content: contentHtml,
       coverImage: `https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/images/covers/${id}.png`,
-      audioFile: `https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/audio/${id}.mp3`,
+      audioFile: hasAudio
+        ? `https://raw.githubusercontent.com/DarkoKuzmanovic/lenkalica/main/public/audio/${id}.mp3`
+        : undefined,
       excerpt: data.excerpt,
       category: data.category,
       tags: data.tags,
