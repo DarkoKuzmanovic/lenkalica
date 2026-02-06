@@ -17,8 +17,9 @@ function generateManifest() {
   const manifest = {};
 
   if (!fs.existsSync(audioDir)) {
-    console.warn("[audio-manifest] No public/audio/ directory found, writing empty manifest.");
-    fs.writeFileSync(outputPath, JSON.stringify(manifest, null, 2));
+    // On Vercel, public/audio is excluded via .vercelignore, so we should
+    // preserve the committed audio-manifest.json instead of overwriting it.
+    console.log("[audio-manifest] No public/audio/ directory found, using existing manifest.");
     return;
   }
 
