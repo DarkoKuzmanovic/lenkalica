@@ -3,8 +3,12 @@ import path from "path";
 import matter from "gray-matter";
 import { renderMarkdownToHtml } from "./markdown";
 import { isSafeContentId } from "@/utils/validation";
+import audioManifest from "./audio-manifest.json";
 
 const articlesDirectory = path.join(process.cwd(), "content/articles");
+
+// Type for the audio manifest generated at build time
+const manifest = audioManifest as Record<string, { file: string; size: number }>;
 
 export interface Article {
   id: string;
@@ -46,9 +50,8 @@ export async function getAllArticles(): Promise<Article[]> {
         // Convert markdown to HTML
         const contentHtml = await renderMarkdownToHtml(content);
 
-        // Check if audio file exists locally before setting the URL
-        const audioFilePath = path.join(process.cwd(), "public", "audio", `${id}.mp3`);
-        const hasAudio = fs.existsSync(audioFilePath);
+        // Use build-time audio manifest instead of fs.existsSync (which fails on Vercel)
+        const hasAudio = id in manifest;
 
         return {
           id,
@@ -85,9 +88,8 @@ export async function getArticleById(id: string): Promise<Article | undefined> {
     // Convert markdown to HTML
     const contentHtml = await renderMarkdownToHtml(content);
 
-    // Check if audio file exists locally before setting the URL
-    const audioFilePath = path.join(process.cwd(), "public", "audio", `${id}.mp3`);
-    const hasAudio = fs.existsSync(audioFilePath);
+    // Use build-time audio manifest instead of fs.existsSync (which fails on Vercel)
+    const hasAudio = id in manifest;
 
     return {
       id,

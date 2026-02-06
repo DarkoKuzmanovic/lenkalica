@@ -1,7 +1,8 @@
 import { getAllArticles } from "@/lib/articles";
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import audioManifest from "@/lib/audio-manifest.json";
+
+const manifest = audioManifest as Record<string, { file: string; size: number }>;
 
 // Function to escape XML special characters
 function escapeXml(unsafe: string): string {
@@ -25,16 +26,9 @@ function isRemoteUrl(url: string): boolean {
   return url.startsWith("http://") || url.startsWith("https://");
 }
 
-// Function to get audio file size for local files
-function getLocalAudioSize(audioFile: string): number {
-  try {
-    const fullPath = path.join(process.cwd(), "public", "audio", audioFile);
-    const stats = fs.statSync(fullPath);
-    return stats.size;
-  } catch (error) {
-    console.error(`Error getting audio file size ${audioFile}:`, error);
-    return 0;
-  }
+// Get audio file size from the build-time manifest
+function getAudioSize(articleId: string): number {
+  return manifest[articleId]?.size ?? 0;
 }
 
 // Function to ensure URL has https:// protocol
@@ -93,8 +87,8 @@ export async function GET() {
         // Use audioFile directly if it's a remote URL, otherwise construct full URL
         const audioUrl = isRemoteUrl(article.audioFile) ? article.audioFile : `${baseUrl}/audio/${article.audioFile}`;
         const articleUrl = `${baseUrl}/articles/${article.id}`;
-        // Try to get size from local file using article ID
-        const size = getLocalAudioSize(`${article.id}.mp3`);
+        // Get size from build-time audio manifest
+        const size = getAudioSize(article.id);
 
         return `
     <item>
