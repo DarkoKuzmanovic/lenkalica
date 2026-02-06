@@ -58,7 +58,7 @@ export async function getAllShorts(): Promise<Short[]> {
           tags: data.tags,
           author: data.author,
         };
-      })
+      }),
   );
 
   // Sort by date (newest first)

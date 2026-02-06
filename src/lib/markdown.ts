@@ -7,7 +7,7 @@ import supersub from "remark-supersub";
 /**
  * Converts markdown to HTML using the unified remark/rehype pipeline.
  * Supports superscript/subscript syntax and preserves raw HTML.
- * 
+ *
  * @param markdown - The markdown content to convert
  * @returns Promise resolving to HTML string
  */
@@ -18,6 +18,6 @@ export async function renderMarkdownToHtml(markdown: string): Promise<string> {
     .use(rehypeRaw)
     .use(rehypeStringify)
     .process(markdown);
-  
+
   return processedContent.toString();
 }
