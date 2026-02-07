@@ -1,8 +1,10 @@
 # Copilot Instructions for Lenkalica
 
+> **Note**: For lessons learned and debugging insights, see [memories.md](memories.md)
+
 ## Project Overview
 
-Lenkalica is a Next.js 15 content blog with sophisticated dual-mode audio capabilities. It features a unique hybrid web/Android app architecture where the same codebase serves both web browsers and an integrated Android webview with native media controls.
+Lenkalica is a Next.js 16 content blog with sophisticated dual-mode audio capabilities. It features a unique hybrid web/Android app architecture where the same codebase serves both web browsers and an integrated Android webview with native media controls.
 
 ## Key Architecture Patterns
 
@@ -104,3 +106,4 @@ npm run lint   # ESLint validation
 - **Vercel Optimized**: Next.js configuration includes image optimization domains
 - **Production Builds**: TypeScript errors ignored (see `next.config.js`)
 - **Static Assets**: Organized in `public/` with structured folders for audio/images
+- **Runtime Filesystem**: See [memories.md](memories.md) for Vercel `public/` directory limitations and solutions

@@ -1,6 +1,6 @@
 # Lenkalica
 
-A Next.js 15 content blog featuring articles, podcasts, comics, and shorts about culture, history, and geography. The site includes sophisticated audio capabilities with special Android app integration for enhanced audio playback through native Android media controls.
+A Next.js 16 content blog featuring articles, podcasts, comics, and shorts about culture, history, and geography. The site includes sophisticated audio capabilities with special Android app integration for enhanced audio playback through native Android media controls.
 
 ## 🚀 Features
 
@@ -28,7 +28,7 @@ A Next.js 15 content blog featuring articles, podcasts, comics, and shorts about
 
 ### Technical Features
 
-- **Next.js 15**: Modern React framework with App Router
+- **Next.js 16**: Modern React framework with App Router and Turbopack
 - **TypeScript**: Strict typing for enhanced developer experience
 - **DaisyUI**: Beautiful, accessible component library
 - **Content Processing**: Markdown rendering with syntax highlighting
