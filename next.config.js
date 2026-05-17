@@ -1,27 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [
-      "knowablemagazine.org",
-      "wyofile.com",
-      "d2r55xnwy6nx47.cloudfront.net", // Quanta Magazine
-      "static.quantamagazine.org",
-      "www.artic.edu",
-      "apod.nasa.gov",
-      "www.quantamagazine.org",
-      "www.earth.com",
-      "phys.org",
-      "www.space.com",
-      "cff2.earth.com",
-      "scx2.b-cdn.net",
-      "cdn.mos.cms.futurecdn.net",
-      "www.positive.news",
-      "scienmag.com",
-      "www.science.org",
-      "science.org",
-      "raw.githubusercontent.com", // GitHub raw content domain
-    ],
-    // Add support for remote patterns to be more flexible
     remotePatterns: [
       {
         protocol: "https",
